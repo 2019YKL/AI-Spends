@@ -2,9 +2,43 @@ import { AIService } from '@/types/ai-services'
 
 export const aiServices: AIService[] = [
   {
+    id: 'claude',
+    name: 'Claude',
+    icon: 'claude-color.svg',
+    color: 'bg-orange-500',
+    subscriptionPrice: 20, // $20/month (Pro tier default)
+    billingStartDate: '2025-07-15T00:00:00Z',
+    billingCycle: 30,
+    isActive: true,
+    category: 'ai-chat',
+    pricingTiers: [
+      { id: 'pro', name: 'Pro', price: 20 },
+      { id: 'team', name: 'Team', price: 100 },
+      { id: 'enterprise', name: 'Enterprise', price: 200 }
+    ],
+    selectedTier: 'pro'
+  },
+  {
+    id: 'chatgpt',
+    name: 'ChatGPT',
+    icon: 'openai.svg',
+    color: 'bg-green-500',
+    subscriptionPrice: 20, // $20/month (Plus tier default)
+    billingStartDate: '2025-07-17T00:00:00Z',
+    billingCycle: 30,
+    isActive: true,
+    category: 'ai-chat',
+    pricingTiers: [
+      { id: 'plus', name: 'Plus', price: 20 },
+      { id: 'team', name: 'Team', price: 100 },
+      { id: 'enterprise', name: 'Enterprise', price: 200 }
+    ],
+    selectedTier: 'plus'
+  },
+  {
     id: 'cursor-pro',
     name: 'Cursor',
-    icon: '🔮',
+    icon: 'cursor.svg',
     color: 'bg-indigo-500',
     subscriptionPrice: 20, // $20/month
     billingStartDate: '2025-07-18T00:00:00Z',
@@ -15,7 +49,7 @@ export const aiServices: AIService[] = [
   {
     id: 'windsurf',
     name: 'Windsurf',
-    icon: '🏄‍♂️',
+    icon: 'windsurf.svg',
     color: 'bg-cyan-500',
     subscriptionPrice: 15, // $15/month
     billingStartDate: '2025-07-16T00:00:00Z',
@@ -24,64 +58,54 @@ export const aiServices: AIService[] = [
     category: 'code-editor'
   },
   {
-    id: 'chatgpt-plus',
-    name: 'ChatGPT Plus',
-    icon: '💬',
-    color: 'bg-green-500',
-    subscriptionPrice: 20, // $20/month
-    billingStartDate: '2025-07-17T00:00:00Z',
-    billingCycle: 30,
-    isActive: true,
-    category: 'ai-chat'
-  },
-  {
-    id: 'claude-pro',
-    name: 'Claude Pro',
-    icon: '🧠',
-    color: 'bg-orange-500',
-    subscriptionPrice: 20, // $20/month
-    billingStartDate: '2025-07-15T00:00:00Z',
-    billingCycle: 30,
-    isActive: false,
-    category: 'ai-chat'
-  },
-  {
     id: 'midjourney',
     name: 'Midjourney',
-    icon: '🎨',
+    icon: 'midjourney.svg',
     color: 'bg-purple-500',
-    subscriptionPrice: 30, // $30/month for Standard plan
+    subscriptionPrice: 10, // $10/month for Basic plan
     billingStartDate: '2025-07-10T00:00:00Z',
     billingCycle: 30,
     isActive: true,
-    category: 'ai-image'
+    category: 'ai-image',
+    pricingTiers: [
+      { id: 'basic', name: 'Basic', price: 10 },
+      { id: 'standard', name: 'Standard', price: 30 },
+      { id: 'pro', name: 'Pro', price: 60 }
+    ],
+    selectedTier: 'basic'
   },
   {
     id: 'github-copilot',
     name: 'GitHub Copilot',
-    icon: '🚁',
+    icon: 'githubcopilot.svg',
     color: 'bg-gray-700',
-    subscriptionPrice: 10, // $10/month
+    subscriptionPrice: 10, // $10/month (Individual plan)
     billingStartDate: '2025-07-01T00:00:00Z',
     billingCycle: 30,
     isActive: true,
-    category: 'code-editor'
+    category: 'code-editor',
+    pricingTiers: [
+      { id: 'individual', name: 'Individual', price: 10 },
+      { id: 'business', name: 'Business', price: 19 },
+      { id: 'enterprise', name: 'Enterprise', price: 39 }
+    ],
+    selectedTier: 'individual'
   },
   {
     id: 'perplexity-pro',
     name: 'Perplexity Pro',
-    icon: '🔍',
+    icon: 'perplexity-color.svg',
     color: 'bg-blue-500',
     subscriptionPrice: 20, // $20/month
     billingStartDate: '2025-07-19T12:00:00Z',
     billingCycle: 30,
-    isActive: false,
+    isActive: true,
     category: 'ai-chat'
   },
   {
     id: 'v0-dev',
     name: 'v0 by Vercel',
-    icon: '🌐',
+    icon: 'v0.svg',
     color: 'bg-black',
     subscriptionPrice: 20, // $20/month
     billingStartDate: '2025-07-14T00:00:00Z',
@@ -90,14 +114,68 @@ export const aiServices: AIService[] = [
     category: 'code-editor'
   },
   {
-    id: 'copilot-pro',
-    name: 'Copilot Pro',
-    icon: '🤖',
-    color: 'bg-blue-600',
-    subscriptionPrice: 22, // $22/month
+    id: 'notion',
+    name: 'Notion',
+    icon: 'notion.svg',
+    color: 'bg-gray-700',
+    subscriptionPrice: 8, // $8/month (Plus plan)
+    billingStartDate: '2025-07-10T00:00:00Z',
+    billingCycle: 30,
+    isActive: true,
+    category: 'productivity',
+    pricingTiers: [
+      { id: 'plus', name: 'Plus', price: 8 },
+      { id: 'business', name: 'Business', price: 15 },
+      { id: 'enterprise', name: 'Enterprise', price: 25 }
+    ],
+    selectedTier: 'plus'
+  },
+  {
+    id: 'raycast',
+    name: 'Raycast',
+    icon: 'Raycast.png',
+    color: 'bg-orange-500',
+    subscriptionPrice: 8, // $8/month (Pro plan)
+    billingStartDate: '2025-07-05T00:00:00Z',
+    billingCycle: 30,
+    isActive: true,
+    category: 'productivity',
+    pricingTiers: [
+      { id: 'pro', name: 'Pro', price: 8 },
+      { id: 'teams', name: 'Teams', price: 16 }
+    ],
+    selectedTier: 'pro'
+  },
+  {
+    id: 'figma',
+    name: 'Figma',
+    icon: 'figma-color.svg',
+    color: 'bg-violet-500',
+    subscriptionPrice: 12, // $12/month (Professional plan)
+    billingStartDate: '2025-07-08T00:00:00Z',
+    billingCycle: 30,
+    isActive: true,
+    category: 'productivity',
+    pricingTiers: [
+      { id: 'professional', name: 'Professional', price: 12 },
+      { id: 'organization', name: 'Organization', price: 45 }
+    ],
+    selectedTier: 'professional'
+  },
+  {
+    id: 'gemini',
+    name: 'Gemini Advanced',
+    icon: 'gemini-color.svg',
+    color: 'bg-blue-500',
+    subscriptionPrice: 20, // $20/month (Advanced plan)
     billingStartDate: '2025-07-12T00:00:00Z',
     billingCycle: 30,
-    isActive: false,
-    category: 'productivity'
+    isActive: true,
+    category: 'ai-chat',
+    pricingTiers: [
+      { id: 'advanced', name: 'Advanced', price: 20 },
+      { id: 'business', name: 'Business', price: 30 }
+    ],
+    selectedTier: 'advanced'
   }
 ]

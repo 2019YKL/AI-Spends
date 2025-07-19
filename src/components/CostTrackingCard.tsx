@@ -1,30 +1,39 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { AIService } from '@/types/ai-services'
+import { AIService, PricingTier } from '@/types/ai-services'
 import { calculateRealTimeCost, formatCurrency, formatCurrencyPrecise, formatTimeElapsed } from '@/lib/cost-calculator'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Switch } from '@/components/ui/switch'
 import { SmoothNumber } from '@/components/SmoothNumber'
+import { IconRenderer } from '@/components/IconRenderer'
 import { cn } from '@/lib/utils'
 
 interface CostTrackingCardProps {
   service: AIService
   className?: string
   onToggle?: (serviceId: string) => void
+  onTierChange?: (serviceId: string, tierId: string) => void
 }
 
-export function CostTrackingCard({ service, className, onToggle }: CostTrackingCardProps) {
+export function CostTrackingCard({ service, className, onToggle, onTierChange }: CostTrackingCardProps) {
   const [currentTime, setCurrentTime] = useState(new Date())
+  const [mounted, setMounted] = useState(false)
   const cost = calculateRealTimeCost(service, currentTime)
 
   useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  useEffect(() => {
+    if (!mounted) return
+    
     const timer = setInterval(() => {
       setCurrentTime(new Date())
     }, 1000)
 
     return () => clearInterval(timer)
-  }, [])
+  }, [mounted])
 
   const getCategoryBadge = (category: string) => {
     const badges = {
@@ -47,11 +56,11 @@ export function CostTrackingCard({ service, className, onToggle }: CostTrackingC
         <CardTitle className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className={cn(
-              "w-12 h-12 rounded-xl flex items-center justify-center text-2xl text-white transition-all duration-200",
+              "w-16 h-16 rounded-xl flex items-center justify-center text-white transition-all duration-200",
               service.color,
               !service.isActive && "grayscale"
             )}>
-              {service.icon}
+              <IconRenderer name={service.icon} size={32} />
             </div>
             <div>
               <h3 className="text-xl font-semibold">{service.name}</h3>
@@ -80,15 +89,24 @@ export function CostTrackingCard({ service, className, onToggle }: CostTrackingC
       <CardContent className="space-y-4">
         {service.isActive ? (
           <>
-            {/* Time Elapsed */}
-            <div className="bg-muted/30 rounded-lg p-3">
-              <div className="text-sm">
-                <span className="text-muted-foreground">Time elapsed:</span>
-                <div className="font-medium text-lg">
-                  {formatTimeElapsed(cost.timeElapsed)}
-                </div>
+            {/* Pricing Tiers */}
+            {service.pricingTiers && service.pricingTiers.length > 0 && (
+              <div className="flex gap-2 flex-wrap">
+                {service.pricingTiers.map((tier) => (
+                  <button
+                    key={tier.id}
+                    onClick={() => onTierChange?.(service.id, tier.id)}
+                    className={`px-3 py-1.5 text-sm rounded-lg transition-all duration-200 font-semibold border-2 ${
+                      service.selectedTier === tier.id
+                        ? 'bg-blue-600 text-white border-blue-600 shadow-lg shadow-blue-500/25'
+                        : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:border-blue-400 dark:hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20'
+                    }`}
+                  >
+                    {tier.name} ${tier.price}
+                  </button>
+                ))}
               </div>
-            </div>
+            )}
 
             {/* Current Cost (Real-time) */}
             <div className="space-y-3">
@@ -103,7 +121,7 @@ export function CostTrackingCard({ service, className, onToggle }: CostTrackingC
                     />
                   </div>
                   <div className="text-xs text-muted-foreground">
-                    {cost.percentageUsed.toFixed(2)}% of billing cycle
+                    {mounted ? `${cost.percentageUsed.toFixed(2)}% of today` : '--% of today'}
                   </div>
                 </div>
               </div>

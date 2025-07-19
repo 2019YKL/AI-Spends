@@ -17,11 +17,30 @@ export function useServiceToggle() {
     )
   }, [])
 
+  const changeTier = useCallback((serviceId: string, tierId: string) => {
+    setServices(prevServices => 
+      prevServices.map(service => {
+        if (service.id === serviceId && service.pricingTiers) {
+          const selectedTier = service.pricingTiers.find(tier => tier.id === tierId)
+          if (selectedTier) {
+            return {
+              ...service,
+              selectedTier: tierId,
+              subscriptionPrice: selectedTier.price
+            }
+          }
+        }
+        return service
+      })
+    )
+  }, [])
+
   const activeServices = services.filter(service => service.isActive)
 
   return {
     services,
     activeServices,
-    toggleService
+    toggleService,
+    changeTier
   }
 }

@@ -64,67 +64,75 @@
                       linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
   }
   
-  /* Raycast-style grid */
-  .raycast-grid {
+  /* Fire-style grid */
+  .fire-grid {
     background-image: 
-      linear-gradient(rgba(99, 102, 241, 0.1) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(99, 102, 241, 0.1) 1px, transparent 1px);
+      linear-gradient(rgba(239, 68, 68, 0.15) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(239, 68, 68, 0.15) 1px, transparent 1px);
     background-size: 32px 32px;
   }
   
-  /* Advanced gradient backgrounds */
-  .hero-gradient {
-    background: radial-gradient(ellipse at top, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
-                radial-gradient(ellipse at bottom left, rgba(147, 51, 234, 0.1) 0%, transparent 50%),
-                radial-gradient(ellipse at bottom right, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
-                linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 41, 59, 0.9) 100%);
+  /* Advanced fire gradient backgrounds */
+  .hero-fire-gradient {
+    background: 
+      radial-gradient(ellipse at top, rgba(220, 38, 38, 0.2) 0%, transparent 50%),
+      radial-gradient(ellipse at bottom left, rgba(234, 88, 12, 0.15) 0%, transparent 50%),
+      radial-gradient(ellipse at bottom right, rgba(239, 68, 68, 0.1) 0%, transparent 50%),
+      radial-gradient(ellipse at center, rgba(127, 29, 29, 0.3) 0%, transparent 70%),
+      linear-gradient(135deg, rgba(23, 23, 23, 0.95) 0%, rgba(39, 39, 42, 0.9) 50%, rgba(15, 15, 15, 0.95) 100%);
   }
   
-  /* Glass morphism effect */
-  .glass-card {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+  /* Fire glass morphism effect */
+  .fire-glass-card {
+    background: rgba(239, 68, 68, 0.05);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(239, 68, 68, 0.2);
     box-shadow: 
-      0 8px 32px rgba(0, 0, 0, 0.3),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1),
-      0 0 0 1px rgba(255, 255, 255, 0.05);
+      0 8px 32px rgba(0, 0, 0, 0.4),
+      0 0 20px rgba(220, 38, 38, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05),
+      0 0 0 1px rgba(239, 68, 68, 0.1);
   }
   
-  /* Premium glow effects */
-  .premium-glow {
+  /* Fire premium glow effects */
+  .fire-premium-glow {
     box-shadow: 
-      0 0 20px rgba(99, 102, 241, 0.3),
-      0 0 40px rgba(147, 51, 234, 0.2),
-      0 0 60px rgba(59, 130, 246, 0.1),
-      0 1px 3px rgba(0, 0, 0, 0.3);
+      0 0 30px rgba(220, 38, 38, 0.4),
+      0 0 60px rgba(234, 88, 12, 0.3),
+      0 0 90px rgba(239, 68, 68, 0.2),
+      0 4px 20px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
   
-  /* Advanced number glow */
-  .number-premium-glow {
+  /* Advanced fire number glow */
+  .number-fire-premium-glow {
     text-shadow: 
-      0 0 10px rgba(99, 102, 241, 0.8),
-      0 0 20px rgba(147, 51, 234, 0.6),
-      0 0 30px rgba(59, 130, 246, 0.4),
-      0 0 40px rgba(99, 102, 241, 0.2);
+      0 0 10px rgba(220, 38, 38, 1),
+      0 0 20px rgba(234, 88, 12, 0.8),
+      0 0 30px rgba(239, 68, 68, 0.6),
+      0 0 40px rgba(220, 38, 38, 0.4),
+      0 0 60px rgba(127, 29, 29, 0.3);
   }
   
-  /* Light beam effects */
-  .light-beam {
+  /* Fire light beam effects */
+  .fire-light-beam {
     background: linear-gradient(
       45deg,
       transparent 30%,
-      rgba(99, 102, 241, 0.1) 50%,
+      rgba(239, 68, 68, 0.15) 40%,
+      rgba(234, 88, 12, 0.1) 50%,
+      rgba(220, 38, 38, 0.15) 60%,
       transparent 70%
     );
     transform: rotate(-45deg) translateX(-100%);
-    animation: beam-sweep 8s infinite;
+    animation: fire-beam-sweep 10s infinite;
   }
   
-  @keyframes beam-sweep {
-    0% { transform: rotate(-45deg) translateX(-100%); }
-    50% { transform: rotate(-45deg) translateX(200vw); }
-    100% { transform: rotate(-45deg) translateX(200vw); }
+  @keyframes fire-beam-sweep {
+    0% { transform: rotate(-45deg) translateX(-100%); opacity: 0; }
+    10% { opacity: 1; }
+    50% { transform: rotate(-45deg) translateX(200vw); opacity: 1; }
+    100% { transform: rotate(-45deg) translateX(200vw); opacity: 0; }
   }
   
   /* Floating orbs */

@@ -1,3 +1,9 @@
+export interface PricingTier {
+  id: string
+  name: string
+  price: number
+}
+
 export interface AIService {
   id: string
   name: string
@@ -8,6 +14,8 @@ export interface AIService {
   billingCycle: number // days in billing cycle (usually 30)
   isActive: boolean // whether the subscription is currently active
   category: 'ai-chat' | 'ai-image' | 'code-editor' | 'productivity' | 'other'
+  pricingTiers?: PricingTier[] // optional pricing tiers for services with multiple plans
+  selectedTier?: string // currently selected tier id
 }
 
 export interface CostCalculation {

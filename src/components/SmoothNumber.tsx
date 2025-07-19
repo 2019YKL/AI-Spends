@@ -33,20 +33,38 @@ export function SmoothNumber({
     return () => clearInterval(interval)
   }, [incrementPerSecond])
 
-  // 60fps 平滑滚动到目标值
+  // 高频率平滑滚动到目标值
   useEffect(() => {
-    const interval = setInterval(() => {
+    let animationFrame: number
+
+    const animate = () => {
       setDisplayValue(current => {
         const diff = targetValue - current
         if (Math.abs(diff) < 0.000001) return targetValue
         
-        // 每帧移动差值的10%，创建平滑缓动效果
-        return current + diff * 0.1
+        // 使用更平滑的缓动算法，每帧移动差值的6%
+        const newValue = current + diff * 0.06
+        
+        // 继续动画
+        if (Math.abs(targetValue - newValue) > 0.000001) {
+          animationFrame = requestAnimationFrame(animate)
+        }
+        
+        return newValue
       })
-    }, 16) // 16ms ≈ 60fps
+    }
 
-    return () => clearInterval(interval)
-  }, [targetValue])
+    // 启动动画
+    if (Math.abs(targetValue - displayValue) > 0.000001) {
+      animate()
+    }
+
+    return () => {
+      if (animationFrame) {
+        cancelAnimationFrame(animationFrame)
+      }
+    }
+  }, [targetValue, displayValue])
 
   return (
     <span className={`font-mono transition-all duration-75 ${className}`}>
