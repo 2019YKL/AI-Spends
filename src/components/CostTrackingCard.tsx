@@ -1,0 +1,179 @@
+'use client'
+
+import { useEffect, useState } from 'react'
+import { AIService } from '@/types/ai-services'
+import { calculateRealTimeCost, formatCurrency, formatCurrencyPrecise, formatTimeElapsed } from '@/lib/cost-calculator'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Switch } from '@/components/ui/switch'
+import { SmoothNumber } from '@/components/SmoothNumber'
+import { cn } from '@/lib/utils'
+
+interface CostTrackingCardProps {
+  service: AIService
+  className?: string
+  onToggle?: (serviceId: string) => void
+}
+
+export function CostTrackingCard({ service, className, onToggle }: CostTrackingCardProps) {
+  const [currentTime, setCurrentTime] = useState(new Date())
+  const cost = calculateRealTimeCost(service, currentTime)
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date())
+    }, 1000)
+
+    return () => clearInterval(timer)
+  }, [])
+
+  const getCategoryBadge = (category: string) => {
+    const badges = {
+      'code-editor': '💻 编辑器',
+      'ai-chat': '💬 AI对话',
+      'ai-image': '🎨 AI图像',
+      'productivity': '⚡ 生产力',
+      'other': '🔧 其他'
+    }
+    return badges[category as keyof typeof badges] || '🔧 其他'
+  }
+
+  return (
+    <Card className={cn(
+      "transition-all duration-200 hover:shadow-lg hover:scale-[1.02]",
+      !service.isActive && "opacity-60 bg-gray-50 dark:bg-gray-900/50",
+      className
+    )}>
+      <CardHeader className="pb-3">
+        <CardTitle className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className={cn(
+              "w-12 h-12 rounded-xl flex items-center justify-center text-2xl text-white transition-all duration-200",
+              service.color,
+              !service.isActive && "grayscale"
+            )}>
+              {service.icon}
+            </div>
+            <div>
+              <h3 className="text-xl font-semibold">{service.name}</h3>
+              <div className="flex items-center gap-2">
+                <p className="text-sm text-muted-foreground">
+                  {formatCurrency(service.subscriptionPrice)}/month
+                </p>
+                <span className="text-xs bg-muted px-2 py-1 rounded-full">
+                  {getCategoryBadge(service.category)}
+                </span>
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-col items-end gap-2">
+            <Switch
+              checked={service.isActive}
+              onCheckedChange={() => onToggle?.(service.id)}
+            />
+            <span className="text-xs text-muted-foreground">
+              {service.isActive ? '已启用' : '已关闭'}
+            </span>
+          </div>
+        </CardTitle>
+      </CardHeader>
+      
+      <CardContent className="space-y-4">
+        {service.isActive ? (
+          <>
+            {/* Time Elapsed */}
+            <div className="bg-muted/30 rounded-lg p-3">
+              <div className="text-sm">
+                <span className="text-muted-foreground">Time elapsed:</span>
+                <div className="font-medium text-lg">
+                  {formatTimeElapsed(cost.timeElapsed)}
+                </div>
+              </div>
+            </div>
+
+            {/* Current Cost (Real-time) */}
+            <div className="space-y-3">
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-muted-foreground">Current Cost</span>
+                <div className="text-right">
+                  <div className="text-2xl font-bold text-primary font-mono">
+                    <SmoothNumber
+                      value={cost.currentCost}
+                      incrementPerSecond={cost.costPerSecond}
+                      formatFn={formatCurrency}
+                    />
+                  </div>
+                  <div className="text-xs text-muted-foreground">
+                    {cost.percentageUsed.toFixed(2)}% of billing cycle
+                  </div>
+                </div>
+              </div>
+          
+          {/* Progress Bar */}
+          <div className="w-full bg-muted rounded-full h-2">
+            <div 
+              className="bg-primary h-2 rounded-full transition-all duration-1000"
+              style={{ width: `${Math.min(cost.percentageUsed, 100)}%` }}
+            />
+          </div>
+
+          {/* Rate Information */}
+          <div className="grid grid-cols-2 gap-3 text-sm">
+            <div className="bg-blue-50 dark:bg-blue-950/20 rounded-lg p-2">
+              <div className="text-muted-foreground">Per second</div>
+              <div className="font-semibold text-blue-600 dark:text-blue-400 font-mono">
+                {formatCurrencyPrecise(cost.costPerSecond)}
+              </div>
+            </div>
+            <div className="bg-green-50 dark:bg-green-950/20 rounded-lg p-2">
+              <div className="text-muted-foreground">Per minute</div>
+              <div className="font-semibold text-green-600 dark:text-green-400 font-mono">
+                {formatCurrencyPrecise(cost.costPerMinute)}
+              </div>
+            </div>
+            <div className="bg-purple-50 dark:bg-purple-950/20 rounded-lg p-2">
+              <div className="text-muted-foreground">Per hour</div>
+              <div className="font-semibold text-purple-600 dark:text-purple-400 font-mono">
+                {formatCurrency(cost.costPerHour)}
+              </div>
+            </div>
+            <div className="bg-orange-50 dark:bg-orange-950/20 rounded-lg p-2">
+              <div className="text-muted-foreground">Per day</div>
+              <div className="font-semibold text-orange-600 dark:text-orange-400 font-mono">
+                {formatCurrency(cost.costPerDay)}
+              </div>
+            </div>
+          </div>
+
+              {/* Budget Information */}
+              <div className="pt-2 border-t">
+                <div className="flex justify-between text-sm">
+                  <span className="text-muted-foreground">Monthly Budget</span>
+                  <span className="font-medium">{formatCurrency(cost.totalMonthlyBudget)}</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span className="text-muted-foreground">Remaining</span>
+                  <span className="font-medium text-green-600">
+                    {formatCurrency(cost.totalMonthlyBudget - cost.currentCost)}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </>
+        ) : (
+          /* Inactive State */
+          <div className="text-center py-8">
+            <div className="text-4xl mb-2 grayscale">😴</div>
+            <div className="text-lg font-medium text-muted-foreground mb-1">服务已暂停</div>
+            <div className="text-sm text-muted-foreground">
+              启用以开始追踪费用
+            </div>
+            <div className="mt-4 p-3 bg-muted/50 rounded-lg">
+              <div className="text-sm text-muted-foreground">月费</div>
+              <div className="text-xl font-bold">{formatCurrency(service.subscriptionPrice)}</div>
+            </div>
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  )
+}
