@@ -12,7 +12,7 @@ import { Button } from '@/components/ui/button'
 import { AIRoastChat } from '@/components/AIRoastChat'
 import { Dot } from '@/components/DotBackground'
 import { Footer } from '@/components/Footer'
-import { SimpleAlternatingText } from '@/components/SimpleAlternatingText'
+import { NewTypewriter } from '@/components/NewTypewriter'
 
 export default function Dashboard() {
   const [currentTime, setCurrentTime] = useState(new Date())
@@ -172,15 +172,9 @@ export default function Dashboard() {
               />
             </div>
             <div className="text-8xl font-bold text-slate-900 dark:text-slate-100 mb-8">
-              <SimpleAlternatingText
-                texts={["发家致富 指日可待", "败家致负 指日可待"]}
-                colors={["#E0BC8E", "#22c55e"]}
-                typingSpeed={100}
-                deleteSpeed={50}
-                pauseDuration={2000}
-              />
+              <NewTypewriter />
             </div>
-            <p className="text-xl md:text-2xl text-gray-600/50 dark:text-gray-400/50 font-medium mb-4">
+            <p className="text-xl md:text-2xl text-gray-600/50 dark:text-gray-400/50 font-medium mb-4 animate-fade-in-up">
               实时刷新你的数字员工每天有多烧钱
             </p>
           </div>

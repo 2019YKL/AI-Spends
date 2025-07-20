@@ -27,15 +27,14 @@ export function SimpleAlternatingText({
 
   useEffect(() => {
     setMounted(true)
-    return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current)
-      }
-    }
   }, [])
 
   useEffect(() => {
     if (!mounted || texts.length === 0) return
+
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current)
+    }
 
     const currentText = texts[currentIndex]
     
@@ -52,7 +51,7 @@ export function SimpleAlternatingText({
     } else {
       if (displayText.length > 0) {
         timeoutRef.current = setTimeout(() => {
-          setDisplayText(displayText.slice(0, -1))
+          setDisplayText(prev => prev.slice(0, -1))
         }, deleteSpeed)
       } else {
         setCurrentIndex((prev) => (prev + 1) % texts.length)
@@ -76,7 +75,7 @@ export function SimpleAlternatingText({
   return (
     <span className={className} style={{ color: currentColor }}>
       {displayText}
-      <span className="animate-pulse">|</span>
+      <span className="animate-pulse ml-0.5">|</span>
     </span>
   )
 }

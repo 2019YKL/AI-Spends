@@ -30,8 +30,8 @@ export function SmoothNumber({
   // 当初始值改变时更新目标值和显示值
   useEffect(() => {
     if (mounted) {
-      setTargetValue(initialValue)
-      setDisplayValue(initialValue)
+      setTargetValue(Math.min(initialValue, 999999.99))
+      setDisplayValue(Math.min(initialValue, 999999.99))
     }
   }, [initialValue, mounted])
 
@@ -40,7 +40,11 @@ export function SmoothNumber({
     if (!mounted) return
     
     const interval = setInterval(() => {
-      setTargetValue(current => current + incrementPerSecond)
+      setTargetValue(current => {
+        const newValue = current + incrementPerSecond
+        // 限制最大值为6位数
+        return Math.min(newValue, 999999.99)
+      })
     }, 1000)
 
     return () => clearInterval(interval)
@@ -81,18 +85,24 @@ export function SmoothNumber({
     }
   }, [targetValue, displayValue, mounted])
 
+  // 格式化函数，限制显示数字
+  const formatWithLimit = (num: number) => {
+    const limitedNum = Math.min(num, 999999.99)
+    return formatFn(limitedNum)
+  }
+
   // 避免水合错误，服务端渲染时显示占位符
   if (!mounted) {
     return (
       <span className={`font-mono transition-all duration-75 ${className}`} suppressHydrationWarning>
-        {formatFn(initialValue)}
+        {formatWithLimit(initialValue)}
       </span>
     )
   }
 
   return (
     <span className={`font-mono transition-all duration-75 ${className}`} suppressHydrationWarning>
-      {formatFn(displayValue)}
+      {formatWithLimit(displayValue)}
     </span>
   )
 }
