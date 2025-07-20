@@ -64,7 +64,7 @@ export function formatCurrency(amount: number, currency: 'USD' | 'CNY' | 'ZWL' =
       style: 'currency',
       currency: 'CNY',
       minimumFractionDigits: 2,
-      maximumFractionDigits: 6,
+      maximumFractionDigits: 4,
     }).format(cnyAmount)
   }
   
@@ -101,8 +101,8 @@ export function formatCurrencyPrecise(amount: number, currency: 'USD' | 'CNY' | 
       return new Intl.NumberFormat('zh-CN', {
         style: 'currency',
         currency: 'CNY',
-        minimumFractionDigits: 6,
-        maximumFractionDigits: 8,
+        minimumFractionDigits: 4,
+        maximumFractionDigits: 6,
       }).format(cnyAmount)
     }
     return formatCurrency(amount, currency)

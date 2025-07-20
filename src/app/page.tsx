@@ -157,9 +157,9 @@ export default function Dashboard() {
         </div>
 
         {/* Hero Section - Hero Card */}
-        <div className="min-h-[60vh] sm:min-h-[70vh] flex items-center justify-center mb-16 sm:mb-32 md:mb-60 px-4">
+        <div className="min-h-[60vh] sm:min-h-[70vh] flex items-center justify-center mb-16 sm:mb-32 md:mb-60 px-4 overflow-hidden">
           <div className="text-center w-full max-w-6xl">
-            <div className="text-[4rem] sm:text-[6rem] md:text-[10rem] lg:text-[14rem] xl:text-[18rem] font-bold text-transparent leading-none tracking-tight mb-4 sm:mb-6" style={{
+            <div className="text-[4rem] sm:text-[6rem] md:text-[10rem] lg:text-[14rem] xl:text-[18rem] font-bold text-transparent leading-none tracking-tight mb-4 sm:mb-6 break-all overflow-hidden" style={{
               background: 'linear-gradient(to right, rgb(234, 205, 163), rgb(214, 174, 123))',
               WebkitBackgroundClip: 'text',
               backgroundClip: 'text'
@@ -181,8 +181,8 @@ export default function Dashboard() {
 
         {/* Services Grid */}
         <div className="mb-6">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
-            <div>
+          <div className="flex items-start justify-between mb-6 gap-4">
+            <div className="flex-1 min-w-0">
               <h2 className="text-xl sm:text-2xl font-semibold text-slate-900 dark:text-slate-100">
                 AI订阅服务
               </h2>
@@ -190,12 +190,12 @@ export default function Dashboard() {
                 {activeServices.length}/{services.length} 服务已启用
               </p>
             </div>
-            <div className="flex gap-2 self-start sm:self-auto">
+            <div className="flex gap-2 flex-shrink-0">
               <Button
                 variant="outline"
                 size="sm"
                 onClick={() => services.forEach(service => !service.isActive && toggleService(service.id))}
-                className="text-xs sm:text-sm"
+                className="text-xs sm:text-sm whitespace-nowrap"
               >
                 全部启用
               </Button>
@@ -203,7 +203,7 @@ export default function Dashboard() {
                 variant="outline"
                 size="sm"
                 onClick={() => services.forEach(service => service.isActive && toggleService(service.id))}
-                className="text-xs sm:text-sm"
+                className="text-xs sm:text-sm whitespace-nowrap"
               >
                 全部关闭
               </Button>
