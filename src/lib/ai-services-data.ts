@@ -189,10 +189,15 @@ export const aiServices: AIService[] = [
     name: 'v0 by Vercel',
     icon: 'v0.svg',
     color: 'bg-black',
-    subscriptionPrice: 20, // $20/month
+    subscriptionPrice: 0, // Free tier default
     billingStartDate: '2025-07-14T00:00:00Z',
     billingCycle: 30,
     isActive: true,
-    category: 'code-editor'
+    category: 'code-editor',
+    pricingTiers: [
+      { id: 'free', name: 'Free', price: 0 },
+      { id: 'pro', name: 'Pro', price: 20 }
+    ],
+    selectedTier: 'free'
   }
 ]
