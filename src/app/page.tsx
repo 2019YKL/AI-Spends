@@ -118,14 +118,12 @@ export default function Dashboard() {
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="mb-8">
-          <div className="flex items-center justify-between mb-4">
-            <div>
-            </div>
+          <div className="flex items-center justify-center sm:justify-end mb-4">
             <div className="relative backdrop-blur-sm rounded-xl p-1 border border-blue-200/30 dark:border-blue-800/30 bg-blue-50/20 dark:bg-blue-900/20">
               <div className="flex items-center gap-1">
                 <button
                   onClick={() => setCurrency('USD')}
-                  className={`relative px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 ${
+                  className={`relative px-2 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all duration-300 ${
                     currency === 'USD'
                       ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/25'
                       : 'text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900/20'
@@ -135,7 +133,7 @@ export default function Dashboard() {
                 </button>
                 <button
                   onClick={() => setCurrency('CNY')}
-                  className={`relative px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 ${
+                  className={`relative px-2 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all duration-300 ${
                     currency === 'CNY'
                       ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/25'
                       : 'text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900/20'
@@ -145,7 +143,7 @@ export default function Dashboard() {
                 </button>
                 <button
                   onClick={() => setCurrency('ZWL')}
-                  className={`relative px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 ${
+                  className={`relative px-2 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all duration-300 ${
                     currency === 'ZWL'
                       ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/25'
                       : 'text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900/20'
@@ -159,9 +157,9 @@ export default function Dashboard() {
         </div>
 
         {/* Hero Section - Hero Card */}
-        <div className="h-[70vh] flex items-center justify-center mb-60">
-          <div className="text-center">
-            <div className="text-[10rem] md:text-[14rem] lg:text-[18rem] font-bold text-transparent leading-none tracking-tight mb-6" style={{
+        <div className="min-h-[60vh] sm:min-h-[70vh] flex items-center justify-center mb-16 sm:mb-32 md:mb-60 px-4">
+          <div className="text-center w-full max-w-6xl">
+            <div className="text-[4rem] sm:text-[6rem] md:text-[10rem] lg:text-[14rem] xl:text-[18rem] font-bold text-transparent leading-none tracking-tight mb-4 sm:mb-6" style={{
               background: 'linear-gradient(to right, rgb(234, 205, 163), rgb(214, 174, 123))',
               WebkitBackgroundClip: 'text',
               backgroundClip: 'text'
@@ -172,10 +170,10 @@ export default function Dashboard() {
                 formatFn={(amount) => formatCurrency(amount, currency)}
               />
             </div>
-            <div className="text-8xl font-bold text-slate-900 dark:text-slate-100 mb-8">
+            <div className="text-3xl sm:text-5xl md:text-6xl lg:text-8xl font-bold text-slate-900 dark:text-slate-100 mb-4 sm:mb-8">
               <NewTypewriter />
             </div>
-            <p className="text-xl md:text-2xl text-gray-600/50 dark:text-gray-400/50 font-medium mb-4 animate-fade-in-up">
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600/50 dark:text-gray-400/50 font-medium mb-4 animate-fade-in-up px-4">
               实时刷新你的数字员工每天有多烧钱
             </p>
           </div>
@@ -183,20 +181,21 @@ export default function Dashboard() {
 
         {/* Services Grid */}
         <div className="mb-6">
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
             <div>
-              <h2 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">
+              <h2 className="text-xl sm:text-2xl font-semibold text-slate-900 dark:text-slate-100">
                 AI订阅服务
               </h2>
               <p className="text-sm text-muted-foreground mt-1">
                 {activeServices.length}/{services.length} 服务已启用
               </p>
             </div>
-            <div className="flex gap-2">
+            <div className="flex gap-2 self-start sm:self-auto">
               <Button
                 variant="outline"
                 size="sm"
                 onClick={() => services.forEach(service => !service.isActive && toggleService(service.id))}
+                className="text-xs sm:text-sm"
               >
                 全部启用
               </Button>
@@ -204,6 +203,7 @@ export default function Dashboard() {
                 variant="outline"
                 size="sm"
                 onClick={() => services.forEach(service => service.isActive && toggleService(service.id))}
+                className="text-xs sm:text-sm"
               >
                 全部关闭
               </Button>
@@ -211,18 +211,18 @@ export default function Dashboard() {
           </div>
           
           {/* Group services by category */}
-          <div className="space-y-12">
+          <div className="space-y-8 sm:space-y-12">
             {Object.entries(groupedServices).map(([category, categoryServices]) => (
               <div key={category}>
-                <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-xl font-bold text-slate-800 dark:text-slate-200">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 sm:mb-6 gap-2">
+                  <h3 className="text-lg sm:text-xl font-bold text-slate-800 dark:text-slate-200">
                     {categoryLabels[category as keyof typeof categoryLabels]}
                   </h3>
-                  <span className="text-sm text-muted-foreground">
+                  <span className="text-xs sm:text-sm text-muted-foreground">
                     {categoryServices.filter(s => s.isActive).length}/{categoryServices.length} 已启用
                   </span>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                   {categoryServices.map((service) => (
                     <CostTrackingCard
                       key={service.id}

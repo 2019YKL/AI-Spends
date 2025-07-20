@@ -1,39 +1,13 @@
 # AiSpends - AI订阅费用实时追踪器
 
-一个现代化的AI订阅费用实时追踪应用，使用Next.js 14、TypeScript和Tailwind CSS构建。实时显示今日AI服务消费，并包含AI嘲讽功能。
+爱（AI）花钱，实时刷新今日此时，雇佣自己的数字员又掏了多少！
 
 ## ✨ 功能特色
 
 - 🔥 **实时费用追踪**: 实时显示今日各项AI服务消费
 - 📊 **分类管理**: AI对话、编程工具、AI绘图、生产力工具四大分类
-- 🎮 **切换控制**: 可开关服务来控制费用计算
 - 🤖 **AI嘲讽功能**: DeepSeek驱动的AI助手会嘲讽你的订阅习惯
-- 🎨 **火焰主题**: 黑红配色的"烧钱"主题设计
-- 📱 **响应式设计**: 完美适配桌面和移动端
-- ⚡ **丝滑动画**: 60fps的数字滚动动画
 
-## 🛠️ 支持的AI服务
-
-### 🤖 AI对话助手
-- **Claude** (Anthropic)
-- **ChatGPT** (OpenAI) 
-- **Gemini** (Google)
-
-### 💻 编程开发工具
-- **Cursor** (AI代码编辑器)
-- **Windsurf** (AI代码编辑器)
-- **GitHub Copilot** (代码补全)
-- **v0** (UI生成)
-
-### 🎨 AI绘图/视频
-- **Midjourney** (AI绘图)
-- **Dreamina** (字节AI绘图)
-- **Hailuo**, **Vidu**, **Kling**, **Pixverse**, **Trae** (AI视频)
-
-### ⚡ 生产力工具
-- **Notion** (笔记协作)
-- **Raycast** (启动器)
-- **Figma** (设计工具)
 
 ## 🚀 技术栈 | Tech Stack
 
@@ -136,29 +110,6 @@ src/
     └── ai-services.ts          # TypeScript类型定义
 ```
 
-## ⚙️ 自定义配置 | Customization
-
-### 添加新的AI服务 | Adding New AI Services
-
-在 `src/lib/ai-services-data.ts` 中添加服务:
-
-```typescript
-{
-  id: 'new-service',
-  name: 'New AI Service', 
-  category: 'ai-chat', // ai-chat | code-editor | ai-image | productivity
-  icon: '/icon/new-service.svg',
-  color: 'bg-indigo-500',
-  subscriptionPrice: 20, // 月费 (USD)
-  billingCycle: 30,      // 计费周期 (天)
-  billingStartDate: '2024-01-01',
-  isActive: true
-}
-```
-
-### 修改主题 | Theming
-
-在 `src/app/globals.css` 中自定义火焰主题颜色和动画效果。
 
 ### API配置 | API Configuration
 
@@ -174,12 +125,7 @@ AI嘲讽功能使用OpenRouter API，可在 `src/app/api/deepseek/chat/route.ts`
 ### 🤖 AI嘲讽系统 | AI Roasting System  
 - 集成DeepSeek模型
 - 程序员文化专属吐槽
-- 中文"雌小鬼"风格对话
-
-### 🎨 火焰主题设计 | Fire Theme Design
-- 黑红配色"烧钱"主题
-- Raycast风格玻璃态效果
-- 响应式设计
+- 杂鱼嘲讽锐评
 
 ## 📝 许可证 | License
 
@@ -194,7 +140,7 @@ MIT License - 可自由用于个人或商业用途
 
 ## 💬 支持 | Support
 
-如有问题或建议，请在GitHub上提交Issue。
+如有问题或建议，请不要在GitHub上提交Issue（好吧，其实我也不太清楚咋处理，你提，我蛮看看）。
 
 ---
 
@@ -203,11 +149,3 @@ MIT License - 可自由用于个人或商业用途
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/2019YKL/AI-Spends&env=DEEPSEEK_API_KEY&envDescription=OpenRouter%20API%20Key%20for%20DeepSeek%20AI%20roasting%20feature&envLink=https://openrouter.ai/)
 
 记得在Vercel中配置 `DEEPSEEK_API_KEY` 环境变量！
-
----
-
-## 🔗 相关链接 | Links
-
-- **作者博客**: [jkaihub.com](https://jkaihub.com/) - 分享AI、编程和技术洞察
-- **项目仓库**: [GitHub](https://github.com/2019YKL/AI-Spends)
-- **在线体验**: [Demo](https://ai-spends.vercel.app/)
