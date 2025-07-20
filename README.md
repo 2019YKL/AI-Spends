@@ -203,3 +203,11 @@ MIT License - 可自由用于个人或商业用途
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/2019YKL/AI-Spends&env=DEEPSEEK_API_KEY&envDescription=OpenRouter%20API%20Key%20for%20DeepSeek%20AI%20roasting%20feature&envLink=https://openrouter.ai/)
 
 记得在Vercel中配置 `DEEPSEEK_API_KEY` 环境变量！
+
+---
+
+## 🔗 相关链接 | Links
+
+- **作者博客**: [jkaihub.com](https://jkaihub.com/) - 分享AI、编程和技术洞察
+- **项目仓库**: [GitHub](https://github.com/2019YKL/AI-Spends)
+- **在线体验**: [Demo](https://ai-spends.vercel.app/)
