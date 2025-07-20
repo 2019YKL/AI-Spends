@@ -162,19 +162,6 @@ export function CostTrackingCard({ service, className, onToggle, onTierChange }:
             </div>
           </div>
 
-              {/* Budget Information */}
-              <div className="pt-2 border-t">
-                <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">Monthly Budget</span>
-                  <span className="font-medium">{formatCurrency(cost.totalMonthlyBudget)}</span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">Remaining</span>
-                  <span className="font-medium text-green-600">
-                    {formatCurrency(cost.totalMonthlyBudget - cost.currentCost)}
-                  </span>
-                </div>
-              </div>
             </div>
           </>
         ) : (
