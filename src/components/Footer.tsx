@@ -3,6 +3,15 @@
 export function Footer() {
   const navigation = [
     {
+      name: 'Blog',
+      href: 'https://jkaihub.com/',
+      icon: (props: React.SVGProps<SVGSVGElement>) => (
+        <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
+          <path d="M12 2L3.09 8.26L4 9L12 14L20 9L20.91 8.26L12 2ZM21 16V11L20.91 8.26L12 2L3.09 8.26L3 11V16C3 17.1 3.9 18 5 18H19C20.1 18 21 17.1 21 16ZM5 16V11.5L12 7L19 11.5V16H5Z"/>
+        </svg>
+      ),
+    },
+    {
       name: 'X',
       href: 'https://x.com/jk20211217',
       icon: (props: React.SVGProps<SVGSVGElement>) => (
