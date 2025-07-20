@@ -49,6 +49,15 @@
   }
 }
 
+/* 3D Flip Animation */
+.rotate-y-0 {
+  transform: rotateY(0deg);
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
 @layer base {
   * {
     @apply border-border;

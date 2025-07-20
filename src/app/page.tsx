@@ -11,6 +11,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { AIRoastChat } from '@/components/AIRoastChat'
 import { Dot } from '@/components/DotBackground'
+import { Footer } from '@/components/Footer'
+import { SimpleAlternatingText } from '@/components/SimpleAlternatingText'
 
 export default function Dashboard() {
   const [currentTime, setCurrentTime] = useState(new Date())
@@ -117,9 +119,6 @@ export default function Dashboard() {
         <div className="mb-8">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h1 className="text-4xl font-bold text-slate-900 dark:text-slate-100">
-                AI-git-money - 你的贡献 AI 不会忘记
-              </h1>
             </div>
             <div className="relative backdrop-blur-sm rounded-xl p-1 border border-blue-200/30 dark:border-blue-800/30 bg-blue-50/20 dark:bg-blue-900/20">
               <div className="flex items-center gap-1">
@@ -172,8 +171,17 @@ export default function Dashboard() {
                 formatFn={(amount) => formatCurrency(amount, currency)}
               />
             </div>
-            <p className="text-xl md:text-2xl text-gray-600/50 dark:text-gray-400/50 font-medium">
-              今日AI订阅服务已消费金额 · 实时更新
+            <div className="text-8xl font-bold text-slate-900 dark:text-slate-100 mb-8">
+              <SimpleAlternatingText
+                texts={["发家致富 指日可待", "败家致负 指日可待"]}
+                colors={["#E0BC8E", "#22c55e"]}
+                typingSpeed={100}
+                deleteSpeed={50}
+                pauseDuration={2000}
+              />
+            </div>
+            <p className="text-xl md:text-2xl text-gray-600/50 dark:text-gray-400/50 font-medium mb-4">
+              实时刷新你的数字员工每天有多烧钱
             </p>
           </div>
         </div>
@@ -244,6 +252,8 @@ export default function Dashboard() {
         </div>
 
       </div>
+      
+      <Footer />
     </Dot>
   )
 }

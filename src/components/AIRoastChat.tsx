@@ -71,7 +71,7 @@ export function AIRoastChat({ activeServices, totalMonthlyCost }: AIRoastChatPro
       <CardHeader className="pb-3">
         <CardTitle className="flex items-center justify-between text-blue-800 dark:text-blue-200">
           <span className="flex items-center gap-2">
-            🤖 AI毒舌助手
+            🤖 AI 锐评你的订阅情况
           </span>
         </CardTitle>
       </CardHeader>

@@ -21,8 +21,8 @@ export async function POST(request: NextRequest) {
       headers: {
         'Authorization': `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
-        'HTTP-Referer': 'https://ai-git-money.vercel.app',
-        'X-Title': 'AI-git-money',
+        'HTTP-Referer': 'https://aispend.vercel.app',
+        'X-Title': 'AIspend',
       },
       body: JSON.stringify({
         model: 'deepseek/deepseek-chat',
