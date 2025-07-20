@@ -101,7 +101,7 @@ export default function Dashboard() {
           <div className="flex items-center justify-between mb-4">
             <div>
               <h1 className="text-4xl font-bold text-slate-900 dark:text-slate-100">
-                AI-git-money - 每分每秒 你对 AI行业的贡献
+                AI-git-money - 感谢你今天又为 AI 行业贡献了:
               </h1>
             </div>
             <div className="relative backdrop-blur-sm rounded-xl p-1 border border-blue-200/30 dark:border-blue-800/30 bg-blue-50/20 dark:bg-blue-900/20">
