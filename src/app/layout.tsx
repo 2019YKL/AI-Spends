@@ -5,7 +5,7 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'AutoBurn - AI Subscription Cost Tracker',
+  title: 'AiSpends - AI Subscription Cost Tracker',
   description: 'Track your AI service subscriptions and costs per minute/hour',
 }
 
