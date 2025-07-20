@@ -2,10 +2,13 @@ import { NextRequest, NextResponse } from 'next/server'
 
 export async function POST(request: NextRequest) {
   try {
-    const { apiKey, messages } = await request.json()
+    const { messages } = await request.json()
 
-    if (!apiKey || !apiKey.startsWith('sk-')) {
-      return NextResponse.json({ error: 'Invalid API key' }, { status: 400 })
+    // 使用环境变量中的API密钥
+    const apiKey = process.env.DEEPSEEK_API_KEY
+
+    if (!apiKey) {
+      return NextResponse.json({ error: 'API key not configured' }, { status: 500 })
     }
 
     if (!messages || !Array.isArray(messages)) {

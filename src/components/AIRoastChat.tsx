@@ -1,11 +1,10 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { AIService } from '@/types/ai-services'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { generateRoastPrompt, getRandomProductivitySuggestion, getRandomMoneyRoast } from '@/lib/prompts'
-import { APIKeySettings } from '@/components/APIKeySettings'
+import { generateRoastPrompt } from '@/lib/prompts'
 import { Input } from '@/components/ui/input'
 import { IconRenderer } from '@/components/IconRenderer'
 
@@ -18,24 +17,9 @@ export function AIRoastChat({ activeServices, totalMonthlyCost }: AIRoastChatPro
   const [isLoading, setIsLoading] = useState(false)
   const [roastMessage, setRoastMessage] = useState('')
   const [isRoasted, setIsRoasted] = useState(false)
-  const [apiKey, setApiKey] = useState('')
-  const [showSettings, setShowSettings] = useState(false)
   const [error, setError] = useState('')
 
-  // 从本地存储加载API Key
-  useEffect(() => {
-    const savedApiKey = localStorage.getItem('deepseek_api_key')
-    if (savedApiKey) {
-      setApiKey(savedApiKey)
-    }
-  }, [])
-
   const handleRoast = async () => {
-    if (!apiKey) {
-      setShowSettings(true)
-      return
-    }
-
     setIsLoading(true)
     setError('')
     
@@ -50,7 +34,6 @@ export function AIRoastChat({ activeServices, totalMonthlyCost }: AIRoastChatPro
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          apiKey: apiKey,
           messages: [
             {
               role: 'user',
@@ -83,13 +66,6 @@ export function AIRoastChat({ activeServices, totalMonthlyCost }: AIRoastChatPro
     setError('')
   }
 
-  const handleApiKeyChange = (newApiKey: string) => {
-    setApiKey(newApiKey)
-    if (newApiKey) {
-      setShowSettings(false)
-    }
-  }
-
   return (
     <Card className="bg-gradient-to-r from-blue-50 to-blue-100 dark:from-blue-950/20 dark:to-blue-900/20 border-blue-200 dark:border-blue-800">
       <CardHeader className="pb-3">
@@ -97,28 +73,6 @@ export function AIRoastChat({ activeServices, totalMonthlyCost }: AIRoastChatPro
           <span className="flex items-center gap-2">
             🤖 AI毒舌助手
           </span>
-          {/* API设置区域 */}
-          <div className="flex gap-2 items-center">
-            <Input
-              type="password"
-              value={apiKey}
-              onChange={(e) => setApiKey(e.target.value)}
-              placeholder="DeepSeek API Key"
-              className="w-48 h-8 text-xs"
-            />
-            <Button 
-              onClick={() => {
-                if (apiKey) {
-                  localStorage.setItem('deepseek_api_key', apiKey)
-                }
-              }}
-              size="sm"
-              disabled={!apiKey}
-              className="h-8 px-3 text-xs"
-            >
-              保存
-            </Button>
-          </div>
         </CardTitle>
       </CardHeader>
       
@@ -164,7 +118,7 @@ export function AIRoastChat({ activeServices, totalMonthlyCost }: AIRoastChatPro
           />
           <Button 
             onClick={handleRoast}
-            disabled={isLoading || activeServices.length === 0 || !apiKey}
+            disabled={isLoading || activeServices.length === 0}
             className="bg-blue-600 hover:bg-blue-700 text-white px-6"
           >
             {isLoading ? (
