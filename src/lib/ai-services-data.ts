@@ -170,19 +170,19 @@ export const aiServices: AIService[] = [
   },
   {
     id: 'gemini',
-    name: 'Gemini Advanced',
+    name: 'Gemini',
     icon: 'gemini-color.svg',
     color: 'bg-blue-500',
-    subscriptionPrice: 20, // $20/month (Advanced plan)
+    subscriptionPrice: 20, // $20/month (Pro plan)
     billingStartDate: '2025-07-12T00:00:00Z',
     billingCycle: 30,
     isActive: true,
     category: 'ai-chat',
     pricingTiers: [
-      { id: 'advanced', name: 'Advanced', price: 20 },
-      { id: 'business', name: 'Business', price: 30 }
+      { id: 'pro', name: 'Pro', price: 20 },
+      { id: 'ai-ultra', name: 'AI Ultra', price: 200 }
     ],
-    selectedTier: 'advanced'
+    selectedTier: 'pro'
   },
   {
     id: 'hailuo',
