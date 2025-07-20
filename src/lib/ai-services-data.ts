@@ -205,7 +205,7 @@ export const aiServices: AIService[] = [
     id: 'vidu',
     name: 'Vidu',
     icon: 'vidu-color.svg',
-    color: 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700',
+    color: 'bg-slate-500',
     subscriptionPrice: 9, // $9/month (Basic tier default, converted from ¥59)
     billingStartDate: '2025-07-20T00:00:00Z',
     billingCycle: 30,

@@ -85,6 +85,23 @@ export default function Dashboard() {
     })
   }
 
+  // Group services by category
+  const categoryLabels = {
+    'ai-chat': '🤖 AI对话助手',
+    'code-editor': '💻 编程开发工具', 
+    'ai-image': '🎨 AI绘图/视频',
+    'productivity': '⚡ 生产力工具'
+  }
+
+  const groupedServices = services.reduce((groups, service) => {
+    const category = service.category
+    if (!groups[category]) {
+      groups[category] = []
+    }
+    groups[category].push(service)
+    return groups
+  }, {} as Record<string, typeof services>)
+
   return (
     <Dot 
       color="rgba(59, 130, 246, 0.15)"
@@ -166,7 +183,7 @@ export default function Dashboard() {
           <div className="flex items-center justify-between mb-6">
             <div>
               <h2 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">
-                开发工具订阅
+                AI订阅服务
               </h2>
               <p className="text-sm text-muted-foreground mt-1">
                 {activeServices.length}/{services.length} 服务已启用
@@ -190,15 +207,30 @@ export default function Dashboard() {
             </div>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {services.map((service) => (
-              <CostTrackingCard
-                key={service.id}
-                service={service}
-                onToggle={toggleService}
-                onTierChange={changeTier}
-                className="h-full"
-              />
+          {/* Group services by category */}
+          <div className="space-y-8">
+            {Object.entries(groupedServices).map(([category, categoryServices]) => (
+              <div key={category}>
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-200">
+                    {categoryLabels[category as keyof typeof categoryLabels]}
+                  </h3>
+                  <span className="text-sm text-muted-foreground">
+                    {categoryServices.filter(s => s.isActive).length}/{categoryServices.length} 已启用
+                  </span>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {categoryServices.map((service) => (
+                    <CostTrackingCard
+                      key={service.id}
+                      service={service}
+                      onToggle={toggleService}
+                      onTierChange={changeTier}
+                      className="h-full"
+                    />
+                  ))}
+                </div>
+              </div>
             ))}
           </div>
         </div>
