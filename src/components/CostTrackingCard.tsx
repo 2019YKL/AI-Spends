@@ -98,7 +98,7 @@ export function CostTrackingCard({ service, className, onToggle, onTierChange }:
                     onClick={() => onTierChange?.(service.id, tier.id)}
                     className={`px-3 py-1.5 text-sm rounded-lg transition-all duration-200 font-semibold border-2 ${
                       service.selectedTier === tier.id
-                        ? 'bg-blue-600 text-white border-blue-600 shadow-lg shadow-blue-500/25'
+                        ? 'bg-blue-600 text-white border-blue-600'
                         : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:border-blue-400 dark:hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20'
                     }`}
                   >
