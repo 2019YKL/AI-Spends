@@ -10,7 +10,7 @@ import { useServiceToggle } from '@/hooks/useServiceToggle'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { AIRoastChat } from '@/components/AIRoastChat'
-import WaterRippleEffect from '@/components/WaterRippleEffect'
+import { Dot } from '@/components/DotBackground'
 
 export default function Dashboard() {
   const [currentTime, setCurrentTime] = useState(new Date())
@@ -86,18 +86,16 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 relative">
-      {/* 水波纹背景效果 */}
-      <WaterRippleEffect
-        waveSpeedX={0.01}
-        waveSpeedY={0.005}
-        waveAmpX={30}
-        waveAmpY={15}
-        backgroundColor="transparent"
-        lineColor="rgba(59, 130, 246, 0.1)"
-        className="pointer-events-none"
-      />
-      <div className="container mx-auto px-4 py-8 relative z-10">
+    <Dot 
+      color="rgba(59, 130, 246, 0.15)"
+      size={1}
+      spacing={30}
+      gradient={true}
+      gradientWidth={150}
+      gradientHeight={150}
+      className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800"
+    >
+      <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center justify-between mb-4">
@@ -214,6 +212,6 @@ export default function Dashboard() {
         </div>
 
       </div>
-    </div>
+    </Dot>
   )
 }
