@@ -17,6 +17,12 @@ export function SmoothNumber({
 }: SmoothNumberProps) {
   const [targetValue, setTargetValue] = useState(initialValue)
   const [displayValue, setDisplayValue] = useState(initialValue)
+  const [mounted, setMounted] = useState(false)
+
+  // 处理水合错误
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   // 当初始值改变时更新目标值和显示值
   useEffect(() => {
@@ -65,6 +71,15 @@ export function SmoothNumber({
       }
     }
   }, [targetValue, displayValue])
+
+  // 避免水合错误，服务端渲染时显示占位符
+  if (!mounted) {
+    return (
+      <span className={`font-mono transition-all duration-75 ${className}`}>
+        {formatFn(initialValue)}
+      </span>
+    )
+  }
 
   return (
     <span className={`font-mono transition-all duration-75 ${className}`}>

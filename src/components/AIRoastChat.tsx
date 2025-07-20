@@ -6,6 +6,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { generateRoastPrompt, getRandomProductivitySuggestion, getRandomMoneyRoast } from '@/lib/prompts'
 import { APIKeySettings } from '@/components/APIKeySettings'
+import { Input } from '@/components/ui/input'
+import { IconRenderer } from '@/components/IconRenderer'
 
 interface AIRoastChatProps {
   activeServices: AIService[]
@@ -89,85 +91,104 @@ export function AIRoastChat({ activeServices, totalMonthlyCost }: AIRoastChatPro
   }
 
   return (
-    <Card className="bg-gradient-to-r from-purple-50 to-indigo-50 dark:from-purple-950/20 dark:to-indigo-950/20 border-purple-200 dark:border-purple-800">
-      <CardHeader className="pb-4">
-        <CardTitle className="flex items-center justify-between text-purple-800 dark:text-purple-200">
+    <Card className="bg-gradient-to-r from-blue-50 to-blue-100 dark:from-blue-950/20 dark:to-blue-900/20 border-blue-200 dark:border-blue-800">
+      <CardHeader className="pb-3">
+        <CardTitle className="flex items-center justify-between text-blue-800 dark:text-blue-200">
           <span className="flex items-center gap-2">
             🤖 AI毒舌助手
           </span>
-          {!showSettings && (
-            <Button
-              onClick={() => setShowSettings(true)}
-              variant="ghost"
+          {/* API设置区域 */}
+          <div className="flex gap-2 items-center">
+            <Input
+              type="password"
+              value={apiKey}
+              onChange={(e) => setApiKey(e.target.value)}
+              placeholder="DeepSeek API Key"
+              className="w-48 h-8 text-xs"
+            />
+            <Button 
+              onClick={() => {
+                if (apiKey) {
+                  localStorage.setItem('deepseek_api_key', apiKey)
+                }
+              }}
               size="sm"
-              className="text-purple-600 hover:text-purple-700 text-xs"
+              disabled={!apiKey}
+              className="h-8 px-3 text-xs"
             >
-              {apiKey ? '⚙️' : '设置API'}
+              保存
             </Button>
-          )}
+          </div>
         </CardTitle>
-        <p className="text-sm text-purple-600 dark:text-purple-400">
-          根据你的{activeServices.length}个订阅(月费${totalMonthlyCost})获得专业AI嘲讽分析，让DeepSeek告诉你哪些钱花得最冤枉
-        </p>
       </CardHeader>
       
       <CardContent className="space-y-4">
-        {/* 简化的API设置 */}
-        {showSettings && (
-          <div className="bg-blue-50 dark:bg-blue-950/30 p-3 rounded-lg">
-            <div className="flex gap-2 items-center">
-              <Input
-                type="password"
-                value={apiKey}
-                onChange={(e) => setApiKey(e.target.value)}
-                placeholder="DeepSeek API Key (sk-...)"
-                className="flex-1 text-sm"
-              />
-              <Button 
-                onClick={() => {
-                  if (apiKey) {
-                    localStorage.setItem('deepseek_api_key', apiKey)
-                    setShowSettings(false)
-                  }
-                }}
-                size="sm"
-                disabled={!apiKey}
-              >
-                保存
-              </Button>
+        {/* 对话输出区域 */}
+        {roastMessage && (
+          <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg p-6">
+            <div className="flex items-start gap-3">
+              <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white text-sm font-medium">
+                AI
+              </div>
+              <div className="flex-1 bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+                <div className="text-sm text-gray-900 dark:text-gray-100 whitespace-pre-wrap leading-relaxed">
+                  {roastMessage}
+                </div>
+              </div>
             </div>
           </div>
         )}
 
-        {/* 主要的对话输出区域 */}
-        <div className="min-h-[200px] bg-white/70 dark:bg-gray-800/70 rounded-lg border p-4">
-          {roastMessage ? (
-            <div className="space-y-3">
-              <div className="flex items-start gap-3">
-                <div className="text-xl">🤖</div>
-                <div className="flex-1">
-                  <div className="text-sm text-red-600 dark:text-red-400 font-medium mb-2">
-                    AI毒舌助手：
-                  </div>
-                  <div className="text-gray-800 dark:text-gray-200 leading-relaxed whitespace-pre-wrap">
-                    {roastMessage}
-                  </div>
-                </div>
+        {/* 当前订阅服务 */}
+        {activeServices.length > 0 && (
+          <div className="p-4">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-sm font-medium text-blue-700 dark:text-blue-300">
+                当前订阅 ({activeServices.length}个)
+              </h3>
+              <div className="text-xs text-blue-600 dark:text-blue-400">
+                月费 ${totalMonthlyCost}
               </div>
             </div>
-          ) : (
-            <div className="flex flex-col items-center justify-center h-full text-center text-gray-500 dark:text-gray-400">
-              <div className="text-4xl mb-3">💬</div>
-              <p className="text-sm">
-                点击下方按钮，让AI来嘲讽你的订阅习惯
-              </p>
-              {!apiKey && (
-                <p className="text-xs mt-2 text-red-500">
-                  需要设置DeepSeek API Key
-                </p>
-              )}
+            <div className="flex flex-wrap gap-2">
+              {activeServices.map((service) => (
+                <div
+                  key={service.id}
+                  className="flex items-center gap-2 bg-white dark:bg-gray-800 rounded-lg px-3 py-2 border border-blue-200 dark:border-blue-700"
+                >
+                  <IconRenderer name={service.icon} size={20} />
+                  <span className="text-sm text-gray-700 dark:text-gray-300">
+                    {service.name}
+                  </span>
+                  <span className="text-xs text-gray-500 dark:text-gray-400">
+                    ${service.subscriptionPrice}
+                  </span>
+                </div>
+              ))}
             </div>
-          )}
+          </div>
+        )}
+
+        {/* 输入框 */}
+        <div className="flex gap-2">
+          <Input
+            placeholder={activeServices.length > 0 ? 
+              `根据你的${activeServices.length}个订阅(月费$${totalMonthlyCost})获得专业的嘲讽输出，让AI告诉你自己是一条什么杂鱼` : 
+              "请先启用一些订阅服务"}
+            className="flex-1 bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700"
+            disabled
+          />
+          <Button 
+            onClick={handleRoast}
+            disabled={isLoading || activeServices.length === 0 || !apiKey}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-6"
+          >
+            {isLoading ? (
+              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+            ) : (
+              "发送"
+            )}
+          </Button>
         </div>
 
         {/* 错误显示 */}
@@ -177,39 +198,6 @@ export function AIRoastChat({ activeServices, totalMonthlyCost }: AIRoastChatPro
           </div>
         )}
 
-        {/* 底部操作区 */}
-        <div className="flex gap-2 justify-center pt-2">
-          <Button 
-            onClick={handleRoast}
-            disabled={isLoading || activeServices.length === 0 || !apiKey}
-            className="bg-red-600 hover:bg-red-700 text-white font-medium px-6"
-          >
-            {isLoading ? (
-              <div className="flex items-center gap-2">
-                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                AI思考中...
-              </div>
-            ) : (
-              '开始嘲讽！'
-            )}
-          </Button>
-          
-          {roastMessage && (
-            <Button 
-              onClick={handleReset}
-              variant="outline"
-              className="border-gray-300 text-gray-600 hover:bg-gray-50"
-            >
-              清空
-            </Button>
-          )}
-        </div>
-
-        {/* 状态提示 */}
-        <div className="text-center text-xs text-gray-500">
-          {activeServices.length === 0 && "先启用一些服务，AI才有素材嘲讽你"}
-          {activeServices.length > 0 && apiKey && `检测到 ${activeServices.length} 个订阅，月费 $${totalMonthlyCost}`}
-        </div>
       </CardContent>
     </Card>
   )

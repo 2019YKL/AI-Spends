@@ -92,11 +92,8 @@ export default function Dashboard() {
           <div className="flex items-center justify-between mb-4">
             <div>
               <h1 className="text-4xl font-bold text-slate-900 dark:text-slate-100">
-                AutoBurn
+                AutoBurn - AI订阅实时费用追踪器
               </h1>
-              <p className="text-lg text-slate-600 dark:text-slate-400 mt-1">
-                AI订阅实时费用追踪器
-              </p>
             </div>
             <div className="relative backdrop-blur-sm rounded-xl p-1 border border-blue-200/30 dark:border-blue-800/30 bg-blue-50/20 dark:bg-blue-900/20">
               <div className="flex items-center gap-1">
