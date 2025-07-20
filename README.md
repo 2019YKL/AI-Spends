@@ -1,145 +1,203 @@
-# AutoBurn - AI Subscription Cost Tracker
+# AiSpends - AI订阅费用实时追踪器
 
-A modern, responsive web application built with Next.js, TypeScript, and Tailwind CSS to track your AI service subscription costs and calculate real-time burn rates.
+一个现代化的AI订阅费用实时追踪应用，使用Next.js 14、TypeScript和Tailwind CSS构建。实时显示今日AI服务消费，并包含AI嘲讽功能。
 
-## Features
+## ✨ 功能特色
 
-- 📊 **Real-time Cost Tracking**: Monitor costs per minute, hour, day, and month
-- 🎯 **Multiple Pricing Models**: Support for token-based, subscription, and credit-based AI services
-- 🎨 **Modern UI**: Beautiful card-based design with shadcn/ui components
-- 📱 **Responsive**: Works perfectly on desktop and mobile devices
-- ⚡ **Real-time Updates**: Live clock and cost calculations
-- 💰 **Cost Breakdown**: Detailed breakdown of costs by service type
+- 🔥 **实时费用追踪**: 实时显示今日各项AI服务消费
+- 📊 **分类管理**: AI对话、编程工具、AI绘图、生产力工具四大分类
+- 🎮 **切换控制**: 可开关服务来控制费用计算
+- 🤖 **AI嘲讽功能**: DeepSeek驱动的AI助手会嘲讽你的订阅习惯
+- 🎨 **火焰主题**: 黑红配色的"烧钱"主题设计
+- 📱 **响应式设计**: 完美适配桌面和移动端
+- ⚡ **丝滑动画**: 60fps的数字滚动动画
 
-## Supported AI Services
+## 🛠️ 支持的AI服务
 
-- **ChatGPT** (Token-based pricing)
-- **Claude** (Token-based pricing)
-- **Midjourney** (Subscription-based)
-- **DALL-E** (Credit-based)
-- **GitHub Copilot** (Subscription-based)
+### 🤖 AI对话助手
+- **Claude** (Anthropic)
+- **ChatGPT** (OpenAI) 
+- **Gemini** (Google)
 
-## Tech Stack
+### 💻 编程开发工具
+- **Cursor** (AI代码编辑器)
+- **Windsurf** (AI代码编辑器)
+- **GitHub Copilot** (代码补全)
+- **v0** (UI生成)
+
+### 🎨 AI绘图/视频
+- **Midjourney** (AI绘图)
+- **Dreamina** (字节AI绘图)
+- **Hailuo**, **Vidu**, **Kling**, **Pixverse**, **Trae** (AI视频)
+
+### ⚡ 生产力工具
+- **Notion** (笔记协作)
+- **Raycast** (启动器)
+- **Figma** (设计工具)
+
+## 🚀 技术栈 | Tech Stack
 
 - **Framework**: Next.js 14 with App Router
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS
 - **UI Components**: shadcn/ui
-- **Icons**: Lucide React
-- **Deployment Ready**: Vercel-optimized
+- **AI Integration**: OpenRouter API (DeepSeek)
+- **Deployment**: Vercel
 
-## Getting Started
+## 📦 快速开始 | Getting Started
 
-### Prerequisites
+### 环境要求 | Prerequisites
 
-- Node.js 18+ 
-- npm or yarn
+- Node.js 18+
+- npm 或 yarn
+- DeepSeek API密钥 (用于AI嘲讽功能)
 
-### Installation
+### 安装步骤 | Installation
 
-1. Clone the repository:
+1. **克隆仓库 | Clone the repository**:
 ```bash
-git clone <your-repo-url>
-cd autoburn
+git clone https://github.com/2019YKL/AI-Spends.git
+cd AI-Spends
 ```
 
-2. Install dependencies:
+2. **安装依赖 | Install dependencies**:
 ```bash
 npm install
 ```
 
-3. Run the development server:
+3. **配置环境变量 | Setup environment variables**:
+创建 `.env.local` 文件并添加以下内容：
+```bash
+# OpenRouter API密钥 (用于DeepSeek AI嘲讽功能)
+# Get your API key from: https://openrouter.ai/
+DEEPSEEK_API_KEY=sk-or-v1-your-openrouter-api-key-here
+```
+
+4. **启动开发服务器 | Run development server**:
 ```bash
 npm run dev
 ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser.
+5. **打开浏览器 | Open browser**: 
+访问 [http://localhost:3000](http://localhost:3000)
 
-## Project Structure
+## 🔧 部署指南 | Deployment
+
+### Vercel部署 (推荐)
+
+1. **部署到Vercel | Deploy to Vercel**:
+   - Fork本仓库到你的GitHub
+   - 连接到Vercel: [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new)
+
+2. **配置环境变量 | Configure Environment Variables**:
+   在Vercel项目设置中添加以下环境变量：
+   
+   | Key | Value | Description |
+   |-----|-------|-------------|
+   | `DEEPSEEK_API_KEY` | `sk-or-v1-your-key` | OpenRouter API密钥 (获取: https://openrouter.ai/) |
+
+3. **获取API密钥 | Get API Key**:
+   - 访问 [OpenRouter](https://openrouter.ai/)
+   - 注册并获取API密钥
+   - 密钥格式: `sk-or-v1-...`
+
+### 本地构建 | Local Build
+
+```bash
+# 构建项目
+npm run build
+
+# 启动生产服务器
+npm start
+```
+
+## 📁 项目结构 | Project Structure
 
 ```
 src/
-├── app/                    # Next.js app router
-│   ├── globals.css        # Global styles and CSS variables
-│   ├── layout.tsx         # Root layout component
-│   └── page.tsx           # Main dashboard page
+├── app/                         # Next.js app router
+│   ├── api/deepseek/chat/      # AI嘲讽API路由
+│   ├── globals.css             # 全局样式和火焰主题
+│   ├── layout.tsx              # 根布局组件
+│   └── page.tsx                # 主仪表板页面
 ├── components/
-│   ├── ui/                # shadcn/ui components
-│   │   ├── button.tsx
-│   │   └── card.tsx
-│   └── CostTrackingCard.tsx # Main cost tracking card component
+│   ├── ui/                     # shadcn/ui组件库
+│   ├── AIRoastChat.tsx         # AI嘲讽聊天组件
+│   ├── CostTrackingCard.tsx    # 费用追踪卡片
+│   ├── DotBackground.tsx       # 点状背景
+│   └── SmoothNumber.tsx        # 丝滑数字动画
 ├── lib/
-│   ├── ai-services-data.ts # Sample AI service data
-│   ├── cost-calculator.ts  # Cost calculation utilities
-│   └── utils.ts           # Utility functions
+│   ├── ai-services-data.ts     # AI服务数据配置
+│   ├── cost-calculator.ts      # 费用计算逻辑
+│   └── utils.ts                # 工具函数
 └── types/
-    └── ai-services.ts     # TypeScript type definitions
+    └── ai-services.ts          # TypeScript类型定义
 ```
 
-## Customization
+## ⚙️ 自定义配置 | Customization
 
-### Adding New AI Services
+### 添加新的AI服务 | Adding New AI Services
 
-1. Add the service to `src/lib/ai-services-data.ts`:
+在 `src/lib/ai-services-data.ts` 中添加服务:
 
 ```typescript
 {
   id: 'new-service',
-  name: 'New AI Service',
-  icon: '🆕',
+  name: 'New AI Service', 
+  category: 'ai-chat', // ai-chat | code-editor | ai-image | productivity
+  icon: '/icon/new-service.svg',
   color: 'bg-indigo-500',
-  pricingModel: 'token-based', // or 'subscription' or 'credit-based'
-  pricing: {
-    inputTokenPrice: 0.001,
-    outputTokenPrice: 0.002,
-  },
-  usage: {
-    inputTokens: 50000,
-    outputTokens: 25000,
-    requests: 500,
-  }
+  subscriptionPrice: 20, // 月费 (USD)
+  billingCycle: 30,      // 计费周期 (天)
+  billingStartDate: '2024-01-01',
+  isActive: true
 }
 ```
 
-### Modifying Pricing Models
+### 修改主题 | Theming
 
-Update the `calculateCost` function in `src/lib/cost-calculator.ts` to add new pricing models or modify existing calculations.
+在 `src/app/globals.css` 中自定义火焰主题颜色和动画效果。
 
-### Styling
+### API配置 | API Configuration
 
-The app uses Tailwind CSS with CSS custom properties for theming. Modify `src/app/globals.css` to customize colors and styling.
+AI嘲讽功能使用OpenRouter API，可在 `src/app/api/deepseek/chat/route.ts` 中调整模型参数。
 
-## Deployment
+## 🌟 特色功能 | Features
 
-### Vercel (Recommended)
+### 🔥 实时费用计算 | Real-time Cost Calculation
+- 基于每日消费模型，从今日00:00开始计算
+- 60fps丝滑数字滚动动画
+- 支持服务开关控制
 
-1. Push your code to GitHub
-2. Connect your repository to Vercel
-3. Deploy with one click
+### 🤖 AI嘲讽系统 | AI Roasting System  
+- 集成DeepSeek模型
+- 程序员文化专属吐槽
+- 中文"雌小鬼"风格对话
 
-### Other Platforms
+### 🎨 火焰主题设计 | Fire Theme Design
+- 黑红配色"烧钱"主题
+- Raycast风格玻璃态效果
+- 响应式设计
 
-Build the application:
-```bash
-npm run build
-```
+## 📝 许可证 | License
 
-Start the production server:
-```bash
-npm start
-```
+MIT License - 可自由用于个人或商业用途
 
-## License
+## 🤝 贡献 | Contributing
 
-MIT License - feel free to use this project for personal or commercial purposes.
+1. Fork 本仓库
+2. 创建功能分支
+3. 提交更改
+4. 发起 Pull Request
 
-## Contributing
+## 💬 支持 | Support
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Submit a pull request
+如有问题或建议，请在GitHub上提交Issue。
 
-## Support
+---
 
-If you encounter any issues or have questions, please open an issue on GitHub.
+**⚡ 一键部署 | Quick Deploy**
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/2019YKL/AI-Spends&env=DEEPSEEK_API_KEY&envDescription=OpenRouter%20API%20Key%20for%20DeepSeek%20AI%20roasting%20feature&envLink=https://openrouter.ai/)
+
+记得在Vercel中配置 `DEEPSEEK_API_KEY` 环境变量！
