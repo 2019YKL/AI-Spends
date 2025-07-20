@@ -68,8 +68,9 @@ npm install
 3. **配置环境变量 | Setup environment variables**:
 创建 `.env.local` 文件并添加以下内容：
 ```bash
-# OpenRouter API密钥 (用于DeepSeek AI嘲讽功能)
-# Get your API key from: https://openrouter.ai/
+# ⚠️ 重要：这是OpenRouter的API密钥，不是DeepSeek官方API！
+# OpenRouter API Key (for DeepSeek AI roasting feature)
+# Get your API key from: https://openrouter.ai/ (NOT deepseek.com)
 DEEPSEEK_API_KEY=sk-or-v1-your-openrouter-api-key-here
 ```
 
@@ -94,12 +95,13 @@ npm run dev
    
    | Key | Value | Description |
    |-----|-------|-------------|
-   | `DEEPSEEK_API_KEY` | `sk-or-v1-your-key` | OpenRouter API密钥 (获取: https://openrouter.ai/) |
+   | `DEEPSEEK_API_KEY` | `sk-or-v1-your-key` | **⚠️ 注意：这是OpenRouter的API密钥，不是DeepSeek官方的！** |
 
 3. **获取API密钥 | Get API Key**:
-   - 访问 [OpenRouter](https://openrouter.ai/)
-   - 注册并获取API密钥
-   - 密钥格式: `sk-or-v1-...`
+   - **重要**: 访问 [OpenRouter](https://openrouter.ai/) (不是DeepSeek官网!)
+   - 注册OpenRouter账号并获取API密钥
+   - 密钥格式: `sk-or-v1-...` (OpenRouter格式)
+   - **说明**: 本项目使用OpenRouter作为API代理来调用DeepSeek模型
 
 ### 本地构建 | Local Build
 
