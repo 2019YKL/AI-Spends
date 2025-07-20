@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-AI-git-money is a real-time AI subscription cost tracker built with Next.js 14, TypeScript, and Tailwind CSS. The name is a programmer pun combining git commands with "给钱" (give money). It calculates and displays live "burn rates" for AI service subscriptions using smooth scrolling animations to show money being spent per second/minute/hour.
+AI-git-money is a real-time AI subscription cost tracker built with Next.js 14, TypeScript, and Tailwind CSS. The name is a programmer pun combining git commands with "给钱" (give money). It displays today's consumption from AI subscriptions using smooth scrolling animations and includes an AI-powered roasting feature that mocks users' subscription habits.
 
 ## Key Commands
 
@@ -51,6 +51,13 @@ Services can be toggled on/off using:
 - Only active services (`isActive: true`) contribute to totals
 - Real-time recalculation when services are toggled
 
+### Service Categories and Organization
+Services are organized into four main categories with clear visual separation:
+- `ai-chat`: 🤖 AI对话助手 (Claude, ChatGPT, Gemini)
+- `code-editor`: 💻 编程开发工具 (Cursor, Windsurf, GitHub Copilot, v0)
+- `ai-image`: 🎨 AI绘图/视频 (Midjourney, Dreamina, Hailuo, Vidu, Kling, Pixverse, Trae)
+- `productivity`: ⚡ 生产力工具 (Notion, Raycast, Figma)
+
 ### AI Roasting Feature
 The app includes an AI-powered roasting system that mocks users' subscription habits:
 - Uses OpenRouter API with DeepSeek model (`deepseek/deepseek-chat`)
@@ -58,6 +65,7 @@ The app includes an AI-powered roasting system that mocks users' subscription ha
 - Generates programmer-culture specific roasts in Chinese "雌小鬼" (bratty little sister) style
 - Combines subscription data with tech industry memes and pain points
 - Uses specific vocabulary like "杂鱼" (small fry), "🩷", "🤡" emojis
+- No user configuration required - API key is built-in
 
 ## Key Files & Components
 
@@ -92,10 +100,18 @@ The app includes an AI-powered roasting system that mocks users' subscription ha
 
 ### Adding New Services
 Add to `aiServices` array in `src/lib/ai-services-data.ts` with proper category classification:
-- `ai-chat`: ChatGPT, Claude, Perplexity
-- `ai-image`: Midjourney, DALL-E  
-- `code-editor`: Cursor, Windsurf, GitHub Copilot
-- `productivity`: General productivity tools
+- `ai-chat`: ChatGPT, Claude, Gemini
+- `ai-image`: Midjourney, Dreamina, Hailuo, Vidu, Kling, Pixverse, Trae
+- `code-editor`: Cursor, Windsurf, GitHub Copilot, v0
+- `productivity`: Notion, Raycast, Figma
+
+Each service requires:
+- Unique `id` and `name`
+- Icon file in `/public/icon/` directory (preferably SVG)
+- Background `color` using Tailwind classes (e.g., `bg-blue-500`)
+- `subscriptionPrice` as default monthly cost in USD
+- `category` for proper grouping
+- Optional `pricingTiers` array for multiple subscription levels
 
 ### Number Display Rules
 ALL dynamic numbers must use `SmoothNumber` component. Never display raw calculated values directly. Key props:
@@ -103,11 +119,12 @@ ALL dynamic numbers must use `SmoothNumber` component. Never display raw calcula
 - `incrementPerSecond`: How much to increment per second (0 for static values)
 - `formatFn`: Custom formatter (use `formatCurrency` or `formatCurrencyPrecise`)
 
-### Fire Theme Requirements
-- Use black-red color scheme throughout
-- Apply fire glow effects to important numbers
-- Maintain glass morphism aesthetic
-- Floating animations should be subtle (6s ease-in-out)
+### UI Design Requirements
+- Money-related elements use golden color (#DBB685) for currency amounts and progress bars
+- Service categories are clearly separated with emoji prefixes and proper spacing
+- Progress bars and cost displays use the golden theme
+- Dot pattern background provides subtle texture
+- Hero section displays large scrolling total with gold gradient
 
 ## Technical Constraints
 
@@ -116,3 +133,12 @@ ALL dynamic numbers must use `SmoothNumber` component. Never display raw calcula
 - Uses shadcn/ui component system
 - No external animation libraries - custom `requestAnimationFrame` implementation
 - Responsive design with mobile-first approach
+- Multi-currency support (USD, CNY, ZWL) with real-time conversion
+- All dynamic numbers must use `SmoothNumber` with `suppressHydrationWarning` to prevent SSR issues
+
+## Environment Variables
+
+Required environment variables in `.env.local`:
+```
+DEEPSEEK_API_KEY=sk-or-v1-... # OpenRouter API key for AI roasting feature
+```
