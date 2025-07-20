@@ -18,6 +18,7 @@ export default function Dashboard() {
   const [currentTime, setCurrentTime] = useState(new Date())
   const [mounted, setMounted] = useState(false)
   const [currency, setCurrency] = useState<'USD' | 'CNY' | 'ZWL'>('USD')
+  const [showBackToTop, setShowBackToTop] = useState(false)
   const { services, activeServices, toggleService, changeTier } = useServiceToggle()
   // Check if component is mounted to avoid hydration errors
   useEffect(() => {
@@ -33,6 +34,19 @@ export default function Dashboard() {
     }, 1000)
 
     return () => clearInterval(timer)
+  }, [mounted])
+
+  // Handle scroll to show/hide back to top button
+  useEffect(() => {
+    if (!mounted) return
+    
+    const handleScroll = () => {
+      // Show button when scrolled down more than 300px
+      setShowBackToTop(window.scrollY > 300)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
   }, [mounted])
 
   // Calculate total costs (only for active services)
@@ -271,6 +285,29 @@ export default function Dashboard() {
             totalMonthlyCost={totalCosts.monthlyBudget}
           />
         </div>
+
+        {/* 回到顶部按钮 - 右侧固定位置，移动端隐藏，滚动到顶部时隐藏 */}
+        {showBackToTop && (
+          <button
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="hidden sm:flex fixed bottom-8 right-8 items-center justify-center w-12 h-12 bg-gray-400 hover:bg-gray-500 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 z-50 animate-fade-in"
+            aria-label="回到顶部"
+          >
+            <svg 
+              className="w-6 h-6 transform group-hover:translate-y-[-2px] transition-transform duration-300" 
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24"
+            >
+              <path 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                strokeWidth={2} 
+                d="M5 10l7-7m0 0l7 7m-7-7v18" 
+              />
+            </svg>
+          </button>
+        )}
 
       </div>
       
