@@ -30,17 +30,21 @@ export function SmoothNumber({
     setDisplayValue(initialValue)
   }, [initialValue])
 
-  // 每秒更新目标值
+  // 每秒更新目标值 - 只在客户端执行
   useEffect(() => {
+    if (!mounted) return
+    
     const interval = setInterval(() => {
       setTargetValue(current => current + incrementPerSecond)
     }, 1000)
 
     return () => clearInterval(interval)
-  }, [incrementPerSecond])
+  }, [incrementPerSecond, mounted])
 
-  // 高频率平滑滚动到目标值
+  // 高频率平滑滚动到目标值 - 只在客户端执行
   useEffect(() => {
+    if (!mounted) return
+    
     let animationFrame: number
 
     const animate = () => {
@@ -70,7 +74,7 @@ export function SmoothNumber({
         cancelAnimationFrame(animationFrame)
       }
     }
-  }, [targetValue, displayValue])
+  }, [targetValue, displayValue, mounted])
 
   // 避免水合错误，服务端渲染时显示占位符
   if (!mounted) {
