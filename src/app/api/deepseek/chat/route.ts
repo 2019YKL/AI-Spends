@@ -22,10 +22,10 @@ export async function POST(request: NextRequest) {
         'Authorization': `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
         'HTTP-Referer': 'https://aispend.vercel.app',
-        'X-Title': 'AIspend',
+        'X-Title': 'AiSpends',
       },
       body: JSON.stringify({
-        model: 'deepseek/deepseek-chat',
+        model: 'deepseek/deepseek-chat:free',
         messages: messages,
         max_tokens: 1000,
         temperature: 0.8,
