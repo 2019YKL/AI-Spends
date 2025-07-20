@@ -25,7 +25,7 @@ export function SmoothNumber({
     // 重新设置初始值以确保客户端和服务端一致
     setTargetValue(initialValue)
     setDisplayValue(initialValue)
-  }, [])
+  }, [initialValue])
 
   // 当初始值改变时更新目标值和显示值
   useEffect(() => {
