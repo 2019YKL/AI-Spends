@@ -181,7 +181,7 @@ export default function Dashboard() {
               <NewTypewriter />
             </div>
             <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600/50 dark:text-gray-400/50 font-medium mb-4 animate-fade-in-up px-4">
-              实时刷新你的数字员工每天有多烧钱
+              实时更新你的数字员工今天花了多少
             </p>
           </div>
         </div>
