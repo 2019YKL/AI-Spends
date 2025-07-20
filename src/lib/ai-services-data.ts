@@ -99,7 +99,7 @@ export const aiServices: AIService[] = [
   {
     id: 'jimeng',
     name: '即梦',
-    icon: 'jimeng.svg',
+    icon: 'jimeng-color.svg',
     color: 'bg-purple-500',
     subscriptionPrice: 69, // ¥69/month (基础版 default)
     billingStartDate: '2025-07-19T12:00:00Z',

@@ -22,13 +22,18 @@ export function SmoothNumber({
   // 处理水合错误
   useEffect(() => {
     setMounted(true)
+    // 重新设置初始值以确保客户端和服务端一致
+    setTargetValue(initialValue)
+    setDisplayValue(initialValue)
   }, [])
 
   // 当初始值改变时更新目标值和显示值
   useEffect(() => {
-    setTargetValue(initialValue)
-    setDisplayValue(initialValue)
-  }, [initialValue])
+    if (mounted) {
+      setTargetValue(initialValue)
+      setDisplayValue(initialValue)
+    }
+  }, [initialValue, mounted])
 
   // 每秒更新目标值 - 只在客户端执行
   useEffect(() => {
@@ -79,14 +84,14 @@ export function SmoothNumber({
   // 避免水合错误，服务端渲染时显示占位符
   if (!mounted) {
     return (
-      <span className={`font-mono transition-all duration-75 ${className}`}>
+      <span className={`font-mono transition-all duration-75 ${className}`} suppressHydrationWarning>
         {formatFn(initialValue)}
       </span>
     )
   }
 
   return (
-    <span className={`font-mono transition-all duration-75 ${className}`}>
+    <span className={`font-mono transition-all duration-75 ${className}`} suppressHydrationWarning>
       {formatFn(displayValue)}
     </span>
   )
