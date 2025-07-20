@@ -208,11 +208,11 @@ export default function Dashboard() {
           </div>
           
           {/* Group services by category */}
-          <div className="space-y-8">
+          <div className="space-y-12">
             {Object.entries(groupedServices).map(([category, categoryServices]) => (
               <div key={category}>
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-200">
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="text-xl font-bold text-slate-800 dark:text-slate-200">
                     {categoryLabels[category as keyof typeof categoryLabels]}
                   </h3>
                   <span className="text-sm text-muted-foreground">
