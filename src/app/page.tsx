@@ -155,7 +155,7 @@ export default function Dashboard() {
                 formatFn={(amount) => formatCurrency(amount, currency)}
               />
             </div>
-            <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-400 font-medium">
+            <p className="text-xl md:text-2xl text-gray-600/50 dark:text-gray-400/50 font-medium">
               今日AI订阅服务已消费金额 · 实时更新
             </p>
           </div>
