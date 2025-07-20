@@ -111,7 +111,7 @@ export function CostTrackingCard({ service, className, onToggle, onTierChange }:
             {/* Current Cost (Real-time) */}
             <div className="space-y-3">
               <div className="flex justify-between items-center">
-                <span className="text-sm text-muted-foreground">Current Cost</span>
+                <span className="text-sm text-muted-foreground">Today's Consumption</span>
                 <div className="text-right">
                   <div className="text-2xl font-bold text-primary font-mono">
                     <SmoothNumber
