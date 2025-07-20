@@ -7,6 +7,9 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
   title: 'AiSpends - AI Subscription Cost Tracker',
   description: 'Track your AI service subscriptions and costs per minute/hour',
+  icons: {
+    icon: '/favicon.svg',
+  },
 }
 
 export default function RootLayout({
