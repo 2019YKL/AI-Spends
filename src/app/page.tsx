@@ -183,6 +183,25 @@ export default function Dashboard() {
             <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600/50 dark:text-gray-400/50 font-medium mb-4 animate-fade-in-up px-4">
               实时更新你的数字员工今天花了多少
             </p>
+            
+            {/* 向下滚动提示箭头 */}
+            <div className="flex justify-center mt-8 sm:mt-16">
+              <div className="animate-bounce">
+                <svg 
+                  className="w-8 h-8 sm:w-10 sm:h-10 text-gray-400 dark:text-gray-500 animate-pulse" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path 
+                    strokeLinecap="round" 
+                    strokeLinejoin="round" 
+                    strokeWidth={2} 
+                    d="M19 14l-7 7m0 0l-7-7m7 7V3" 
+                  />
+                </svg>
+              </div>
+            </div>
           </div>
         </div>
 

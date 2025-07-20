@@ -25,7 +25,11 @@ export function AIRoastChat({ activeServices, totalMonthlyCost }: AIRoastChatPro
     
     try {
       const serviceNames = activeServices.map(service => service.name)
-      const prompt = generateRoastPrompt(serviceNames, totalMonthlyCost)
+      const serviceCategories = activeServices.reduce((acc, service) => {
+        acc[service.name] = service.category
+        return acc
+      }, {} as Record<string, string>)
+      const prompt = generateRoastPrompt(serviceNames, totalMonthlyCost, serviceCategories)
       
       // 调用 DeepSeek API
       const response = await fetch('/api/deepseek/chat', {

@@ -15,11 +15,12 @@ export const ROAST_PROMPTS = {
 
 2. 内容规则
   - 贴切的程序员梗类型：
-    - 工具囤积症（例："又是一个工具收集怪？杂鱼程序员的收藏夹比代码仓库还满呢~🤡 订阅这么多AI工具，该不会以为有了GPT就不用学算法了吧？杂鱼🩷~"）
-    - 重复订阅嘲讽（例："Claude、ChatGPT、Gemini全都要？杂鱼哥哥这是在搞AI军备竞赛吗？🤡 不会吧不会吧，该不会真以为多订阅几个就能掩盖自己不会写代码的事实吧？杂鱼~杂鱼🩷~"）
-    - 费用vs产出（例："月费{totalCost}刀养这么多AI助手，结果还是只会写Hello World？🤡 杂鱼程序员花钱比烧钱还快，产出比蜗牛爬还慢呢~杂鱼🩷~"）
-    - 依赖症嘲讽（例："离开AI就不会编程了？杂鱼哥哥该不会连for循环都要问ChatGPT怎么写吧？🤡 这年头没有AI代码提示，杂鱼们连变量名都起不出来了呢~杂鱼🩷~"）
-    - 效率悖论（例："订阅这么多'提效'工具，结果一天到晚在研究哪个AI更好用？🤡 杂鱼程序员把时间都花在选工具上，真正写代码的时间比摸鱼还少呢~杂鱼🩷~"）
+    - 工具囤积症（例："又是一个工具收集怪？杂鱼程序员的收藏夹比代码仓库还满呢~🤡 订阅这么多AI工具，该不会以为有了GPT就不用学算法了吧？杂鱼🩷~ 工具比技能多，这就是传说中的'工具人'吗？"）
+    - 重复订阅嘲讽（例："Claude、ChatGPT、Gemini全都要？杂鱼哥哥这是在搞AI军备竞赛吗？🤡 不会吧不会吧，该不会真以为多订阅几个就能掩盖自己不会写代码的事实吧？杂鱼~杂鱼🩷~ 这复读机行为，是想让AI也学会你的焦虑吗？"）
+    - 费用vs产出（例："月费{totalCost}刀养这么多AI助手，结果还是只会写Hello World？🤡 杂鱼程序员花钱比烧钱还快，产出比蜗牛爬还慢呢~杂鱼🩷~ 这投入产出比，AI公司股东都要给你颁奖了~"）
+    - 用嘴编程依赖症（例："Voice Coding用嘴编程，效率确实高，就是不知道debug的时候是不是也要用嘴？🤡 '嘿AI，我的代码为什么报错了？'杂鱼程序员连错误信息都懒得看，直接开口问AI呢~杂鱼🩷~ 手写代码已经out了，现在流行嘴写代码！"）
+    - 复读机模式（例："每天问AI同样的问题，杂鱼哥哥这是在cosplay复读机吗？🤡 '帮我写个函数'、'优化一下代码'、'再详细点'，除了当AI的传声筒还会啥呢？杂鱼🩷~ 订阅这么多AI工具，结果自己变成了最大的复读机~"）
+    - 效率悖论（例："订阅这么多'提效'工具，结果一天到晚在研究哪个AI更好用？🤡 杂鱼程序员把时间都花在选工具上，真正写代码的时间比摸鱼还少呢~杂鱼🩷~ 这效率提升了，就是不知道提升到哪里去了~"）
     - 跟风订阅（例："看到别人用什么就订阅什么？杂鱼哥哥的技术栈选择比股票韭菜还随大流呢~🤡 不会吧不会吧，该不会以为订阅了Cursor就能成为10x工程师吧？杂鱼🩷~"）
   - 每段字数要足够多，要有具体的技术梗和程序员痛点
   - 所有内容必须包含在 ">> 标签" 行之后
@@ -54,12 +55,40 @@ export const ROAST_PROMPTS = {
   ]
 }
 
-export function generateRoastPrompt(services: string[], totalCost: number): string {
+export function generateRoastPrompt(services: string[], totalCost: number, serviceCategories?: Record<string, string>): string {
   const serviceList = services.join('、')
+  
+  // 根据服务类别生成特定的嘲讽内容
+  let categorySpecificRoasts = ''
+  if (serviceCategories) {
+    const hasCodeEditor = Object.values(serviceCategories).includes('code-editor')
+    const hasAiImage = Object.values(serviceCategories).includes('ai-image')
+    const hasAiChat = Object.values(serviceCategories).includes('ai-chat')
+    
+    if (hasCodeEditor) {
+      categorySpecificRoasts += `
+  - 编程工具依赖症（例："离开AI就不会编程了？杂鱼哥哥该不会连for循环都要问ChatGPT怎么写吧？🤡 现在都流行'用嘴编程'了，杂鱼程序员嘴比手快，说得比写得还溜呢~杂鱼🩷~ 订阅Cursor、Windsurf、GitHub Copilot，这是要组建AI编程天团吗？结果还是只会Ctrl+C、Ctrl+V的复读机杂鱼~"）
+  - Voice Coding嘲讽（例："Voice Coding用嘴编程？杂鱼哥哥这是要当代码说唱歌手吗？🤡 '嘿Siri，帮我写个HelloWorld'，效率确实高，就是不知道面试官听到会不会笑出声~杂鱼🩷~ 手写代码的时代结束了，现在是嘴写代码的时代，杂鱼们连键盘都不用碰了呢~"）`
+    }
+    
+    if (hasAiImage) {
+      categorySpecificRoasts += `
+  - AI绘画创意缺失（例："订阅这么多AI绘画工具，结果画出来的都是没有灵魂的流水线作品？🤡 杂鱼画师除了会输入提示词，真正的创意和美感在哪里呢？炒粉都画不出什么好东西~杂鱼🩷~ Midjourney、Dreamina、Hailuo全都要，这是要开AI画廊吗？结果画出来的都是千篇一律的网红脸，比复读机还没创意呢~"）
+  - 提示词工程师嘲讽（例："天天研究提示词优化，杂鱼哥哥这是要转行当'提示词工程师'吗？🤡 从'美女，大长腿'到'masterpiece, best quality'，进步神速啊杂鱼~杂鱼🩷~ 花这么多钱订阅AI绘画，结果还是画不出自己的女朋友，因为根本没有呢~"）`
+    }
+    
+    if (hasAiChat) {
+      categorySpecificRoasts += `
+  - AI对话依赖症（例："天天跟AI聊天，是不是已经忘记怎么跟真人交流了？🤡 杂鱼社恐患者把AI当男朋友，结果AI都比你有情商呢~杂鱼🩷~ Claude、ChatGPT、Gemini轮流聊，这是要搞AI后宫吗？结果还是个单身狗复读机~"）
+  - AI复读机嘲讽（例："问AI同样的问题换着花样问，杂鱼哥哥这是在训练AI还是在训练自己当复读机？🤡 '帮我写个方案'、'帮我优化一下'、'再详细一点'，除了当AI的传声筒还会啥呢？杂鱼🩷~ 订阅这么多AI对话工具，结果自己的表达能力还不如AI呢~"）`
+    }
+  }
   
   return ROAST_PROMPTS.SUBSCRIPTION_ADDICTION
     .replace('{services}', serviceList)
     .replace('{totalCost}', `$${totalCost}`)
+    .replace('- 跟风订阅（例："看到别人用什么就订阅什么？杂鱼哥哥的技术栈选择比股票韭菜还随大流呢~🤡 不会吧不会吧，该不会以为订阅了Cursor就能成为10x工程师吧？杂鱼🩷~"）', 
+             `- 跟风订阅（例："看到别人用什么就订阅什么？杂鱼哥哥的技术栈选择比股票韭菜还随大流呢~🤡 不会吧不会吧，该不会以为订阅了Cursor就能成为10x工程师吧？杂鱼🩷~"）${categorySpecificRoasts}`)
 }
 
 export function getServiceSpecificRoast(serviceId: string): string {
