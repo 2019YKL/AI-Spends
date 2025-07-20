@@ -113,7 +113,7 @@ export function CostTrackingCard({ service, className, onToggle, onTierChange }:
               <div className="flex justify-between items-center">
                 <span className="text-sm text-muted-foreground">Today's Consumption</span>
                 <div className="text-right">
-                  <div className="text-2xl font-bold font-mono text-transparent bg-gradient-to-r from-yellow-600 to-yellow-400 bg-clip-text">
+                  <div className="text-2xl font-bold font-mono" style={{ color: '#DBB685' }}>
                     <SmoothNumber
                       value={cost.currentCost}
                       incrementPerSecond={cost.costPerSecond}
@@ -129,8 +129,11 @@ export function CostTrackingCard({ service, className, onToggle, onTierChange }:
           {/* Progress Bar */}
           <div className="w-full bg-muted rounded-full h-2">
             <div 
-              className="bg-gradient-to-r from-yellow-600 to-yellow-400 h-2 rounded-full transition-all duration-1000 shadow-sm"
-              style={{ width: `${Math.min(cost.percentageUsed, 100)}%` }}
+              className="h-2 rounded-full transition-all duration-1000 shadow-sm"
+              style={{ 
+                width: `${Math.min(cost.percentageUsed, 100)}%`,
+                backgroundColor: '#DBB685'
+              }}
             />
           </div>
 
