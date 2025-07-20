@@ -15,15 +15,17 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Invalid messages format' }, { status: 400 })
     }
 
-    // 调用 DeepSeek API
-    const response = await fetch('https://api.deepseek.com/v1/chat/completions', {
+    // 调用 OpenRouter API
+    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
+        'HTTP-Referer': 'https://ai-git-money.vercel.app',
+        'X-Title': 'AI-git-money',
       },
       body: JSON.stringify({
-        model: 'deepseek-chat',
+        model: 'deepseek/deepseek-chat',
         messages: messages,
         max_tokens: 1000,
         temperature: 0.8,
@@ -34,7 +36,7 @@ export async function POST(request: NextRequest) {
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}))
       return NextResponse.json(
-        { error: errorData.error?.message || 'DeepSeek API request failed' },
+        { error: errorData.error?.message || 'OpenRouter API request failed' },
         { status: response.status }
       )
     }
@@ -42,7 +44,7 @@ export async function POST(request: NextRequest) {
     const data = await response.json()
     
     if (!data.choices || !data.choices[0] || !data.choices[0].message) {
-      return NextResponse.json({ error: 'Invalid response from DeepSeek' }, { status: 500 })
+      return NextResponse.json({ error: 'Invalid response from OpenRouter' }, { status: 500 })
     }
 
     return NextResponse.json({
@@ -51,7 +53,7 @@ export async function POST(request: NextRequest) {
     })
 
   } catch (error) {
-    console.error('DeepSeek API error:', error)
+    console.error('OpenRouter API error:', error)
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
 }

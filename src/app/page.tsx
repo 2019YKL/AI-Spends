@@ -101,7 +101,7 @@ export default function Dashboard() {
           <div className="flex items-center justify-between mb-4">
             <div>
               <h1 className="text-4xl font-bold text-slate-900 dark:text-slate-100">
-                AutoBurn - AI订阅实时费用追踪器
+                AI-git-money - 每分每秒 AI 都在烧你的钱
               </h1>
             </div>
             <div className="relative backdrop-blur-sm rounded-xl p-1 border border-blue-200/30 dark:border-blue-800/30 bg-blue-50/20 dark:bg-blue-900/20">
