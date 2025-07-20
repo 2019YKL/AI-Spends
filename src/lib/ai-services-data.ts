@@ -97,19 +97,19 @@ export const aiServices: AIService[] = [
     selectedTier: 'individual'
   },
   {
-    id: 'jimeng',
-    name: '即梦',
+    id: 'dreamina',
+    name: 'Dreamina',
     icon: 'jimeng-color.svg',
     color: 'bg-purple-500',
-    subscriptionPrice: 69, // ¥69/month (基础版 default)
+    subscriptionPrice: 10, // $10/month (Basic tier default, converted from ¥69)
     billingStartDate: '2025-07-19T12:00:00Z',
     billingCycle: 30,
     isActive: true,
     category: 'ai-image',
     pricingTiers: [
-      { id: 'basic', name: '基础版', price: 69 },
-      { id: 'pro', name: '专业版', price: 199 },
-      { id: 'ultra', name: '旗舰版', price: 499 }
+      { id: 'basic', name: 'Basic', price: 10 }, // ¥69 ≈ $10
+      { id: 'pro', name: 'Pro', price: 28 }, // ¥199 ≈ $28
+      { id: 'ultra', name: 'Ultra', price: 70 } // ¥499 ≈ $70
     ],
     selectedTier: 'basic'
   },
