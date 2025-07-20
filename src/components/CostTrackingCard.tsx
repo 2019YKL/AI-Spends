@@ -131,9 +131,10 @@ export function CostTrackingCard({ service, className, onToggle, onTierChange }:
             <div 
               className="h-2 rounded-full transition-all duration-1000 shadow-sm"
               style={{ 
-                width: `${Math.min(cost.percentageUsed, 100)}%`,
+                width: mounted ? `${Math.min(cost.percentageUsed, 100)}%` : '0%',
                 backgroundColor: '#DBB685'
               }}
+              suppressHydrationWarning
             />
           </div>
 

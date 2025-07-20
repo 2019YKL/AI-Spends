@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { CostTrackingCard } from '@/components/CostTrackingCard'
 import { calculateRealTimeCost, formatCurrency, formatCurrencyPrecise } from '@/lib/cost-calculator'
 import { SmoothNumber } from '@/components/SmoothNumber'
@@ -19,15 +19,6 @@ export default function Dashboard() {
   const [mounted, setMounted] = useState(false)
   const [currency, setCurrency] = useState<'USD' | 'CNY' | 'ZWL'>('USD')
   const { services, activeServices, toggleService, changeTier } = useServiceToggle()
-  const [totalCosts, setTotalCosts] = useState({
-    currentTotal: 0,
-    monthlyBudget: 0,
-    perSecond: 0,
-    perMinute: 0,
-    perHour: 0,
-    perDay: 0
-  })
-
   // Check if component is mounted to avoid hydration errors
   useEffect(() => {
     setMounted(true)
@@ -45,7 +36,18 @@ export default function Dashboard() {
   }, [mounted])
 
   // Calculate total costs (only for active services)
-  useEffect(() => {
+  const totalCosts = useMemo(() => {
+    if (!mounted) {
+      return {
+        currentTotal: 0,
+        monthlyBudget: 0,
+        perSecond: 0,
+        perMinute: 0,
+        perHour: 0,
+        perDay: 0
+      }
+    }
+    
     const costs = activeServices.map(service => calculateRealTimeCost(service, currentTime))
     const currentTotal = costs.reduce((sum, cost) => sum + cost.currentCost, 0)
     const monthlyBudget = costs.reduce((sum, cost) => sum + cost.totalMonthlyBudget, 0)
@@ -54,8 +56,7 @@ export default function Dashboard() {
     const perHour = costs.reduce((sum, cost) => sum + cost.costPerHour, 0)
     const perDay = costs.reduce((sum, cost) => sum + cost.costPerDay, 0)
 
-
-    setTotalCosts({ currentTotal, monthlyBudget, perSecond, perMinute, perHour, perDay })
+    return { currentTotal, monthlyBudget, perSecond, perMinute, perHour, perDay }
   }, [currentTime, activeServices, mounted])
 
   // Calculate today's time progress

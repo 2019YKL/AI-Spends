@@ -13,7 +13,7 @@ export function Footer() {
     },
     {
       name: 'GitHub',
-      href: '#',
+      href: 'https://github.com/2019YKL/AI-Spends',
       icon: (props: React.SVGProps<SVGSVGElement>) => (
         <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
           <path

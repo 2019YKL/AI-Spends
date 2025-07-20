@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useMemo } from 'react'
 import { AIService } from '@/types/ai-services'
 import { aiServices as initialServices } from '@/lib/ai-services-data'
 
@@ -35,7 +35,10 @@ export function useServiceToggle() {
     )
   }, [])
 
-  const activeServices = services.filter(service => service.isActive)
+  const activeServices = useMemo(() => 
+    services.filter(service => service.isActive), 
+    [services]
+  )
 
   return {
     services,

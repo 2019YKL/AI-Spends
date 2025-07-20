@@ -74,16 +74,14 @@ export function SmoothNumber({
     }
 
     // 启动动画
-    if (Math.abs(targetValue - displayValue) > 0.000001) {
-      animate()
-    }
+    animate()
 
     return () => {
       if (animationFrame) {
         cancelAnimationFrame(animationFrame)
       }
     }
-  }, [targetValue, displayValue, mounted])
+  }, [targetValue, mounted])
 
   // 格式化函数，限制显示数字
   const formatWithLimit = (num: number) => {
