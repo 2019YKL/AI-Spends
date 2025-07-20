@@ -185,6 +185,57 @@ export const aiServices: AIService[] = [
     selectedTier: 'advanced'
   },
   {
+    id: 'hailuo',
+    name: 'Hailuo',
+    icon: 'hailuo-color.svg',
+    color: 'bg-blue-500',
+    subscriptionPrice: 9, // $9/month (Basic tier default, converted from ¥61)
+    billingStartDate: '2025-07-20T00:00:00Z',
+    billingCycle: 30,
+    isActive: true,
+    category: 'ai-image',
+    pricingTiers: [
+      { id: 'basic', name: 'Basic', price: 9 }, // ¥61 ≈ $9
+      { id: 'pro', name: 'Pro', price: 32 }, // ¥220 ≈ $32
+      { id: 'ultra', name: 'Ultra', price: 75 } // ¥521 ≈ $75
+    ],
+    selectedTier: 'basic'
+  },
+  {
+    id: 'vidu',
+    name: 'Vidu',
+    icon: 'vidu-color.svg',
+    color: 'bg-purple-600',
+    subscriptionPrice: 9, // $9/month (Basic tier default, converted from ¥59)
+    billingStartDate: '2025-07-20T00:00:00Z',
+    billingCycle: 30,
+    isActive: true,
+    category: 'ai-image',
+    pricingTiers: [
+      { id: 'basic', name: 'Basic', price: 9 }, // ¥59 ≈ $9
+      { id: 'pro', name: 'Pro', price: 31 }, // ¥219 ≈ $31
+      { id: 'ultra', name: 'Ultra', price: 71 } // ¥499 ≈ $71
+    ],
+    selectedTier: 'basic'
+  },
+  {
+    id: 'kling',
+    name: 'Kling',
+    icon: 'kling-color.svg',
+    color: 'bg-green-600',
+    subscriptionPrice: 7, // $7/month (Basic tier default, converted from ¥46)
+    billingStartDate: '2025-07-20T00:00:00Z',
+    billingCycle: 30,
+    isActive: true,
+    category: 'ai-image',
+    pricingTiers: [
+      { id: 'basic', name: 'Basic', price: 7 }, // ¥46 ≈ $7
+      { id: 'pro', name: 'Pro', price: 27 }, // ¥186 ≈ $27
+      { id: 'ultra', name: 'Ultra', price: 67 } // ¥466 ≈ $67
+    ],
+    selectedTier: 'basic'
+  },
+  {
     id: 'v0-dev',
     name: 'v0 by Vercel',
     icon: 'v0.svg',
