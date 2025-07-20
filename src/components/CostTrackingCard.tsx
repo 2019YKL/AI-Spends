@@ -134,33 +134,6 @@ export function CostTrackingCard({ service, className, onToggle, onTierChange }:
             />
           </div>
 
-          {/* Rate Information */}
-          <div className="grid grid-cols-2 gap-3 text-sm">
-            <div className="bg-blue-50 dark:bg-blue-950/20 rounded-lg p-2">
-              <div className="text-muted-foreground">Per second</div>
-              <div className="font-semibold text-blue-600 dark:text-blue-400 font-mono">
-                {formatCurrencyPrecise(cost.costPerSecond)}
-              </div>
-            </div>
-            <div className="bg-green-50 dark:bg-green-950/20 rounded-lg p-2">
-              <div className="text-muted-foreground">Per minute</div>
-              <div className="font-semibold text-green-600 dark:text-green-400 font-mono">
-                {formatCurrencyPrecise(cost.costPerMinute)}
-              </div>
-            </div>
-            <div className="bg-purple-50 dark:bg-purple-950/20 rounded-lg p-2">
-              <div className="text-muted-foreground">Per hour</div>
-              <div className="font-semibold text-purple-600 dark:text-purple-400 font-mono">
-                {formatCurrency(cost.costPerHour)}
-              </div>
-            </div>
-            <div className="bg-orange-50 dark:bg-orange-950/20 rounded-lg p-2">
-              <div className="text-muted-foreground">Per day</div>
-              <div className="font-semibold text-orange-600 dark:text-orange-400 font-mono">
-                {formatCurrency(cost.costPerDay)}
-              </div>
-            </div>
-          </div>
 
             </div>
           </>
