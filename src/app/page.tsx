@@ -157,17 +157,24 @@ export default function Dashboard() {
         </div>
 
         {/* Hero Section - Hero Card */}
-        <div className="min-h-[60vh] sm:min-h-[70vh] flex items-center justify-center mb-16 sm:mb-32 md:mb-60 px-4 overflow-hidden">
-          <div className="text-center w-full max-w-6xl">
-            <div className="text-[4rem] sm:text-[6rem] md:text-[10rem] lg:text-[14rem] xl:text-[18rem] font-bold text-transparent leading-none tracking-tight mb-4 sm:mb-6 break-all overflow-hidden" style={{
-              background: 'linear-gradient(to right, rgb(234, 205, 163), rgb(214, 174, 123))',
-              WebkitBackgroundClip: 'text',
-              backgroundClip: 'text'
-            }}>
+        <div className="min-h-[60vh] sm:min-h-[70vh] flex items-center justify-center mb-16 sm:mb-32 md:mb-60 px-4">
+          <div className="text-center w-full">
+            <div 
+              className="hero-number-fit text-[3rem] xs:text-[3.5rem] sm:text-[5rem] md:text-[8rem] lg:text-[12rem] xl:text-[16rem] font-bold text-transparent leading-none tracking-tight mb-4 sm:mb-6 inline-block" 
+              style={{
+                background: 'linear-gradient(to right, rgb(234, 205, 163), rgb(214, 174, 123))',
+                WebkitBackgroundClip: 'text',
+                backgroundClip: 'text',
+                whiteSpace: 'nowrap',
+                wordBreak: 'keep-all',
+                overflowWrap: 'normal'
+              }}
+            >
               <RollingNumber
                 value={totalCosts.currentTotal}
                 incrementPerSecond={totalCosts.perSecond}
                 formatFn={(amount) => formatCurrency(amount, currency)}
+                className="whitespace-nowrap"
               />
             </div>
             <div className="text-3xl sm:text-5xl md:text-6xl lg:text-8xl font-bold text-slate-900 dark:text-slate-100 mb-4 sm:mb-8">

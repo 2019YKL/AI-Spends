@@ -52,7 +52,7 @@ export function Footer() {
           ))}
         </div>
         <p className="mt-8 text-center text-sm/6 text-slate-600 dark:text-slate-400 md:order-1 md:mt-0">
-          &copy; 2024 AI-git-money. Designed by JK. All rights reserved.
+          &copy; 2024 AiSpends. Designed by JK. All rights reserved.
         </p>
       </div>
     </footer>

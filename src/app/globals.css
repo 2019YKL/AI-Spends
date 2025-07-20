@@ -202,4 +202,35 @@
     animation-delay: 0.5s;
     opacity: 0;
   }
+  
+  /* Hero number auto-fit utility */
+  .hero-number-fit {
+    display: inline-block;
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+    overflow-wrap: normal !important;
+  }
+  
+  .hero-number-fit * {
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+    overflow-wrap: normal !important;
+  }
+  
+  /* Responsive font scaling based on content length */
+  .hero-number-fit[data-length="short"] {
+    font-size: inherit;
+  }
+  
+  .hero-number-fit[data-length="medium"] {
+    font-size: 0.85em;
+  }
+  
+  .hero-number-fit[data-length="long"] {
+    font-size: 0.7em;
+  }
+  
+  .hero-number-fit[data-length="very-long"] {
+    font-size: 0.55em;
+  }
 }

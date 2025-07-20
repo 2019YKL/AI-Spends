@@ -33,9 +33,8 @@ export function RollingNumber({
   }, [initialValue])
 
   const formatWithLimit = useCallback((num: number) => {
-    // 限制最大显示为6位数 (999999.99)
-    const limitedNum = Math.min(num, 999999.99)
-    return formatFn(limitedNum)
+    // 移除限制，允许显示完整数字
+    return formatFn(num)
   }, [formatFn])
 
   useEffect(() => {
@@ -50,8 +49,8 @@ export function RollingNumber({
     intervalRef.current = setInterval(() => {
       setTotalCost(current => {
         const newValue = current + incrementPerSecond / 10
-        // 限制最大值，防止数字过大
-        return Math.min(newValue, 999999.99)
+        // 移除限制，允许数字自然增长
+        return newValue
       })
     }, 100)
 
@@ -65,14 +64,30 @@ export function RollingNumber({
   // 在服务端渲染或未挂载时显示初始值
   if (!mounted) {
     return (
-      <span className={`font-mono ${className}`} suppressHydrationWarning>
+      <span 
+        className={`font-mono whitespace-nowrap ${className}`} 
+        suppressHydrationWarning
+        style={{ 
+          display: 'inline-block',
+          whiteSpace: 'nowrap',
+          wordBreak: 'keep-all'
+        }}
+      >
         {formatWithLimit(initialValue)}
       </span>
     )
   }
 
   return (
-    <span className={`font-mono ${className}`} suppressHydrationWarning>
+    <span 
+      className={`font-mono whitespace-nowrap ${className}`} 
+      suppressHydrationWarning
+      style={{ 
+        display: 'inline-block',
+        whiteSpace: 'nowrap',
+        wordBreak: 'keep-all'
+      }}
+    >
       {formatWithLimit(totalCost)}
     </span>
   )
