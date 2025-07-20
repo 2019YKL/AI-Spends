@@ -1,4 +1,3 @@
 {
-  "/page": "app/page.js",
-  "/api/deepseek/chat/route": "app/api/deepseek/chat/route.js"
+  "/page": "app/page.js"
 }

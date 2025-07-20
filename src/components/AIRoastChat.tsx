@@ -123,22 +123,6 @@ export function AIRoastChat({ activeServices, totalMonthlyCost }: AIRoastChatPro
       </CardHeader>
       
       <CardContent className="space-y-4">
-        {/* 对话输出区域 */}
-        {roastMessage && (
-          <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg p-6">
-            <div className="flex items-start gap-3">
-              <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white text-sm font-medium">
-                AI
-              </div>
-              <div className="flex-1 bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
-                <div className="text-sm text-gray-900 dark:text-gray-100 whitespace-pre-wrap leading-relaxed">
-                  {roastMessage}
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
         {/* 当前订阅服务 */}
         {activeServices.length > 0 && (
           <div className="p-4">
@@ -195,6 +179,22 @@ export function AIRoastChat({ activeServices, totalMonthlyCost }: AIRoastChatPro
         {error && (
           <div className="bg-red-100 dark:bg-red-900/50 border border-red-300 dark:border-red-700 p-3 rounded-lg">
             <p className="text-red-700 dark:text-red-300 text-sm">{error}</p>
+          </div>
+        )}
+
+        {/* 对话输出区域 */}
+        {roastMessage && (
+          <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg p-6">
+            <div className="flex items-start gap-3">
+              <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white text-sm font-medium">
+                AI
+              </div>
+              <div className="flex-1 bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+                <div className="text-sm text-gray-900 dark:text-gray-100 whitespace-pre-wrap leading-relaxed">
+                  {roastMessage}
+                </div>
+              </div>
+            </div>
           </div>
         )}
 

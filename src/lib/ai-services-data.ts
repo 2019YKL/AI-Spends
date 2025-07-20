@@ -40,11 +40,16 @@ export const aiServices: AIService[] = [
     name: 'Cursor',
     icon: 'cursor.svg',
     color: 'bg-indigo-500',
-    subscriptionPrice: 20, // $20/month
+    subscriptionPrice: 20, // $20/month (Pro plan default)
     billingStartDate: '2025-07-18T00:00:00Z',
     billingCycle: 30,
     isActive: true,
-    category: 'code-editor'
+    category: 'code-editor',
+    pricingTiers: [
+      { id: 'pro', name: 'Pro', price: 20 },
+      { id: 'ultra', name: 'Ultra', price: 200 }
+    ],
+    selectedTier: 'pro'
   },
   {
     id: 'windsurf',
@@ -92,15 +97,21 @@ export const aiServices: AIService[] = [
     selectedTier: 'individual'
   },
   {
-    id: 'perplexity-pro',
-    name: 'Perplexity Pro',
-    icon: 'perplexity-color.svg',
-    color: 'bg-blue-500',
-    subscriptionPrice: 20, // $20/month
+    id: 'jimeng',
+    name: '即梦',
+    icon: 'jimeng.svg',
+    color: 'bg-purple-500',
+    subscriptionPrice: 69, // ¥69/month (基础版 default)
     billingStartDate: '2025-07-19T12:00:00Z',
     billingCycle: 30,
     isActive: true,
-    category: 'ai-chat'
+    category: 'ai-image',
+    pricingTiers: [
+      { id: 'basic', name: '基础版', price: 69 },
+      { id: 'pro', name: '专业版', price: 199 },
+      { id: 'ultra', name: '旗舰版', price: 499 }
+    ],
+    selectedTier: 'basic'
   },
   {
     id: 'v0-dev',
