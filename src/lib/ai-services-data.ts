@@ -236,6 +236,40 @@ export const aiServices: AIService[] = [
     selectedTier: 'basic'
   },
   {
+    id: 'pixverse',
+    name: 'Pixverse',
+    icon: 'pixverse-color.svg',
+    color: 'bg-indigo-500',
+    subscriptionPrice: 10, // $10/month (Standard tier default)
+    billingStartDate: '2025-07-20T00:00:00Z',
+    billingCycle: 30,
+    isActive: true,
+    category: 'ai-image',
+    pricingTiers: [
+      { id: 'standard', name: 'Standard', price: 10 },
+      { id: 'pro', name: 'Pro', price: 30 },
+      { id: 'premium', name: 'Premium', price: 60 },
+      { id: 'enterprise', name: 'Enterprise', price: 100 }
+    ],
+    selectedTier: 'standard'
+  },
+  {
+    id: 'trae',
+    name: 'Trae',
+    icon: 'trae-color.svg',
+    color: 'bg-emerald-500',
+    subscriptionPrice: 0, // Free tier default
+    billingStartDate: '2025-07-20T00:00:00Z',
+    billingCycle: 30,
+    isActive: true,
+    category: 'ai-image',
+    pricingTiers: [
+      { id: 'free', name: 'Free', price: 0 },
+      { id: 'pro', name: 'Pro', price: 10 }
+    ],
+    selectedTier: 'free'
+  },
+  {
     id: 'v0-dev',
     name: 'v0 by Vercel',
     icon: 'v0.svg',
