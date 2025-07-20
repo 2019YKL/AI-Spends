@@ -56,11 +56,17 @@ export const aiServices: AIService[] = [
     name: 'Windsurf',
     icon: 'windsurf.svg',
     color: 'bg-cyan-500',
-    subscriptionPrice: 15, // $15/month
+    subscriptionPrice: 15, // $15/month (Basic tier default)
     billingStartDate: '2025-07-16T00:00:00Z',
     billingCycle: 30,
     isActive: true,
-    category: 'code-editor'
+    category: 'code-editor',
+    pricingTiers: [
+      { id: 'basic', name: 'Basic', price: 15 },
+      { id: 'pro', name: 'Pro', price: 30 },
+      { id: 'ultra', name: 'Ultra', price: 60 }
+    ],
+    selectedTier: 'basic'
   },
   {
     id: 'midjourney',
@@ -112,17 +118,6 @@ export const aiServices: AIService[] = [
       { id: 'ultra', name: 'Ultra', price: 70 } // ¥499 ≈ $70
     ],
     selectedTier: 'basic'
-  },
-  {
-    id: 'v0-dev',
-    name: 'v0 by Vercel',
-    icon: 'v0.svg',
-    color: 'bg-black',
-    subscriptionPrice: 20, // $20/month
-    billingStartDate: '2025-07-14T00:00:00Z',
-    billingCycle: 30,
-    isActive: true,
-    category: 'code-editor'
   },
   {
     id: 'notion',
@@ -188,5 +183,16 @@ export const aiServices: AIService[] = [
       { id: 'business', name: 'Business', price: 30 }
     ],
     selectedTier: 'advanced'
+  },
+  {
+    id: 'v0-dev',
+    name: 'v0 by Vercel',
+    icon: 'v0.svg',
+    color: 'bg-black',
+    subscriptionPrice: 20, // $20/month
+    billingStartDate: '2025-07-14T00:00:00Z',
+    billingCycle: 30,
+    isActive: true,
+    category: 'code-editor'
   }
 ]
