@@ -3,7 +3,7 @@
 import { useRef, useState } from 'react'
 import * as htmlToImage from 'html-to-image'
 import { Button } from '@/components/ui/button'
-import { Download, Share2, X } from 'lucide-react'
+import { Download, Share2, X, Twitter } from 'lucide-react'
 import { AIService } from '@/types/ai-services'
 import { formatCurrency } from '@/lib/cost-calculator'
 import { IconRenderer } from '@/components/IconRenderer'
@@ -247,14 +247,11 @@ export function ShareImageGenerator({
             variant="outline"
             className="flex items-center gap-2"
           >
-            <Share2 className="w-4 h-4" />
-            分享
+            <Twitter className="w-4 h-4" />
+            分享到 X
           </Button>
         </div>
 
-        <div className="mt-4 text-xs text-gray-500 text-center">
-          * 图片尺寸 900x1200px，适合社交媒体分享
-        </div>
       </div>
     </div>
   )
