@@ -262,6 +262,7 @@ export default function Dashboard() {
         {/* Services Grid */}
         <div className="mb-6">
           <div className="flex items-start justify-between mb-6 gap-4">
+            {/* Left: Title and Stats */}
             <div className="flex-1 min-w-0">
               <h2 className="text-xl sm:text-2xl font-semibold text-slate-900 dark:text-slate-100">
                 AI订阅服务
@@ -270,49 +271,31 @@ export default function Dashboard() {
                 {activeServices.length}/{services.length} 服务已启用
               </p>
             </div>
-            <div className="flex gap-4 flex-shrink-0 items-center">
-              {/* 卡片/列表模式切换 */}
-              <div className="flex items-center gap-2.5">
-                <span className="text-sm font-medium text-gray-700 dark:text-gray-300 whitespace-nowrap">卡片模式</span>
-                <button
-                  onClick={handleListModeChange}
-                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
-                    isListMode ? 'bg-blue-600' : 'bg-gray-300'
-                  }`}
-                >
-                  <span
-                    className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200 ${
-                      isListMode ? 'translate-x-6' : 'translate-x-1'
-                    }`}
-                  />
-                </button>
-                <span className="text-sm font-medium text-gray-700 dark:text-gray-300 whitespace-nowrap">列表模式</span>
-              </div>
+            
+            {/* Right: Controls */}
+            <div className="flex gap-2 flex-shrink-0">
+              {/* 视图模式切换按钮 */}
+              <button
+                onClick={handleListModeChange}
+                className="px-3 py-1.5 text-xs sm:text-sm font-medium bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-md transition-colors duration-200 whitespace-nowrap"
+              >
+                {isListMode ? '列表视图' : '卡片视图'}
+              </button>
               
-              {/* 全部开启/关闭切换 */}
-              <div className="flex items-center gap-2.5">
-                <span className="text-sm font-medium text-gray-700 dark:text-gray-300 whitespace-nowrap">全部关闭</span>
-                <button
-                  onClick={() => {
-                    const shouldTurnOff = activeServices.length > services.length / 2
-                    if (shouldTurnOff) {
-                      services.forEach(service => service.isActive && toggleService(service.id))
-                    } else {
-                      services.forEach(service => !service.isActive && toggleService(service.id))
-                    }
-                  }}
-                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
-                    activeServices.length > services.length / 2 ? 'bg-blue-600' : 'bg-gray-300'
-                  }`}
-                >
-                  <span
-                    className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200 ${
-                      activeServices.length > services.length / 2 ? 'translate-x-6' : 'translate-x-1'
-                    }`}
-                  />
-                </button>
-                <span className="text-sm font-medium text-gray-700 dark:text-gray-300 whitespace-nowrap">全部开启</span>
-              </div>
+              {/* 批量操作按钮 */}
+              <button
+                onClick={() => {
+                  const shouldTurnOff = activeServices.length > services.length / 2
+                  if (shouldTurnOff) {
+                    services.forEach(service => service.isActive && toggleService(service.id))
+                  } else {
+                    services.forEach(service => !service.isActive && toggleService(service.id))
+                  }
+                }}
+                className="px-3 py-1.5 text-xs sm:text-sm font-medium bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-md transition-colors duration-200 whitespace-nowrap"
+              >
+                {activeServices.length > services.length / 2 ? '全部关闭' : '全部开启'}
+              </button>
             </div>
           </div>
           
