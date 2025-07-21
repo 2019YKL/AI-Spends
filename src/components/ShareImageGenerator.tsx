@@ -6,6 +6,43 @@ import { Button } from '@/components/ui/button'
 import { Download, Share2, X, Twitter } from 'lucide-react'
 import { AIService } from '@/types/ai-services'
 import { formatCurrency } from '@/lib/cost-calculator'
+
+// 格式化货币显示两位小数
+const formatCurrencyTwoDecimals = (amount: number, currency: 'USD' | 'CNY' | 'ZWL' = 'USD'): string => {
+  const exchangeRates = {
+    CNY: 7.3,
+    ZWL: 2700000000000,
+  }
+  
+  if (currency === 'CNY') {
+    const cnyAmount = amount * exchangeRates.CNY
+    return new Intl.NumberFormat('zh-CN', {
+      style: 'currency',
+      currency: 'CNY',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(cnyAmount)
+  }
+  
+  if (currency === 'ZWL') {
+    const zwlAmount = amount * exchangeRates.ZWL
+    if (zwlAmount >= 1000000000000) {
+      return `Z$${(zwlAmount / 1000000000000).toFixed(2)}T`
+    } else if (zwlAmount >= 1000000000) {
+      return `Z$${(zwlAmount / 1000000000).toFixed(2)}B`
+    } else if (zwlAmount >= 1000000) {
+      return `Z$${(zwlAmount / 1000000).toFixed(2)}M`
+    }
+    return `Z$${zwlAmount.toFixed(2)}`
+  }
+  
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(amount)
+}
 import { IconRenderer } from '@/components/IconRenderer'
 
 interface ShareImageGeneratorProps {
@@ -60,49 +97,10 @@ export function ShareImageGenerator({
     }
   }
 
-  const shareImage = async () => {
-    if (!shareCardRef.current) return
-    
-    setIsGenerating(true)
-    try {
-      const blob = await htmlToImage.toBlob(shareCardRef.current, {
-        width: 900,
-        height: 1200,
-        backgroundColor: 'transparent',
-        pixelRatio: 1,
-        style: {
-          transform: 'scale(2)',
-          transformOrigin: 'top left'
-        }
-      })
-      
-      if (blob && navigator.share) {
-        const file = new File([blob], 'aispends-share.png', { type: 'image/png' })
-        try {
-          await navigator.share({
-            files: [file],
-            title: 'AI支出锐评',
-            text: `${username || '某人'} 的AI订阅消费锐评`
-          })
-        } catch (error) {
-          console.error('分享失败:', error)
-          generateImage()
-        }
-      } else {
-        generateImage()
-      }
-    } catch (error) {
-      console.error('生成分享图失败:', error)
-    } finally {
-      setIsGenerating(false)
-    }
+  const shareToX = () => {
+    window.open('https://x.com', '_blank')
   }
 
-  const todayDate = new Date().toLocaleDateString('zh-CN', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  })
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
@@ -143,7 +141,7 @@ export function ShareImageGenerator({
 
               {/* 锐评标题 */}
               {roastTitle && (
-                <div className="mb-3 border-2 border-blue-500">
+                <div className="mb-3">
                   <div className="text-lg font-bold text-black leading-tight">
                     {roastTitle}
                   </div>
@@ -152,7 +150,7 @@ export function ShareImageGenerator({
 
               {/* 锐评内容 */}
               {roastMessage && (
-                <div className="mb-3 border-2 border-green-500">
+                <div className="mb-3">
                   <div className="text-sm text-gray-800 leading-relaxed text-justify">
                     {roastMessage.length > 180 ? `${roastMessage.slice(0, 180)}...` : roastMessage}
                   </div>
@@ -160,7 +158,7 @@ export function ShareImageGenerator({
               )}
 
               {/* 中间金额显示 */}
-              <div className="mb-3 flex justify-center border-2 border-yellow-500">
+              <div className="mb-3 flex justify-center">
                 <div 
                   className="text-8xl font-bold leading-none"
                   style={{
@@ -170,26 +168,26 @@ export function ShareImageGenerator({
                     color: 'transparent'
                   }}
                 >
-                  {formatCurrency(totalCost, currency).slice(0, -3)}
+                  {formatCurrencyTwoDecimals(totalCost, currency)}
                 </div>
               </div>
 
               {/* 金额描述文字 */}
-              <div className="mb-3 flex justify-end border-2 border-orange-500">
+              <div className="mb-3 flex justify-end">
                 <div className="text-xs text-gray-500">
-                  今天你的数字员工花了这么些
+                  今天，你的数字员工花了这么多诶
                 </div>
               </div>
 
               {/* 服务标题 */}
-              <div className="mt-3 pt-2 border-t border-gray-100 border-2 border-purple-500 mb-3">
+              <div className="mt-3 pt-2 border-t border-gray-100 mb-3">
                 <div className="text-xs text-gray-500 font-bold">
                   订阅服务 ({activeServices.length}个)
                 </div>
               </div>
 
               {/* 服务图标 */}
-              <div className="border-2 border-pink-500">
+              <div>
                 <div className="grid grid-cols-8 gap-x-2 gap-y-2 justify-items-center">
                   {(() => {
                     if (activeServices.length <= 16) {
@@ -242,8 +240,7 @@ export function ShareImageGenerator({
             {isGenerating ? '生成中...' : '下载图片'}
           </Button>
           <Button 
-            onClick={shareImage}
-            disabled={isGenerating}
+            onClick={shareToX}
             variant="outline"
             className="flex items-center gap-2"
           >

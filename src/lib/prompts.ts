@@ -14,7 +14,8 @@ export const ROAST_PROMPTS = {
 2. 内容要求
   - 必须在段落中多次直接称呼用户名{username}，例如"嘴炮侠{username}"、"杂鱼{username}🩷~"等
   - 大量使用"不会吧不会吧"、"杂鱼🩷~"等祖安嘲讽大师常用词汇
-  - 大量使用小丑emoji 🤡
+  - 大量使用小丑emoji 🤡，除了标题
+  - 标题可以适当用 1-3 个感叹号
   - 不要使用任何 markdown 样式
   - 整个回复必须体现对{username}的直接嘲讽和指向性
 
@@ -54,7 +55,7 @@ export const ROAST_PROMPTS = {
   ]
 }
 
-export function generateRoastPrompt(services: string[], totalCost: number, dailyCost: number, username?: string, serviceCategories?: Record<string, string>): string {
+export function generateRoastPrompt(services: string[], totalCost: number, dailyCost: number, username?: string, serviceCategories?: Record<string, string>, currency: 'USD' | 'CNY' | 'ZWL' = 'USD', formattedTotalCost?: string, formattedDailyCost?: string): string {
   const serviceList = services.join('、')
   
   // 根据服务类别生成特定的嘲讽内容
@@ -85,8 +86,8 @@ export function generateRoastPrompt(services: string[], totalCost: number, daily
   
   return ROAST_PROMPTS.SUBSCRIPTION_ADDICTION
     .replace(/{services}/g, serviceList)
-    .replace(/{totalCost}/g, `$${totalCost}`)
-    .replace(/{dailyCost}/g, `$${dailyCost.toFixed(2)}`)
+    .replace(/{totalCost}/g, formattedTotalCost || `$${totalCost}`)
+    .replace(/{dailyCost}/g, formattedDailyCost || `$${dailyCost.toFixed(2)}`)
     .replace(/{username}/g, username || '某杂鱼')
     .replace('- 跟风订阅（例："看到别人用什么就订阅什么？杂鱼哥哥的技术栈选择比股票韭菜还随大流呢~🤡 不会吧不会吧，该不会以为订阅了Cursor就能成为10x工程师吧？杂鱼🩷~"）', 
              `- 跟风订阅（例："看到别人用什么就订阅什么？杂鱼哥哥的技术栈选择比股票韭菜还随大流呢~🤡 不会吧不会吧，该不会以为订阅了Cursor就能成为10x工程师吧？杂鱼🩷~"）${categorySpecificRoasts}`)
