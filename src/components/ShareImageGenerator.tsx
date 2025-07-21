@@ -39,7 +39,7 @@ export function ShareImageGenerator({
     try {
       const canvas = await html2canvas(shareCardRef.current, {
         width: 900,
-        height: 900,
+        height: 1200,
         scale: 2,
         backgroundColor: '#ffffff',
         useCORS: true,
@@ -65,7 +65,7 @@ export function ShareImageGenerator({
     try {
       const canvas = await html2canvas(shareCardRef.current, {
         width: 900,
-        height: 900,
+        height: 1200,
         scale: 2,
         backgroundColor: '#ffffff',
         useCORS: true,
@@ -116,33 +116,44 @@ export function ShareImageGenerator({
         <div className="mb-6 flex justify-center">
           <div 
             ref={shareCardRef}
-            className="w-[450px] h-[450px] bg-gradient-to-br from-red-50 to-pink-100 rounded-2xl p-6 relative overflow-hidden"
+            className="w-[450px] h-[600px] bg-white rounded-2xl p-6 relative overflow-hidden"
             style={{ fontFamily: 'PingFang SC, Microsoft YaHei, sans-serif' }}
           >
-            {/* 背景装饰 */}
-            <div className="absolute inset-0 opacity-5">
-              <div className="absolute top-10 right-10 w-32 h-32 bg-red-500 rounded-full"></div>
-              <div className="absolute bottom-10 left-10 w-24 h-24 bg-pink-500 rounded-full"></div>
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-40 h-40 bg-rose-500 rounded-full"></div>
-            </div>
 
-            {/* 内容 */}
-            <div className="relative z-10 h-full flex flex-col">
-
-              {/* 用户信息 */}
-              <div className="text-center mb-3">
-                <div className="text-lg font-bold text-gray-900 mb-1">
-                  {username || '匿名用户'}
+            {/* 内容 - Tweet Card 样式布局 */}
+            <div className="relative z-10 h-full flex flex-col p-4">
+              
+              {/* 头部 - 用户信息 */}
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center text-2xl">
+                  🤡
                 </div>
-                <div className="text-xs text-gray-600">
-                  今日消费 {formatCurrency(totalCost, currency)}
+                <div className="ml-3">
+                  <div className="font-bold text-gray-900 text-2xl">
+                    {username || '匿名用户'} · 今日消费
+                  </div>
+                </div>
+              </div>
+
+              {/* 大金额显示 */}
+              <div className="mb-6">
+                <div 
+                  className="text-8xl font-bold leading-none"
+                  style={{
+                    background: 'linear-gradient(to right, rgb(234, 205, 163), rgb(214, 174, 123))',
+                    WebkitBackgroundClip: 'text',
+                    backgroundClip: 'text',
+                    color: 'transparent'
+                  }}
+                >
+                  {formatCurrency(totalCost, currency).slice(0, -3)}
                 </div>
               </div>
 
               {/* 锐评标题 */}
               {roastTitle && (
-                <div className="text-center mb-3">
-                  <div className="text-sm font-bold text-red-700 bg-red-100 rounded-lg px-3 py-2">
+                <div className="mb-3">
+                  <div className="text-lg font-bold text-black leading-tight">
                     {roastTitle}
                   </div>
                 </div>
@@ -150,33 +161,27 @@ export function ShareImageGenerator({
 
               {/* 锐评内容 */}
               {roastMessage && (
-                <div className="mb-3 flex-1">
-                  <div className="bg-white/80 rounded-lg p-3 text-xs text-gray-800 leading-relaxed h-full overflow-hidden">
-                    {roastMessage.length > 200 ? `${roastMessage.slice(0, 200)}...` : roastMessage}
+                <div className="flex-1 mb-4">
+                  <div className="text-sm text-gray-800 leading-relaxed text-justify">
+                    {roastMessage.length > 180 ? `${roastMessage.slice(0, 180)}...` : roastMessage}
                   </div>
                 </div>
               )}
 
-              {/* 服务图标 */}
-              <div className="mt-auto">
-                <div className="text-xs text-gray-600 mb-2 text-center">
-                  当前订阅 ({activeServices.length}个)
+              {/* 底部 - 服务图标 */}
+              <div className="mt-auto pt-4 border-t border-gray-100">
+                <div className="text-xs text-gray-500 mb-2">
+                  订阅服务 ({activeServices.length}个)
                 </div>
-                <div className="flex flex-wrap justify-center gap-1">
-                  {activeServices.slice(0, 8).map((service) => (
+                <div className="flex flex-wrap gap-2">
+                  {activeServices.map((service) => (
                     <div
                       key={service.id}
-                      className="w-8 h-8 rounded-lg flex items-center justify-center bg-white/60"
-                      style={{ backgroundColor: `${service.color.replace('bg-', '')}20` }}
+                      className="w-8 h-8 rounded-lg flex items-center justify-center bg-gray-50 border border-gray-200"
                     >
                       <IconRenderer name={service.icon} size={16} />
                     </div>
                   ))}
-                  {activeServices.length > 8 && (
-                    <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-gray-200 text-xs font-bold text-gray-600">
-                      +{activeServices.length - 8}
-                    </div>
-                  )}
                 </div>
               </div>
             </div>
@@ -205,7 +210,7 @@ export function ShareImageGenerator({
         </div>
 
         <div className="mt-4 text-xs text-gray-500 text-center">
-          * 图片尺寸 900x900px，适合社交媒体分享
+          * 图片尺寸 900x1200px，适合社交媒体分享
         </div>
       </div>
     </div>
