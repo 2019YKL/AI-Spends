@@ -150,7 +150,7 @@ export function ShareImageGenerator({
               {/* 锐评标题 */}
               {roastTitle && (
                 <div className="mb-3">
-                  <div className="text-lg font-bold text-black leading-tight">
+                  <div className="text-lg font-bold text-gray-800 leading-tight">
                     {roastTitle}
                   </div>
                 </div>

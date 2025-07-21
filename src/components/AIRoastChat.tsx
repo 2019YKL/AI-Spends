@@ -38,6 +38,12 @@ export function AIRoastChat({
   const [staticTotalCost, setStaticTotalCost] = useState(0)
 
   const handleRoast = async () => {
+    // 检查用户输入是否为空
+    if (!userInput.trim()) {
+      setError('请输入自己的网名，让 AI 更好用力')
+      return
+    }
+    
     setIsLoading(true)
     setError('')
     
