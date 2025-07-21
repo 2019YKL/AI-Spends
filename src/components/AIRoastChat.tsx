@@ -12,13 +12,23 @@ import { ImageIcon, Send } from 'lucide-react'
 interface AIRoastChatProps {
   activeServices: AIService[]
   totalMonthlyCost: number
+  totalCurrentCost?: number
+  currency?: 'USD' | 'CNY' | 'ZWL'
 }
 
-export function AIRoastChat({ activeServices, totalMonthlyCost }: AIRoastChatProps) {
+export function AIRoastChat({ 
+  activeServices, 
+  totalMonthlyCost, 
+  totalCurrentCost = 0,
+  currency = 'USD'
+}: AIRoastChatProps) {
   const [isLoading, setIsLoading] = useState(false)
   const [roastMessage, setRoastMessage] = useState('')
+  const [roastTitle, setRoastTitle] = useState('')
   const [isRoasted, setIsRoasted] = useState(false)
   const [error, setError] = useState('')
+  const [showShareGenerator, setShowShareGenerator] = useState(false)
+  const [username, setUsername] = useState('')
 
   const handleRoast = async () => {
     setIsLoading(true)
@@ -54,7 +64,18 @@ export function AIRoastChat({ activeServices, totalMonthlyCost }: AIRoastChatPro
       }
 
       const data = await response.json()
-      setRoastMessage(data.message)
+      const message = data.message
+      
+      // 解析标题和内容
+      const lines = message.split('\n').filter(line => line.trim())
+      if (lines.length > 0) {
+        setRoastTitle(lines[0].trim())
+        setRoastMessage(lines.slice(1).join('\n').trim())
+      } else {
+        setRoastTitle('')
+        setRoastMessage(message)
+      }
+      
       setIsRoasted(true)
       
     } catch (error) {
@@ -67,6 +88,7 @@ export function AIRoastChat({ activeServices, totalMonthlyCost }: AIRoastChatPro
 
   const handleReset = () => {
     setRoastMessage('')
+    setRoastTitle('')
     setIsRoasted(false)
     setError('')
   }
@@ -85,13 +107,10 @@ export function AIRoastChat({ activeServices, totalMonthlyCost }: AIRoastChatPro
         {/* 当前订阅服务 */}
         {activeServices.length > 0 && (
           <div className="p-4">
-            <div className="flex items-center justify-between mb-3">
+            <div className="mb-3">
               <h3 className="text-sm font-medium text-blue-700 dark:text-blue-300">
                 当前订阅 ({activeServices.length}个)
               </h3>
-              <div className="text-xs text-blue-600 dark:text-blue-400">
-                月费 ${totalMonthlyCost}
-              </div>
             </div>
             <div className="flex flex-wrap gap-2">
               {activeServices.map((service) => (
@@ -112,42 +131,109 @@ export function AIRoastChat({ activeServices, totalMonthlyCost }: AIRoastChatPro
           </div>
         )}
 
-        {/* 输入框行 */}
-        <div className="flex mb-3">
-          <Input
-            placeholder={activeServices.length > 0 ? 
-              `根据你的${activeServices.length}个订阅(月费$${totalMonthlyCost})获得专业的嘲讽输出，让AI告诉你自己是一条什么杂鱼` : 
-              "请先启用一些订阅服务"}
-            className="flex-1 bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700"
-            disabled
-          />
+        {/* 移动端布局：分两行 */}
+        <div className="block sm:hidden space-y-3">
+          {/* 输入框行 */}
+          <div className="flex">
+            <Input
+              placeholder={activeServices.length > 0 ? 
+                `根据你的${activeServices.length}个订阅(月费$${totalMonthlyCost})获得专业的嘲讽输出，让AI告诉你自己是一条什么杂鱼` : 
+                "请先启用一些订阅服务"}
+              className="flex-1 bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700"
+              disabled
+            />
+          </div>
+          
+          {/* 按钮行 */}
+          <div className="space-y-2">
+            <div className="flex gap-2">
+              <Button 
+                onClick={handleRoast}
+                disabled={isLoading || activeServices.length === 0}
+                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 flex items-center justify-center gap-2"
+              >
+                {isLoading ? (
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                ) : (
+                  <>
+                    <Send className="w-4 h-4" />
+                    测水平
+                  </>
+                )}
+              </Button>
+              <Button 
+                onClick={() => setShowShareGenerator(true)}
+                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 flex items-center justify-center gap-2"
+                disabled={activeServices.length === 0 || !roastMessage}
+              >
+                <ImageIcon className="w-4 h-4" />
+                分享
+              </Button>
+            </div>
+            
+            {/* 网名输入 - 只在有锐评内容时显示 */}
+            {roastMessage && (
+              <div className="flex gap-2 items-center">
+                <span className="text-xs text-gray-600 dark:text-gray-400 whitespace-nowrap">网名:</span>
+                <Input
+                  type="text"
+                  placeholder="输入网名用于分享图..."
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  className="flex-1 text-xs h-8 bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600"
+                />
+              </div>
+            )}
+          </div>
         </div>
 
-        {/* 按钮行 - 移动端优先 */}
-        <div className="flex gap-2">
-          <Button 
-            onClick={handleRoast}
-            disabled={isLoading || activeServices.length === 0}
-            className="flex-1 sm:flex-none bg-blue-600 hover:bg-blue-700 text-white px-4 sm:px-6 flex items-center justify-center gap-2"
-          >
-            {isLoading ? (
-              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-            ) : (
-              <>
-                <Send className="w-4 h-4" />
-                <span className="hidden sm:inline">测测我的水平</span>
-                <span className="sm:hidden">测水平</span>
-              </>
-            )}
-          </Button>
-          <Button 
-            className="flex-1 sm:flex-none bg-blue-600 hover:bg-blue-700 text-white px-4 flex items-center justify-center gap-2"
-            disabled={activeServices.length === 0}
-          >
-            <ImageIcon className="w-4 h-4" />
-            <span className="hidden sm:inline">分享图片</span>
-            <span className="sm:hidden">分享</span>
-          </Button>
+        {/* PC端布局：一行 */}
+        <div className="hidden sm:block space-y-2">
+          <div className="flex gap-2">
+            <Input
+              placeholder={activeServices.length > 0 ? 
+                `根据你的${activeServices.length}个订阅(月费$${totalMonthlyCost})获得专业的嘲讽输出，让AI告诉你自己是一条什么杂鱼` : 
+                "请先启用一些订阅服务"}
+              className="flex-1 bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700"
+              disabled
+            />
+            <Button 
+              onClick={handleRoast}
+              disabled={isLoading || activeServices.length === 0}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-6 flex items-center gap-2"
+            >
+              {isLoading ? (
+                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+              ) : (
+                <>
+                  <Send className="w-4 h-4" />
+                  测测我的水平
+                </>
+              )}
+            </Button>
+            <Button 
+              onClick={() => setShowShareGenerator(true)}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-4 flex items-center gap-2"
+              disabled={activeServices.length === 0 || !roastMessage}
+            >
+              <ImageIcon className="w-4 h-4" />
+              分享图片
+            </Button>
+          </div>
+          
+          {/* 网名输入 - 只在有锐评内容时显示 */}
+          {roastMessage && (
+            <div className="flex gap-2 items-center">
+              <span className="text-sm text-gray-600 dark:text-gray-400 whitespace-nowrap">网名:</span>
+              <Input
+                type="text"
+                placeholder="输入网名用于分享图..."
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                className="w-48 text-sm h-9 bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600"
+              />
+            </div>
+          )}
         </div>
 
         {/* 错误显示 */}
@@ -165,6 +251,11 @@ export function AIRoastChat({ activeServices, totalMonthlyCost }: AIRoastChatPro
                 AI
               </div>
               <div className="flex-1 bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+                {roastTitle && (
+                  <div className="text-base font-bold text-gray-900 dark:text-gray-100 mb-3 border-b border-gray-200 dark:border-gray-600 pb-2">
+                    {roastTitle}
+                  </div>
+                )}
                 <div className="text-sm text-gray-900 dark:text-gray-100 whitespace-pre-wrap leading-relaxed">
                   {roastMessage}
                 </div>
@@ -174,6 +265,20 @@ export function AIRoastChat({ activeServices, totalMonthlyCost }: AIRoastChatPro
         )}
 
       </CardContent>
+      
+      {/* 分享图生成器弹窗 */}
+      {showShareGenerator && (
+        <ShareImageGenerator
+          totalCost={totalCurrentCost}
+          monthlyBudget={totalMonthlyCost}
+          activeServices={activeServices}
+          currency={currency}
+          roastMessage={roastMessage}
+          roastTitle={roastTitle}
+          username={username}
+          onClose={() => setShowShareGenerator(false)}
+        />
+      )}
     </Card>
   )
 }

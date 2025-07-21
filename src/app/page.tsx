@@ -345,6 +345,8 @@ export default function Dashboard() {
           <AIRoastChat 
             activeServices={activeServices}
             totalMonthlyCost={totalCosts.monthlyBudget}
+            totalCurrentCost={totalCosts.currentTotal}
+            currency={currency}
           />
         </div>
 
