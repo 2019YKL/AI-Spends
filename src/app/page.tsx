@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react'
 import { CostTrackingCard } from '@/components/CostTrackingCard'
+import { SimpleCostTrackingCard } from '@/components/SimpleCostTrackingCard'
 import { calculateRealTimeCost, formatCurrency, formatCurrencyPrecise } from '@/lib/cost-calculator'
 import { SmoothNumber } from '@/components/SmoothNumber'
 import { RollingNumber } from '@/components/RollingNumber'
@@ -19,6 +20,7 @@ export default function Dashboard() {
   const [mounted, setMounted] = useState(false)
   const [currency, setCurrency] = useState<'USD' | 'CNY' | 'ZWL'>('USD')
   const [showBackToTop, setShowBackToTop] = useState(false)
+  const [isSimpleMode, setIsSimpleMode] = useState(false)
   const { services, activeServices, toggleService, changeTier } = useServiceToggle()
   // Check if component is mounted to avoid hydration errors
   useEffect(() => {
@@ -234,6 +236,14 @@ export default function Dashboard() {
               <Button
                 variant="outline"
                 size="sm"
+                onClick={() => setIsSimpleMode(!isSimpleMode)}
+                className="text-xs sm:text-sm whitespace-nowrap"
+              >
+                {isSimpleMode ? '详细模式' : '简洁模式'}
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
                 onClick={() => services.forEach(service => !service.isActive && toggleService(service.id))}
                 className="text-xs sm:text-sm whitespace-nowrap"
               >
@@ -264,13 +274,23 @@ export default function Dashboard() {
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                   {categoryServices.map((service) => (
-                    <CostTrackingCard
-                      key={service.id}
-                      service={service}
-                      onToggle={toggleService}
-                      onTierChange={changeTier}
-                      className="h-full"
-                    />
+                    isSimpleMode ? (
+                      <SimpleCostTrackingCard
+                        key={service.id}
+                        service={service}
+                        onToggle={toggleService}
+                        onTierChange={changeTier}
+                        className="h-full"
+                      />
+                    ) : (
+                      <CostTrackingCard
+                        key={service.id}
+                        service={service}
+                        onToggle={toggleService}
+                        onTierChange={changeTier}
+                        className="h-full"
+                      />
+                    )
                   ))}
                 </div>
               </div>
