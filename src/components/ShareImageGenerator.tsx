@@ -40,7 +40,7 @@ export function ShareImageGenerator({
       const canvas = await html2canvas(shareCardRef.current, {
         width: 900,
         height: 1200,
-        scale: 2,
+        scale: 1,
         backgroundColor: 'transparent',
         useCORS: true,
         allowTaint: true
@@ -66,7 +66,7 @@ export function ShareImageGenerator({
       const canvas = await html2canvas(shareCardRef.current, {
         width: 900,
         height: 1200,
-        scale: 2,
+        scale: 1,
         backgroundColor: 'transparent',
         useCORS: true,
         allowTaint: true
@@ -116,8 +116,11 @@ export function ShareImageGenerator({
         <div className="mb-6 flex justify-center">
           <div 
             ref={shareCardRef}
-            className="w-[450px] h-[600px] p-8 relative overflow-hidden"
+            className="relative overflow-hidden"
             style={{ 
+              width: '450px', 
+              height: '600px', 
+              padding: '40px',
               backgroundImage: 'linear-gradient(60deg, #96deda 0%, #50c9c3 100%)',
               fontFamily: 'PingFang SC, Microsoft YaHei, sans-serif' 
             }}
