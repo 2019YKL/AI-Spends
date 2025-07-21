@@ -169,7 +169,7 @@ export function ShareImageGenerator({
               )}
 
               {/* 底部 - 服务图标 */}
-              <div className="mt-auto pt-4 border-t border-gray-100">
+              <div className="mt-auto pt-2 border-t border-gray-100">
                 <div className="text-xs text-gray-500 mb-2">
                   订阅服务 ({activeServices.length}个)
                 </div>
