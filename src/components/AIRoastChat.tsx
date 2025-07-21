@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { generateRoastPrompt } from '@/lib/prompts'
 import { Input } from '@/components/ui/input'
 import { IconRenderer } from '@/components/IconRenderer'
+import { ImageIcon, Send } from 'lucide-react'
 
 interface AIRoastChatProps {
   activeServices: AIService[]
@@ -123,13 +124,23 @@ export function AIRoastChat({ activeServices, totalMonthlyCost }: AIRoastChatPro
           <Button 
             onClick={handleRoast}
             disabled={isLoading || activeServices.length === 0}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-6"
+            className="bg-blue-600 hover:bg-blue-700 text-white px-6 flex items-center gap-2"
           >
             {isLoading ? (
               <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
             ) : (
-              "发送"
+              <>
+                <Send className="w-4 h-4" />
+                测测我的水平
+              </>
             )}
+          </Button>
+          <Button 
+            className="bg-blue-600 hover:bg-blue-700 text-white px-4 flex items-center gap-2"
+            disabled={activeServices.length === 0}
+          >
+            <ImageIcon className="w-4 h-4" />
+            分享图片
           </Button>
         </div>
 
