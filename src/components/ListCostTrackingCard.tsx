@@ -33,10 +33,17 @@ export function ListCostTrackingCard({ service, className, onToggle, onTierChang
           <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 truncate">
             {service.name}
           </h3>
-          {service.pricingTiers && service.pricingTiers.length > 0 && (
+          {service.isActive && service.pricingTiers && service.pricingTiers.length > 0 && (
             <div className="mt-1">
               <span className="text-sm text-gray-500 dark:text-gray-500">
                 {service.pricingTiers.length} 个计划
+              </span>
+            </div>
+          )}
+          {!service.isActive && (
+            <div className="mt-1">
+              <span className="text-sm text-gray-500 dark:text-gray-500">
+                服务已关闭
               </span>
             </div>
           )}

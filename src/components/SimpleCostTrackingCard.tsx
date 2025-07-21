@@ -70,7 +70,7 @@ export function SimpleCostTrackingCard({ service, className, onToggle, onTierCha
           /* Inactive State */
           <div className="flex items-center justify-center py-3">
             <span className="text-sm text-muted-foreground">
-              ${service.subscriptionPrice}/month
+              服务已关闭
             </span>
           </div>
         )}

@@ -149,10 +149,6 @@ export function CostTrackingCard({ service, className, onToggle, onTierChange }:
             <div className="text-sm text-muted-foreground">
               启用以开始追踪费用
             </div>
-            <div className="mt-4 p-3 bg-muted/50 rounded-lg">
-              <div className="text-sm text-muted-foreground">月费</div>
-              <div className="text-xl font-bold">{formatCurrency(service.subscriptionPrice)}</div>
-            </div>
           </div>
         )}
       </CardContent>
