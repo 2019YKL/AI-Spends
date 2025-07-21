@@ -43,8 +43,6 @@ npm install
 创建 `.env.local` 文件并添加以下内容：
 ```bash
 # ⚠️ 重要：这是OpenRouter的API密钥，不是DeepSeek官方API！
-# OpenRouter API Key (for DeepSeek AI roasting feature)
-# Get your API key from: https://openrouter.ai/ (NOT deepseek.com)
 DEEPSEEK_API_KEY=sk-or-v1-your-openrouter-api-key-here
 ```
 
@@ -142,10 +140,3 @@ MIT License - 可自由用于个人或商业用途
 
 如有问题或建议，请不要在GitHub上提交Issue（好吧，其实我也不太清楚咋处理，你提，我蛮看看）。
 
----
-
-**⚡ 一键部署 | Quick Deploy**
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/2019YKL/AI-Spends&env=DEEPSEEK_API_KEY&envDescription=OpenRouter%20API%20Key%20for%20DeepSeek%20AI%20roasting%20feature&envLink=https://openrouter.ai/)
-
-记得在Vercel中配置 `DEEPSEEK_API_KEY` 环境变量！
