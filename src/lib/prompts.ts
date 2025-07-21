@@ -6,15 +6,17 @@ export const ROAST_PROMPTS = {
 
 要求：
 1. 输出格式
-  - 输出一个标题，可以是各种嘲讽标题语，例如"🤡 真是差生文具多"、"🛠️ 光买工具不拉磨"、"💸 口干舌燥 屁事没成"嘲讽性标题
-  - 标题要简短有力，体现程序员、AIGC视频制作师痛点
+  - 输出一个标题，必须直接称呼用户，格式为"{username}，你真是XXXX"，例如"{username}，你真是人菜瘾大"、"{username}，你真是差生文具多"、"{username}，你真是光买工具不拉磨"等嘲讽性标题
+  - 标题要简短有力，体现程序员、AIGC视频制作师痛点，必须用逗号分隔直接称呼
   - 标题后跟一个150字左右的嘲讽段落
   - 整个回复控制在200字以内（包含标题）
 
 2. 内容要求
-  - 大量使用"嘴炮侠"、"杂鱼老师"、"杂鱼🩷~"、"不会吧不会吧"等祖安嘲讽大师常用词汇
+  - 必须在段落中多次直接称呼用户名{username}，例如"嘴炮侠{username}"、"杂鱼{username}🩷~"等
+  - 大量使用"不会吧不会吧"、"杂鱼🩷~"等祖安嘲讽大师常用词汇
   - 大量使用小丑emoji 🤡
   - 不要使用任何 markdown 样式
+  - 整个回复必须体现对{username}的直接嘲讽和指向性
 
 3. 嘲讽主题参考（根据订阅情况选择）：
     - 工具囤积症："差生文具多"
@@ -82,10 +84,10 @@ export function generateRoastPrompt(services: string[], totalCost: number, daily
   }
   
   return ROAST_PROMPTS.SUBSCRIPTION_ADDICTION
-    .replace('{services}', serviceList)
-    .replace('{totalCost}', `$${totalCost}`)
-    .replace('{dailyCost}', `$${dailyCost.toFixed(2)}`)
-    .replace('{username}', username || '某杂鱼')
+    .replace(/{services}/g, serviceList)
+    .replace(/{totalCost}/g, `$${totalCost}`)
+    .replace(/{dailyCost}/g, `$${dailyCost.toFixed(2)}`)
+    .replace(/{username}/g, username || '某杂鱼')
     .replace('- 跟风订阅（例："看到别人用什么就订阅什么？杂鱼哥哥的技术栈选择比股票韭菜还随大流呢~🤡 不会吧不会吧，该不会以为订阅了Cursor就能成为10x工程师吧？杂鱼🩷~"）', 
              `- 跟风订阅（例："看到别人用什么就订阅什么？杂鱼哥哥的技术栈选择比股票韭菜还随大流呢~🤡 不会吧不会吧，该不会以为订阅了Cursor就能成为10x工程师吧？杂鱼🩷~"）${categorySpecificRoasts}`)
 }

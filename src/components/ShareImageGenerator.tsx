@@ -136,18 +136,6 @@ export function ShareImageGenerator({
 
             {/* 内容 - Tweet Card 样式布局 */}
             <div className="relative z-10 h-full flex flex-col p-4">
-              
-              {/* 头部 - 用户信息 */}
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center text-2xl">
-                  🤡
-                </div>
-                <div className="ml-3">
-                  <div className="font-bold text-gray-900 text-2xl">
-                    {username || '匿名用户'} · 今日消费
-                  </div>
-                </div>
-              </div>
 
               {/* 大金额显示 - 静态 */}
               <div className="mb-6">
