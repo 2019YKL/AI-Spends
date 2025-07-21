@@ -112,8 +112,8 @@ export function AIRoastChat({ activeServices, totalMonthlyCost }: AIRoastChatPro
           </div>
         )}
 
-        {/* 输入框 */}
-        <div className="flex gap-2">
+        {/* 输入框行 */}
+        <div className="flex mb-3">
           <Input
             placeholder={activeServices.length > 0 ? 
               `根据你的${activeServices.length}个订阅(月费$${totalMonthlyCost})获得专业的嘲讽输出，让AI告诉你自己是一条什么杂鱼` : 
@@ -121,26 +121,32 @@ export function AIRoastChat({ activeServices, totalMonthlyCost }: AIRoastChatPro
             className="flex-1 bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700"
             disabled
           />
+        </div>
+
+        {/* 按钮行 - 移动端优先 */}
+        <div className="flex gap-2">
           <Button 
             onClick={handleRoast}
             disabled={isLoading || activeServices.length === 0}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-6 flex items-center gap-2"
+            className="flex-1 sm:flex-none bg-blue-600 hover:bg-blue-700 text-white px-4 sm:px-6 flex items-center justify-center gap-2"
           >
             {isLoading ? (
               <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
             ) : (
               <>
                 <Send className="w-4 h-4" />
-                测测我的水平
+                <span className="hidden sm:inline">测测我的水平</span>
+                <span className="sm:hidden">测水平</span>
               </>
             )}
           </Button>
           <Button 
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 flex items-center gap-2"
+            className="flex-1 sm:flex-none bg-blue-600 hover:bg-blue-700 text-white px-4 flex items-center justify-center gap-2"
             disabled={activeServices.length === 0}
           >
             <ImageIcon className="w-4 h-4" />
-            分享图片
+            <span className="hidden sm:inline">分享图片</span>
+            <span className="sm:hidden">分享</span>
           </Button>
         </div>
 
