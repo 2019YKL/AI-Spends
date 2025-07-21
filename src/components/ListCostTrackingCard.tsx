@@ -33,16 +33,13 @@ export function ListCostTrackingCard({ service, className, onToggle, onTierChang
           <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 truncate">
             {service.name}
           </h3>
-          <div className="flex items-center gap-3 mt-1">
-            <span className="text-sm text-gray-600 dark:text-gray-400">
-              ${service.subscriptionPrice}/month
-            </span>
-            {service.pricingTiers && service.pricingTiers.length > 0 && (
-              <span className="text-xs text-gray-500 dark:text-gray-500">
-                {service.pricingTiers.length} plans
+          {service.pricingTiers && service.pricingTiers.length > 0 && (
+            <div className="mt-1">
+              <span className="text-sm text-gray-500 dark:text-gray-500">
+                {service.pricingTiers.length} 个计划
               </span>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </div>
 
