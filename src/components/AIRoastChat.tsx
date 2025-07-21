@@ -76,7 +76,7 @@ export function AIRoastChat({
       const message = data.message
       
       // 解析标题和内容
-      const lines = message.split('\n').filter(line => line.trim())
+      const lines = message.split('\n').filter((line: string) => line.trim())
       if (lines.length > 0) {
         setRoastTitle(lines[0].trim())
         setRoastMessage(lines.slice(1).join('\n').trim())

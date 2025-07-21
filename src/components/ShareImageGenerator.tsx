@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef, useState } from 'react'
-import html2canvas from 'html2canvas'
+import * as htmlToImage from 'html-to-image'
 import { Button } from '@/components/ui/button'
 import { Download, Share2, X } from 'lucide-react'
 import { AIService } from '@/types/ai-services'
@@ -37,19 +37,21 @@ export function ShareImageGenerator({
     
     setIsGenerating(true)
     try {
-      const canvas = await html2canvas(shareCardRef.current, {
+      const dataUrl = await htmlToImage.toPng(shareCardRef.current, {
         width: 900,
         height: 1200,
-        scale: 1,
         backgroundColor: 'transparent',
-        useCORS: true,
-        allowTaint: true
+        pixelRatio: 1,
+        style: {
+          transform: 'scale(2)',
+          transformOrigin: 'top left'
+        }
       })
       
       // 下载图片
       const link = document.createElement('a')
       link.download = `aispends-${username || 'user'}-${new Date().toISOString().split('T')[0]}.png`
-      link.href = canvas.toDataURL()
+      link.href = dataUrl
       link.click()
     } catch (error) {
       console.error('生成分享图失败:', error)
@@ -63,32 +65,32 @@ export function ShareImageGenerator({
     
     setIsGenerating(true)
     try {
-      const canvas = await html2canvas(shareCardRef.current, {
+      const blob = await htmlToImage.toBlob(shareCardRef.current, {
         width: 900,
         height: 1200,
-        scale: 1,
         backgroundColor: 'transparent',
-        useCORS: true,
-        allowTaint: true
+        pixelRatio: 1,
+        style: {
+          transform: 'scale(2)',
+          transformOrigin: 'top left'
+        }
       })
       
-      canvas.toBlob(async (blob) => {
-        if (blob && navigator.share) {
-          const file = new File([blob], 'aispends-share.png', { type: 'image/png' })
-          try {
-            await navigator.share({
-              files: [file],
-              title: 'AI支出锐评',
-              text: `${username || '某人'} 的AI订阅消费锐评`
-            })
-          } catch (error) {
-            console.error('分享失败:', error)
-            generateImage()
-          }
-        } else {
+      if (blob && navigator.share) {
+        const file = new File([blob], 'aispends-share.png', { type: 'image/png' })
+        try {
+          await navigator.share({
+            files: [file],
+            title: 'AI支出锐评',
+            text: `${username || '某人'} 的AI订阅消费锐评`
+          })
+        } catch (error) {
+          console.error('分享失败:', error)
           generateImage()
         }
-      }, 'image/png')
+      } else {
+        generateImage()
+      }
     } catch (error) {
       console.error('生成分享图失败:', error)
     } finally {
