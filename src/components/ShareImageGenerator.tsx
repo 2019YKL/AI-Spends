@@ -112,27 +112,30 @@ export function ShareImageGenerator({
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-xl p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl font-bold text-gray-900">生成分享图</h2>
+      <div className="bg-white rounded-xl p-4 sm:p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+        <div className="flex items-center justify-between mb-4 sm:mb-6">
+          <h2 className="text-lg sm:text-xl font-bold text-gray-900">生成分享图</h2>
           <Button variant="ghost" size="sm" onClick={onClose}>
             <X className="w-4 h-4" />
           </Button>
         </div>
 
         {/* 分享图预览 - 竖版设计 */}
-        <div className="mb-6 flex justify-center">
-          <div 
-            ref={shareCardRef}
-            className="relative overflow-hidden"
-            style={{ 
-              width: '450px', 
-              height: '600px', 
-              padding: '40px',
-              backgroundImage: backgroundOptions[selectedBackground].gradient,
-              fontFamily: 'PingFang SC, Microsoft YaHei, sans-serif' 
-            }}
-          >
+        <div className="mb-4 sm:mb-6 flex justify-center">
+          <div className="relative max-w-full overflow-hidden">
+            <div 
+              ref={shareCardRef}
+              className="relative overflow-hidden mx-auto"
+              style={{ 
+                width: '450px', 
+                height: '600px', 
+                padding: '40px',
+                backgroundImage: backgroundOptions[selectedBackground].gradient,
+                fontFamily: 'PingFang SC, Microsoft YaHei, sans-serif',
+                transform: 'scale(min(calc(100vw - 80px) / 450px, 1))',
+                transformOrigin: 'center top'
+              }}
+            >
             {/* 内部白色卡片 */}
             <div 
               className="w-full h-full bg-white relative overflow-hidden"
@@ -247,16 +250,17 @@ export function ShareImageGenerator({
             </div>
             </div>
           </div>
+          </div>
         </div>
 
         {/* 背景色选择器 */}
-        <div className="mb-6">
-          <div className="flex justify-center gap-3">
+        <div className="mb-4 sm:mb-6">
+          <div className="flex justify-center gap-2 sm:gap-3">
             {backgroundOptions.map((option, index) => (
               <button
                 key={index}
                 onClick={() => setSelectedBackground(index)}
-                className={`w-8 h-8 rounded-full border-2 transition-all ${
+                className={`w-6 h-6 sm:w-8 sm:h-8 rounded-full border-2 transition-all ${
                   selectedBackground === index 
                     ? 'border-blue-500 scale-110' 
                     : 'border-gray-300 hover:border-gray-400'
@@ -269,7 +273,7 @@ export function ShareImageGenerator({
         </div>
 
         {/* 操作按钮 */}
-        <div className="flex gap-3 justify-center">
+        <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <Button 
             onClick={generateImage}
             disabled={isGenerating}

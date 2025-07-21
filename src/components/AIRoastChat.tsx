@@ -265,7 +265,6 @@ export function AIRoastChat({
       {showShareGenerator && (
         <ShareImageGenerator
           totalCost={staticTotalCost}
-          monthlyBudget={totalMonthlyCost}
           activeServices={activeServices}
           currency={currency}
           roastMessage={roastMessage}
