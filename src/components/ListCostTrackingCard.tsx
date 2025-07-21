@@ -50,10 +50,10 @@ export function ListCostTrackingCard({ service, className, onToggle, onTierChang
         </div>
       </div>
 
-      {/* Center: Pricing Tiers (if active) */}
-      {service.isActive && service.pricingTiers && service.pricingTiers.length > 0 && (
-        <div className="flex gap-2 mx-4 flex-shrink-0">
-          {service.pricingTiers.map((tier) => (
+      {/* Center: Pricing Tiers - 保持固定宽度避免布局抖动 */}
+      <div className="flex gap-2 mx-4 flex-shrink-0 min-w-[200px] justify-center">
+        {service.isActive && service.pricingTiers && service.pricingTiers.length > 0 ? (
+          service.pricingTiers.map((tier) => (
             <button
               key={tier.id}
               onClick={() => onTierChange?.(service.id, tier.id)}
@@ -65,9 +65,17 @@ export function ListCostTrackingCard({ service, className, onToggle, onTierChang
             >
               {tier.name} ${tier.price}
             </button>
-          ))}
-        </div>
-      )}
+          ))
+        ) : service.isActive ? (
+          <span className="text-xs text-gray-500 dark:text-gray-500">
+            单一套餐
+          </span>
+        ) : (
+          <span className="text-xs text-gray-400 dark:text-gray-600">
+            —
+          </span>
+        )}
+      </div>
 
       {/* Right: Switch */}
       <div className="flex items-center gap-3 flex-shrink-0">

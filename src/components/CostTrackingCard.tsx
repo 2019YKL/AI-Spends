@@ -142,14 +142,36 @@ export function CostTrackingCard({ service, className, onToggle, onTierChange }:
             </div>
           </>
         ) : (
-          /* Inactive State */
-          <div className="text-center py-8">
-            <div className="text-4xl mb-2 grayscale">😴</div>
-            <div className="text-lg font-medium text-muted-foreground mb-1">服务已暂停</div>
-            <div className="text-sm text-muted-foreground">
-              启用以开始追踪费用
+          /* Inactive State - 保持与活跃状态相同的高度结构 */
+          <>
+            {/* Pricing Tiers 占位区域 */}
+            {service.pricingTiers && service.pricingTiers.length > 0 && (
+              <div className="h-[42px]"></div>
+            )}
+            
+            {/* Current Cost 占位区域 */}
+            <div className="space-y-3">
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-muted-foreground">Status</span>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-muted-foreground">
+                    😴
+                  </div>
+                  <div className="text-xs text-muted-foreground">
+                    已关闭
+                  </div>
+                </div>
+              </div>
+          
+              {/* Progress Bar 占位区域 */}
+              <div className="w-full bg-muted rounded-full h-2">
+                <div 
+                  className="h-2 rounded-full bg-gray-300"
+                  style={{ width: '0%' }}
+                />
+              </div>
             </div>
-          </div>
+          </>
         )}
       </CardContent>
     </Card>
