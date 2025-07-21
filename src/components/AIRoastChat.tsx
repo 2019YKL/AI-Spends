@@ -43,8 +43,8 @@ export function AIRoastChat({
         return acc
       }, {} as Record<string, string>)
       
-      // 使用用户输入的内容或默认prompt
-      const prompt = userInput.trim() || generateRoastPrompt(serviceNames, totalMonthlyCost, totalCurrentCost, serviceCategories)
+      // 始终使用锐评提示词，将用户输入作为username传递
+      const prompt = generateRoastPrompt(serviceNames, totalMonthlyCost, totalCurrentCost, userInput.trim(), serviceCategories)
       
       // 调用 DeepSeek API
       const response = await fetch('/api/deepseek/chat', {

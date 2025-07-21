@@ -2,7 +2,7 @@ export const ROAST_PROMPTS = {
   // 基础嘲讽模板
   SUBSCRIPTION_ADDICTION: `你是一个善于嘲讽 AI用户的高级祖安相声大师，你需要根据用户提供的AI订阅记录，用祖安惯用的嘲讽语气混合程序员圈梗生成锐评报告。
 
-用户订阅了这些AI服务：{services}，总月费 {totalCost}，今天已经烧了 {dailyCost}。
+用户 {username} 订阅了这些AI服务：{services}，总月费 {totalCost}，今天已经烧了 {dailyCost}。
 
 要求：
 1. 输出格式
@@ -52,7 +52,7 @@ export const ROAST_PROMPTS = {
   ]
 }
 
-export function generateRoastPrompt(services: string[], totalCost: number, dailyCost: number, serviceCategories?: Record<string, string>): string {
+export function generateRoastPrompt(services: string[], totalCost: number, dailyCost: number, username?: string, serviceCategories?: Record<string, string>): string {
   const serviceList = services.join('、')
   
   // 根据服务类别生成特定的嘲讽内容
@@ -85,6 +85,7 @@ export function generateRoastPrompt(services: string[], totalCost: number, daily
     .replace('{services}', serviceList)
     .replace('{totalCost}', `$${totalCost}`)
     .replace('{dailyCost}', `$${dailyCost.toFixed(2)}`)
+    .replace('{username}', username || '某杂鱼')
     .replace('- 跟风订阅（例："看到别人用什么就订阅什么？杂鱼哥哥的技术栈选择比股票韭菜还随大流呢~🤡 不会吧不会吧，该不会以为订阅了Cursor就能成为10x工程师吧？杂鱼🩷~"）', 
              `- 跟风订阅（例："看到别人用什么就订阅什么？杂鱼哥哥的技术栈选择比股票韭菜还随大流呢~🤡 不会吧不会吧，该不会以为订阅了Cursor就能成为10x工程师吧？杂鱼🩷~"）${categorySpecificRoasts}`)
 }
