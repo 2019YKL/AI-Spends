@@ -3,6 +3,7 @@
 import { useState, useEffect, useMemo } from 'react'
 import { CostTrackingCard } from '@/components/CostTrackingCard'
 import { SimpleCostTrackingCard } from '@/components/SimpleCostTrackingCard'
+import { ListCostTrackingCard } from '@/components/ListCostTrackingCard'
 import { calculateRealTimeCost, formatCurrency, formatCurrencyPrecise } from '@/lib/cost-calculator'
 import { SmoothNumber } from '@/components/SmoothNumber'
 import { RollingNumber } from '@/components/RollingNumber'
@@ -20,7 +21,7 @@ export default function Dashboard() {
   const [mounted, setMounted] = useState(false)
   const [currency, setCurrency] = useState<'USD' | 'CNY' | 'ZWL'>('USD')
   const [showBackToTop, setShowBackToTop] = useState(false)
-  const [isSimpleMode, setIsSimpleMode] = useState(false)
+  const [isListMode, setIsListMode] = useState(false)
   const { services, activeServices, toggleService, changeTier } = useServiceToggle()
   // Check if component is mounted to avoid hydration errors
   useEffect(() => {
@@ -233,22 +234,22 @@ export default function Dashboard() {
               </p>
             </div>
             <div className="flex gap-4 flex-shrink-0 items-center">
-              {/* 简洁/详细模式切换 */}
+              {/* 卡片/列表模式切换 */}
               <div className="flex items-center gap-2.5">
-                <span className="text-sm font-medium text-gray-700 dark:text-gray-300 whitespace-nowrap">简洁模式</span>
+                <span className="text-sm font-medium text-gray-700 dark:text-gray-300 whitespace-nowrap">卡片模式</span>
                 <button
-                  onClick={() => setIsSimpleMode(!isSimpleMode)}
+                  onClick={() => setIsListMode(!isListMode)}
                   className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
-                    isSimpleMode ? 'bg-blue-600' : 'bg-gray-300'
+                    isListMode ? 'bg-blue-600' : 'bg-gray-300'
                   }`}
                 >
                   <span
                     className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200 ${
-                      isSimpleMode ? 'translate-x-6' : 'translate-x-1'
+                      isListMode ? 'translate-x-6' : 'translate-x-1'
                     }`}
                   />
                 </button>
-                <span className="text-sm font-medium text-gray-700 dark:text-gray-300 whitespace-nowrap">详细模式</span>
+                <span className="text-sm font-medium text-gray-700 dark:text-gray-300 whitespace-nowrap">列表模式</span>
               </div>
               
               {/* 全部开启/关闭切换 */}
@@ -290,17 +291,20 @@ export default function Dashboard() {
                     {categoryServices.filter(s => s.isActive).length}/{categoryServices.length} 已启用
                   </span>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-                  {categoryServices.map((service) => (
-                    isSimpleMode ? (
-                      <SimpleCostTrackingCard
+                {isListMode ? (
+                  <div className="space-y-3">
+                    {categoryServices.map((service) => (
+                      <ListCostTrackingCard
                         key={service.id}
                         service={service}
                         onToggle={toggleService}
                         onTierChange={changeTier}
-                        className="h-full"
                       />
-                    ) : (
+                    ))}
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                    {categoryServices.map((service) => (
                       <CostTrackingCard
                         key={service.id}
                         service={service}
@@ -308,9 +312,9 @@ export default function Dashboard() {
                         onTierChange={changeTier}
                         className="h-full"
                       />
-                    )
-                  ))}
-                </div>
+                    ))}
+                  </div>
+                )}
               </div>
             ))}
           </div>
