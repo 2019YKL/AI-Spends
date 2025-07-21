@@ -137,21 +137,6 @@ export function ShareImageGenerator({
             {/* 内容 - Tweet Card 样式布局 */}
             <div className="relative z-10 h-full flex flex-col p-4">
 
-              {/* 大金额显示 - 静态 */}
-              <div className="mb-6">
-                <div 
-                  className="text-8xl font-bold leading-none"
-                  style={{
-                    background: 'linear-gradient(to right, rgb(234, 205, 163), rgb(214, 174, 123))',
-                    WebkitBackgroundClip: 'text',
-                    backgroundClip: 'text',
-                    color: 'transparent'
-                  }}
-                >
-                  {formatCurrency(totalCost, currency).slice(0, -3)}
-                </div>
-              </div>
-
               {/* 锐评标题 */}
               {roastTitle && (
                 <div className="mb-3">

@@ -35,6 +35,7 @@ export function AIRoastChat({
   const [showShareGenerator, setShowShareGenerator] = useState(false)
   const [username, setUsername] = useState('')
   const [userInput, setUserInput] = useState('')
+  const [staticTotalCost, setStaticTotalCost] = useState(0)
 
   const handleRoast = async () => {
     setIsLoading(true)
@@ -171,7 +172,10 @@ export function AIRoastChat({
             </Button>
             
             <Button 
-              onClick={() => setShowShareGenerator(true)}
+              onClick={() => {
+                setStaticTotalCost(totalCurrentCost)
+                setShowShareGenerator(true)
+              }}
               className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 flex items-center justify-center gap-2"
               disabled={activeServices.length === 0 || !roastMessage}
             >
@@ -207,7 +211,10 @@ export function AIRoastChat({
           </Button>
           
           <Button 
-            onClick={() => setShowShareGenerator(true)}
+            onClick={() => {
+              setStaticTotalCost(totalCurrentCost)
+              setShowShareGenerator(true)
+            }}
             className="bg-blue-600 hover:bg-blue-700 text-white px-4 flex items-center gap-2"
             disabled={activeServices.length === 0 || !roastMessage}
           >
@@ -249,7 +256,7 @@ export function AIRoastChat({
       {/* 分享图生成器弹窗 */}
       {showShareGenerator && (
         <ShareImageGenerator
-          totalCost={totalCurrentCost}
+          totalCost={staticTotalCost}
           monthlyBudget={totalMonthlyCost}
           activeServices={activeServices}
           currency={currency}
