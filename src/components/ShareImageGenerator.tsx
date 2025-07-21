@@ -38,8 +38,8 @@ export function ShareImageGenerator({
     setIsGenerating(true)
     try {
       const canvas = await html2canvas(shareCardRef.current, {
-        width: 800,
-        height: 800,
+        width: 900,
+        height: 900,
         scale: 2,
         backgroundColor: '#ffffff',
         useCORS: true,
@@ -64,8 +64,8 @@ export function ShareImageGenerator({
     setIsGenerating(true)
     try {
       const canvas = await html2canvas(shareCardRef.current, {
-        width: 800,
-        height: 800,
+        width: 900,
+        height: 900,
         scale: 2,
         backgroundColor: '#ffffff',
         useCORS: true,
@@ -116,7 +116,7 @@ export function ShareImageGenerator({
         <div className="mb-6 flex justify-center">
           <div 
             ref={shareCardRef}
-            className="w-[400px] h-[400px] bg-gradient-to-br from-red-50 to-pink-100 rounded-2xl p-6 relative overflow-hidden"
+            className="w-[450px] h-[450px] bg-gradient-to-br from-red-50 to-pink-100 rounded-2xl p-6 relative overflow-hidden"
             style={{ fontFamily: 'PingFang SC, Microsoft YaHei, sans-serif' }}
           >
             {/* 背景装饰 */}
@@ -128,11 +128,6 @@ export function ShareImageGenerator({
 
             {/* 内容 */}
             <div className="relative z-10 h-full flex flex-col">
-              {/* 头部 */}
-              <div className="text-center mb-3">
-                <div className="text-sm text-gray-600 mb-1">🤖 AI锐评 · AiSpends</div>
-                <div className="text-xs text-gray-500">{todayDate}</div>
-              </div>
 
               {/* 用户信息 */}
               <div className="text-center mb-3">
@@ -210,7 +205,7 @@ export function ShareImageGenerator({
         </div>
 
         <div className="mt-4 text-xs text-gray-500 text-center">
-          * 图片尺寸 800x800px，适合社交媒体分享
+          * 图片尺寸 900x900px，适合社交媒体分享
         </div>
       </div>
     </div>

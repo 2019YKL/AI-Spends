@@ -346,6 +346,7 @@ export default function Dashboard() {
             activeServices={activeServices}
             totalMonthlyCost={totalCosts.monthlyBudget}
             totalCurrentCost={totalCosts.currentTotal}
+            incrementPerSecond={totalCosts.perSecond}
             currency={currency}
           />
         </div>

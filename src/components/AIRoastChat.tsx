@@ -9,11 +9,14 @@ import { Input } from '@/components/ui/input'
 import { IconRenderer } from '@/components/IconRenderer'
 import { ShareImageGenerator } from '@/components/ShareImageGenerator'
 import { ImageIcon, Send } from 'lucide-react'
+import { formatCurrency } from '@/lib/cost-calculator'
+import { RollingNumber } from '@/components/RollingNumber'
 
 interface AIRoastChatProps {
   activeServices: AIService[]
   totalMonthlyCost: number
   totalCurrentCost?: number
+  incrementPerSecond?: number
   currency?: 'USD' | 'CNY' | 'ZWL'
 }
 
@@ -21,6 +24,7 @@ export function AIRoastChat({
   activeServices, 
   totalMonthlyCost, 
   totalCurrentCost = 0,
+  incrementPerSecond = 0,
   currency = 'USD'
 }: AIRoastChatProps) {
   const [isLoading, setIsLoading] = useState(false)
