@@ -41,7 +41,7 @@ export function ShareImageGenerator({
         width: 900,
         height: 1200,
         scale: 2,
-        backgroundColor: '#ffffff',
+        backgroundColor: 'transparent',
         useCORS: true,
         allowTaint: true
       })
@@ -67,7 +67,7 @@ export function ShareImageGenerator({
         width: 900,
         height: 1200,
         scale: 2,
-        backgroundColor: '#ffffff',
+        backgroundColor: 'transparent',
         useCORS: true,
         allowTaint: true
       })
@@ -112,13 +112,24 @@ export function ShareImageGenerator({
           </Button>
         </div>
 
-        {/* 分享图预览 - 方形设计 */}
+        {/* 分享图预览 - 竖版设计 */}
         <div className="mb-6 flex justify-center">
           <div 
             ref={shareCardRef}
-            className="w-[450px] h-[600px] bg-white rounded-2xl p-6 relative overflow-hidden"
-            style={{ fontFamily: 'PingFang SC, Microsoft YaHei, sans-serif' }}
+            className="w-[450px] h-[600px] p-8 relative overflow-hidden"
+            style={{ 
+              backgroundImage: 'linear-gradient(60deg, #96deda 0%, #50c9c3 100%)',
+              fontFamily: 'PingFang SC, Microsoft YaHei, sans-serif' 
+            }}
           >
+            {/* 内部白色卡片 */}
+            <div 
+              className="w-full h-full bg-white relative overflow-hidden"
+              style={{
+                borderRadius: '24px',
+                boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.08)'
+              }}
+            >
 
             {/* 内容 - Tweet Card 样式布局 */}
             <div className="relative z-10 h-full flex flex-col p-4">
@@ -135,7 +146,7 @@ export function ShareImageGenerator({
                 </div>
               </div>
 
-              {/* 大金额显示 */}
+              {/* 大金额显示 - 静态 */}
               <div className="mb-6">
                 <div 
                   className="text-8xl font-bold leading-none"
@@ -184,6 +195,7 @@ export function ShareImageGenerator({
                   ))}
                 </div>
               </div>
+            </div>
             </div>
           </div>
         </div>
