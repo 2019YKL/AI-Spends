@@ -47,7 +47,6 @@ import { IconRenderer } from '@/components/IconRenderer'
 
 interface ShareImageGeneratorProps {
   totalCost: number
-  monthlyBudget: number
   activeServices: AIService[]
   currency: 'USD' | 'CNY' | 'ZWL'
   roastMessage?: string
@@ -56,9 +55,17 @@ interface ShareImageGeneratorProps {
   onClose: () => void
 }
 
+const backgroundOptions = [
+  { name: '青绿渐变', gradient: 'linear-gradient(60deg, #96deda 0%, #50c9c3 100%)' },
+  { name: '粉色渐变', gradient: 'linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%)' },
+  { name: '薄荷渐变', gradient: 'linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%)' },
+  { name: '天空渐变', gradient: 'linear-gradient(to top, #accbee 0%, #e7f0fd 100%)' },
+  { name: '绿色渐变', gradient: 'linear-gradient(to top, #0ba360 0%, #3cba92 100%)' },
+  { name: '蓝色渐变', gradient: 'linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%)' }
+]
+
 export function ShareImageGenerator({
   totalCost,
-  monthlyBudget,
   activeServices,
   currency,
   roastMessage,
@@ -68,6 +75,7 @@ export function ShareImageGenerator({
 }: ShareImageGeneratorProps) {
   const shareCardRef = useRef<HTMLDivElement>(null)
   const [isGenerating, setIsGenerating] = useState(false)
+  const [selectedBackground, setSelectedBackground] = useState(0)
 
   const generateImage = async () => {
     if (!shareCardRef.current) return
@@ -121,7 +129,7 @@ export function ShareImageGenerator({
               width: '450px', 
               height: '600px', 
               padding: '40px',
-              backgroundImage: 'linear-gradient(60deg, #96deda 0%, #50c9c3 100%)',
+              backgroundImage: backgroundOptions[selectedBackground].gradient,
               fontFamily: 'PingFang SC, Microsoft YaHei, sans-serif' 
             }}
           >
@@ -238,6 +246,25 @@ export function ShareImageGenerator({
               </div>
             </div>
             </div>
+          </div>
+        </div>
+
+        {/* 背景色选择器 */}
+        <div className="mb-6">
+          <div className="flex justify-center gap-3">
+            {backgroundOptions.map((option, index) => (
+              <button
+                key={index}
+                onClick={() => setSelectedBackground(index)}
+                className={`w-8 h-8 rounded-full border-2 transition-all ${
+                  selectedBackground === index 
+                    ? 'border-blue-500 scale-110' 
+                    : 'border-gray-300 hover:border-gray-400'
+                }`}
+                style={{ backgroundImage: option.gradient }}
+                title={option.name}
+              />
+            ))}
           </div>
         </div>
 
