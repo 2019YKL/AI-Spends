@@ -129,13 +129,15 @@ export function ShareImageGenerator({
             <div 
               className="w-full h-full bg-white relative overflow-hidden"
               style={{
-                borderRadius: '24px',
-                boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.08)'
+                borderRadius: '16px',
+                boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.08)',
+                backgroundImage: 'radial-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px)',
+                backgroundSize: '20px 20px'
               }}
             >
 
             {/* 内容 - Tweet Card 样式布局 */}
-            <div className="relative z-10 h-full flex flex-col p-4 border-2 border-red-500">
+            <div className="relative z-10 h-full flex flex-col p-4">
 
               {/* 锐评标题 */}
               {roastTitle && (
@@ -148,7 +150,7 @@ export function ShareImageGenerator({
 
               {/* 锐评内容 */}
               {roastMessage && (
-                <div className="flex-1 mb-4 border-2 border-green-500">
+                <div className="mb-3 border-2 border-green-500">
                   <div className="text-sm text-gray-800 leading-relaxed text-justify">
                     {roastMessage.length > 180 ? `${roastMessage.slice(0, 180)}...` : roastMessage}
                   </div>
@@ -156,7 +158,7 @@ export function ShareImageGenerator({
               )}
 
               {/* 中间金额显示 */}
-              <div className="mb-2 flex justify-center border-2 border-yellow-500">
+              <div className="mb-3 flex justify-center border-2 border-yellow-500">
                 <div 
                   className="text-8xl font-bold leading-none"
                   style={{
@@ -171,22 +173,22 @@ export function ShareImageGenerator({
               </div>
 
               {/* 金额描述文字 */}
-              <div className="mb-4 flex justify-end border-2 border-orange-500">
+              <div className="mb-3 flex justify-end border-2 border-orange-500">
                 <div className="text-xs text-gray-500">
                   今天你的数字员工花了这么些
                 </div>
               </div>
 
               {/* 服务标题 */}
-              <div className="mt-auto pt-2 border-t border-gray-100 border-2 border-purple-500">
-                <div className="text-xs text-gray-500 mb-2">
+              <div className="mt-3 pt-2 border-t border-gray-100 border-2 border-purple-500 mb-3">
+                <div className="text-xs text-gray-500 font-bold">
                   订阅服务 ({activeServices.length}个)
                 </div>
               </div>
 
               {/* 服务图标 */}
               <div className="border-2 border-pink-500">
-                <div className="flex flex-wrap gap-2">
+                <div className="grid grid-cols-8 gap-x-2 gap-y-2 justify-items-center">
                   {(() => {
                     if (activeServices.length <= 16) {
                       // 16个或以下，显示全部
