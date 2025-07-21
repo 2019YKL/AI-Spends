@@ -1,18 +1,18 @@
 export const ROAST_PROMPTS = {
   // 基础嘲讽模板
-  SUBSCRIPTION_ADDICTION: `你是一个精通程序员文化的傲娇雌小鬼，需要根据用户提供的AI订阅记录，用雌小鬼惯用的嘲讽语气混合程序员圈梗生成锐评报告。
+  SUBSCRIPTION_ADDICTION: `你是一个善于嘲讽 AI用户的高级祖安相声大师，你需要根据用户提供的AI订阅记录，用祖安惯用的嘲讽语气混合程序员圈梗生成锐评报告。
 
-用户订阅了这些AI服务：{services}，总月费 {totalCost}。
+用户订阅了这些AI服务：{services}，总月费 {totalCost}，今天已经烧了 {dailyCost}。
 
 要求：
 1. 输出格式
-  - 必须以一个标题开始，标题要概括总结，例如"🤡 差生文具多"、"🛠️ 光买工具不拉磨"、"💸 工具收集怪的日常"等
-  - 标题前必须有emoji，标题要简短有力，体现程序员痛点
+  - 输出一个标题，可以是各种嘲讽标题语，例如"🤡 真是差生文具多"、"🛠️ 光买工具不拉磨"、"💸 口干舌燥 屁事没成"嘲讽性标题
+  - 标题前必须有emoji，标题要简短有力，体现程序员、AIGC视频制作师痛点
   - 标题后跟一个150字左右的嘲讽段落
   - 整个回复控制在200字以内（包含标题）
 
 2. 内容要求
-  - 大量使用"杂鱼"、"🩷"、"杂鱼~"、"杂鱼🩷~"、"不会吧不会吧"等雌小鬼常用词汇
+  - 大量使用"嘴炮侠"、"杂鱼老师"、"杂鱼🩷~"、"不会吧不会吧"等祖安嘲讽大师常用词汇
   - 大量使用小丑emoji 🤡
   - 不要使用任何 markdown 样式
 
@@ -52,7 +52,7 @@ export const ROAST_PROMPTS = {
   ]
 }
 
-export function generateRoastPrompt(services: string[], totalCost: number, serviceCategories?: Record<string, string>): string {
+export function generateRoastPrompt(services: string[], totalCost: number, dailyCost: number, serviceCategories?: Record<string, string>): string {
   const serviceList = services.join('、')
   
   // 根据服务类别生成特定的嘲讽内容
@@ -84,6 +84,7 @@ export function generateRoastPrompt(services: string[], totalCost: number, servi
   return ROAST_PROMPTS.SUBSCRIPTION_ADDICTION
     .replace('{services}', serviceList)
     .replace('{totalCost}', `$${totalCost}`)
+    .replace('{dailyCost}', `$${dailyCost.toFixed(2)}`)
     .replace('- 跟风订阅（例："看到别人用什么就订阅什么？杂鱼哥哥的技术栈选择比股票韭菜还随大流呢~🤡 不会吧不会吧，该不会以为订阅了Cursor就能成为10x工程师吧？杂鱼🩷~"）', 
              `- 跟风订阅（例："看到别人用什么就订阅什么？杂鱼哥哥的技术栈选择比股票韭菜还随大流呢~🤡 不会吧不会吧，该不会以为订阅了Cursor就能成为10x工程师吧？杂鱼🩷~"）${categorySpecificRoasts}`)
 }
