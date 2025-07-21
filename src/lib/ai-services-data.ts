@@ -246,10 +246,10 @@ export const aiServices: AIService[] = [
     isActive: true,
     category: 'ai-image',
     pricingTiers: [
-      { id: 'standard', name: 'Standard', price: 10 },
+      { id: 'standard', name: 'Std', price: 10 },
       { id: 'pro', name: 'Pro', price: 30 },
-      { id: 'premium', name: 'Premium', price: 60 },
-      { id: 'enterprise', name: 'Enterprise', price: 100 }
+      { id: 'premium', name: 'Prem', price: 60 },
+      { id: 'enterprise', name: 'Ent', price: 100 }
     ],
     selectedTier: 'standard'
   },
