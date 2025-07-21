@@ -23,6 +23,43 @@ export default function Dashboard() {
   const [showBackToTop, setShowBackToTop] = useState(false)
   const [isListMode, setIsListMode] = useState(false)
   const { services, activeServices, toggleService, changeTier } = useServiceToggle()
+
+  // 从 localStorage 加载 UI 偏好设置
+  useEffect(() => {
+    if (!mounted) return
+    
+    try {
+      const savedCurrency = localStorage.getItem('aiSpends_currency')
+      const savedListMode = localStorage.getItem('aiSpends_listMode')
+      
+      if (savedCurrency && ['USD', 'CNY', 'ZWL'].includes(savedCurrency)) {
+        setCurrency(savedCurrency as 'USD' | 'CNY' | 'ZWL')
+      }
+      
+      if (savedListMode) {
+        setIsListMode(JSON.parse(savedListMode))
+      }
+    } catch (error) {
+      console.error('Failed to load UI preferences from localStorage:', error)
+    }
+  }, [mounted])
+
+  // 保存货币选择
+  const handleCurrencyChange = (newCurrency: 'USD' | 'CNY' | 'ZWL') => {
+    setCurrency(newCurrency)
+    if (mounted) {
+      localStorage.setItem('aiSpends_currency', newCurrency)
+    }
+  }
+
+  // 保存列表模式选择
+  const handleListModeChange = () => {
+    const newMode = !isListMode
+    setIsListMode(newMode)
+    if (mounted) {
+      localStorage.setItem('aiSpends_listMode', JSON.stringify(newMode))
+    }
+  }
   // Check if component is mounted to avoid hydration errors
   useEffect(() => {
     setMounted(true)
@@ -139,7 +176,7 @@ export default function Dashboard() {
             <div className="relative backdrop-blur-sm rounded-xl p-1 border border-blue-200/30 dark:border-blue-800/30 bg-blue-50/20 dark:bg-blue-900/20">
               <div className="flex items-center gap-1">
                 <button
-                  onClick={() => setCurrency('USD')}
+                  onClick={() => handleCurrencyChange('USD')}
                   className={`relative px-2 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all duration-300 ${
                     currency === 'USD'
                       ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/25'
@@ -149,7 +186,7 @@ export default function Dashboard() {
                   <span className="relative z-10">USD $</span>
                 </button>
                 <button
-                  onClick={() => setCurrency('CNY')}
+                  onClick={() => handleCurrencyChange('CNY')}
                   className={`relative px-2 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all duration-300 ${
                     currency === 'CNY'
                       ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/25'
@@ -159,7 +196,7 @@ export default function Dashboard() {
                   <span className="relative z-10">CNY ¥</span>
                 </button>
                 <button
-                  onClick={() => setCurrency('ZWL')}
+                  onClick={() => handleCurrencyChange('ZWL')}
                   className={`relative px-2 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all duration-300 ${
                     currency === 'ZWL'
                       ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/25'
@@ -238,7 +275,7 @@ export default function Dashboard() {
               <div className="flex items-center gap-2.5">
                 <span className="text-sm font-medium text-gray-700 dark:text-gray-300 whitespace-nowrap">卡片模式</span>
                 <button
-                  onClick={() => setIsListMode(!isListMode)}
+                  onClick={handleListModeChange}
                   className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
                     isListMode ? 'bg-blue-600' : 'bg-gray-300'
                   }`}
