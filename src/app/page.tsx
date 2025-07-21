@@ -232,31 +232,49 @@ export default function Dashboard() {
                 {activeServices.length}/{services.length} 服务已启用
               </p>
             </div>
-            <div className="flex gap-2 flex-shrink-0">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setIsSimpleMode(!isSimpleMode)}
-                className="text-xs sm:text-sm whitespace-nowrap"
-              >
-                {isSimpleMode ? '详细模式' : '简洁模式'}
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => services.forEach(service => !service.isActive && toggleService(service.id))}
-                className="text-xs sm:text-sm whitespace-nowrap"
-              >
-                全部启用
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => services.forEach(service => service.isActive && toggleService(service.id))}
-                className="text-xs sm:text-sm whitespace-nowrap"
-              >
-                全部关闭
-              </Button>
+            <div className="flex gap-4 flex-shrink-0 items-center">
+              {/* 简洁/详细模式切换 */}
+              <div className="flex items-center gap-2.5">
+                <span className="text-sm font-medium text-gray-700 dark:text-gray-300 whitespace-nowrap">简洁模式</span>
+                <button
+                  onClick={() => setIsSimpleMode(!isSimpleMode)}
+                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
+                    isSimpleMode ? 'bg-blue-600' : 'bg-gray-300'
+                  }`}
+                >
+                  <span
+                    className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200 ${
+                      isSimpleMode ? 'translate-x-6' : 'translate-x-1'
+                    }`}
+                  />
+                </button>
+                <span className="text-sm font-medium text-gray-700 dark:text-gray-300 whitespace-nowrap">详细模式</span>
+              </div>
+              
+              {/* 全部开启/关闭切换 */}
+              <div className="flex items-center gap-2.5">
+                <span className="text-sm font-medium text-gray-700 dark:text-gray-300 whitespace-nowrap">全部关闭</span>
+                <button
+                  onClick={() => {
+                    const shouldTurnOff = activeServices.length > services.length / 2
+                    if (shouldTurnOff) {
+                      services.forEach(service => service.isActive && toggleService(service.id))
+                    } else {
+                      services.forEach(service => !service.isActive && toggleService(service.id))
+                    }
+                  }}
+                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
+                    activeServices.length > services.length / 2 ? 'bg-blue-600' : 'bg-gray-300'
+                  }`}
+                >
+                  <span
+                    className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200 ${
+                      activeServices.length > services.length / 2 ? 'translate-x-6' : 'translate-x-1'
+                    }`}
+                  />
+                </button>
+                <span className="text-sm font-medium text-gray-700 dark:text-gray-300 whitespace-nowrap">全部开启</span>
+              </div>
             </div>
           </div>
           
