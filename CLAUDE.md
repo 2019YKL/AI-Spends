@@ -38,12 +38,13 @@ Critical UX requirement: Numbers must **scroll smoothly, never jump or twitch**.
 - Handles real-time incrementing based on `incrementPerSecond`
 - Formats output with custom formatting functions
 
-### Fire Theme Design
-The app uses a "burning money" fire theme with:
-- Black-red color palette (NOT purple/blue)
+### UI Theme Design
+The app uses a clean blue-and-gold theme with:
+- Blue-based color palette with golden accents for currency displays
 - Raycast-inspired premium gradients and glass morphism
-- Advanced CSS utilities in `globals.css` for fire effects
-- All numbers should have fire-themed glowing text effects
+- Dot pattern background for subtle texture
+- Golden gradient (#DBB685) for money-related elements and progress bars
+- Blue theme for UI components and navigation
 
 ### Service Toggle Architecture
 Services can be toggled on/off using:
@@ -70,31 +71,46 @@ The app includes an AI-powered roasting system that mocks users' subscription ha
 ## Key Files & Components
 
 ### Data Layer
-- `src/types/ai-services.ts`: Core TypeScript interfaces
+- `src/types/ai-services.ts`: Core TypeScript interfaces (AIService, CostCalculation, PricingTier)
 - `src/lib/ai-services-data.ts`: Preset AI services (Cursor, Windsurf, ChatGPT, etc.)
-- `src/lib/cost-calculator.ts`: Real-time cost calculation logic
+- `src/lib/cost-calculator.ts`: Real-time cost calculation logic with currency conversion
+- `src/lib/prompts.ts`: AI roasting prompt templates and system messages
+
+### Hooks & State Management
+- `src/hooks/useServiceToggle.ts`: Manages service state (active/inactive, tier selection)
+- LocalStorage integration for persistent user preferences
+- State synchronization between initial data and user customizations
 
 ### UI Components
 - `src/components/SmoothNumber.tsx`: Smooth scrolling number animation with hydration error handling
-- `src/components/CostTrackingCard.tsx`: Individual service cards with pricing tiers
+- `src/components/RollingNumber.tsx`: Alternative number animation for hero section display
+- `src/components/CostTrackingCard.tsx`: Individual service cards with pricing tiers (card mode)
+- `src/components/ListCostTrackingCard.tsx`: Compact service list items (list mode)
+- `src/components/SimpleCostTrackingCard.tsx`: Simplified service card variant
 - `src/components/AIRoastChat.tsx`: AI roasting interface with DeepSeek integration
 - `src/components/DotBackground.tsx`: Dot pattern background component
-- `src/components/ui/`: shadcn/ui components (Card, Button, Switch)
+- `src/components/NewTypewriter.tsx`: Typewriter effect for hero text
+- `src/components/Footer.tsx`: App footer component
+- `src/components/ui/`: shadcn/ui components (Card, Button, Switch, Input, Label)
 
 ### API Routes
 - `src/app/api/deepseek/chat/route.ts`: OpenRouter API integration for AI roasting
+- `src/app/api/deepseek/validate/route.ts`: API key validation endpoint
 - Uses environment variable `DEEPSEEK_API_KEY` for authentication
-- Calls `https://openrouter.ai/api/v1/chat/completions` with `deepseek/deepseek-chat` model
+- Calls `https://openrouter.ai/api/v1/chat/completions` with `deepseek/deepseek-chat:free` model
 
 ### Styling
-- `src/app/globals.css`: Fire theme utilities, advanced gradients
-- Uses Tailwind CSS with custom fire-themed utilities
-- Glass morphism effects with `fire-glass-card` class
+- `src/app/globals.css`: Custom theme utilities, gradients, and animation effects
+- Uses Tailwind CSS with custom utilities for animations and glass morphism
+- Includes fire-style effects (legacy) and blue theme components
+- Responsive design with mobile-first approach
 
 ### Main Page
 - `src/app/page.tsx`: Dashboard with hero section and service grid
-- Real-time clock updates every second
-- Hero section uses premium fire gradients with floating orbs
+- Real-time updates every second for cost calculations
+- Hero section uses golden gradient for currency display with typewriter effect
+- Supports card/list view toggle and currency switching (USD/CNY/ZWL)
+- Includes "back to top" button and service category organization
 
 ## Development Guidelines
 
@@ -114,17 +130,24 @@ Each service requires:
 - Optional `pricingTiers` array for multiple subscription levels
 
 ### Number Display Rules
-ALL dynamic numbers must use `SmoothNumber` component. Never display raw calculated values directly. Key props:
+ALL dynamic numbers must use smooth animation components. Two main options:
+- `SmoothNumber`: For most real-time updating numbers with smooth transitions
+- `RollingNumber`: For hero section large display with real-time incrementing
+Key props for both:
 - `value`: Current value to display
 - `incrementPerSecond`: How much to increment per second (0 for static values)
 - `formatFn`: Custom formatter (use `formatCurrency` or `formatCurrencyPrecise`)
+- Use `suppressHydrationWarning` to prevent SSR/client mismatch issues
 
 ### UI Design Requirements
-- Money-related elements use golden color (#DBB685) for currency amounts and progress bars
+- Money-related elements use golden gradient for currency amounts and large displays
 - Service categories are clearly separated with emoji prefixes and proper spacing
-- Progress bars and cost displays use the golden theme
+- Blue theme for UI components (buttons, switches, navigation)
 - Dot pattern background provides subtle texture
-- Hero section displays large scrolling total with gold gradient
+- Hero section displays large scrolling total with golden gradient
+- Card/list view toggle allows users to switch between grid and compact layouts
+- Currency selector supports USD, CNY, and ZWL with real-time conversion
+- localStorage integration for preserving user preferences (currency, view mode, service states)
 
 ## Technical Constraints
 
@@ -134,7 +157,9 @@ ALL dynamic numbers must use `SmoothNumber` component. Never display raw calcula
 - No external animation libraries - custom `requestAnimationFrame` implementation
 - Responsive design with mobile-first approach
 - Multi-currency support (USD, CNY, ZWL) with real-time conversion
-- All dynamic numbers must use `SmoothNumber` with `suppressHydrationWarning` to prevent SSR issues
+- All dynamic numbers must use animation components with `suppressHydrationWarning` to prevent SSR issues
+- LocalStorage integration for user preferences (requires mounted state checks)
+- Framer Motion available for advanced animations if needed
 
 ## Environment Variables
 
