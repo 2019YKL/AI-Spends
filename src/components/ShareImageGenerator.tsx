@@ -157,6 +157,13 @@ export function ShareImageGenerator({
                 </div>
               )}
 
+              {/* 锐评下分割线 */}
+              {(roastTitle || roastMessage) && (
+                <div className="mb-3">
+                  <hr className="border-gray-100" />
+                </div>
+              )}
+
               {/* 中间金额显示 */}
               <div className="mb-3 flex justify-center">
                 <div 
@@ -179,8 +186,13 @@ export function ShareImageGenerator({
                 </div>
               </div>
 
+              {/* 金额描述下分割线 */}
+              <div className="mb-3">
+                <hr className="border-gray-100" />
+              </div>
+
               {/* 服务标题 */}
-              <div className="mt-3 pt-2 border-t border-gray-100 mb-3">
+              <div className="mb-3">
                 <div className="text-xs text-gray-500 font-bold">
                   订阅服务 ({activeServices.length}个)
                 </div>
