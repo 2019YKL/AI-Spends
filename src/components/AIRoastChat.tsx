@@ -166,35 +166,14 @@ export function AIRoastChat({
               )}
             </Button>
             
-            {/* 分享按钮和网名输入的组合 */}
-            {roastMessage ? (
-              <div className="flex gap-1 flex-1">
-                <Button 
-                  onClick={() => setShowShareGenerator(true)}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-3 flex items-center justify-center gap-1"
-                  disabled={activeServices.length === 0 || !roastMessage}
-                >
-                  <ImageIcon className="w-4 h-4" />
-                  分享
-                </Button>
-                <Input
-                  type="text"
-                  placeholder="网名"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  className="flex-1 text-xs h-10 bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600"
-                />
-              </div>
-            ) : (
-              <Button 
-                onClick={() => setShowShareGenerator(true)}
-                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 flex items-center justify-center gap-2"
-                disabled={activeServices.length === 0 || !roastMessage}
-              >
-                <ImageIcon className="w-4 h-4" />
-                分享
-              </Button>
-            )}
+            <Button 
+              onClick={() => setShowShareGenerator(true)}
+              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 flex items-center justify-center gap-2"
+              disabled={activeServices.length === 0 || !roastMessage}
+            >
+              <ImageIcon className="w-4 h-4" />
+              分享
+            </Button>
           </div>
         </div>
 
@@ -223,35 +202,14 @@ export function AIRoastChat({
             )}
           </Button>
           
-          {/* 分享按钮和网名输入的组合 */}
-          {roastMessage ? (
-            <div className="flex gap-2">
-              <Button 
-                onClick={() => setShowShareGenerator(true)}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-4 flex items-center gap-2"
-                disabled={activeServices.length === 0 || !roastMessage}
-              >
-                <ImageIcon className="w-4 h-4" />
-                分享图片
-              </Button>
-              <Input
-                type="text"
-                placeholder="网名"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                className="w-32 text-sm bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600"
-              />
-            </div>
-          ) : (
-            <Button 
-              onClick={() => setShowShareGenerator(true)}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-4 flex items-center gap-2"
-              disabled={activeServices.length === 0 || !roastMessage}
-            >
-              <ImageIcon className="w-4 h-4" />
-              分享图片
-            </Button>
-          )}
+          <Button 
+            onClick={() => setShowShareGenerator(true)}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-4 flex items-center gap-2"
+            disabled={activeServices.length === 0 || !roastMessage}
+          >
+            <ImageIcon className="w-4 h-4" />
+            分享图片
+          </Button>
         </div>
 
         {/* 错误显示 */}
@@ -293,7 +251,7 @@ export function AIRoastChat({
           currency={currency}
           roastMessage={roastMessage}
           roastTitle={roastTitle}
-          username={username}
+          username={userInput}
           onClose={() => setShowShareGenerator(false)}
         />
       )}
