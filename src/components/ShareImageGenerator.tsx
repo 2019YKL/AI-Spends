@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import * as htmlToImage from 'html-to-image'
 import { Button } from '@/components/ui/button'
 import { Download, Share2, X, Twitter } from 'lucide-react'
@@ -111,8 +111,8 @@ export function ShareImageGenerator({
 
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-xl p-4 sm:p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 bg-black/50 flex items-start justify-center p-4 z-50 overflow-y-auto">
+      <div className="bg-white rounded-xl p-4 sm:p-6 max-w-2xl w-full my-4 min-h-fit">
         <div className="flex items-center justify-between mb-4 sm:mb-6">
           <h2 className="text-lg sm:text-xl font-bold text-gray-900">生成分享图</h2>
           <Button variant="ghost" size="sm" onClick={onClose}>
@@ -122,18 +122,14 @@ export function ShareImageGenerator({
 
         {/* 分享图预览 - 竖版设计 */}
         <div className="mb-4 sm:mb-6 flex justify-center">
-          <div className="relative max-w-full overflow-hidden">
-            <div 
-              ref={shareCardRef}
-              className="relative overflow-hidden mx-auto"
+          <div 
+            ref={shareCardRef}
+            className="relative overflow-hidden w-full max-w-sm sm:max-w-md lg:max-w-lg mx-auto"
               style={{ 
-                width: '450px', 
-                height: '600px', 
-                padding: '40px',
+                aspectRatio: '3/4', // 保持 450:600 的宽高比
+                padding: 'clamp(20px, 8vw, 40px)', // 响应式内边距
                 backgroundImage: backgroundOptions[selectedBackground].gradient,
-                fontFamily: 'PingFang SC, Microsoft YaHei, sans-serif',
-                transform: 'scale(min(calc(100vw - 80px) / 450px, 1))',
-                transformOrigin: 'center top'
+                fontFamily: 'PingFang SC, Microsoft YaHei, sans-serif'
               }}
             >
             {/* 内部白色卡片 */}
@@ -148,79 +144,99 @@ export function ShareImageGenerator({
             >
 
             {/* 内容 - Tweet Card 样式布局 */}
-            <div className="relative z-10 h-full flex flex-col p-4">
+            <div className="relative z-10 h-full flex flex-col p-4 overflow-hidden">
 
               {/* 锐评标题 */}
               {roastTitle && (
-                <div className="mb-3">
-                  <div className="text-lg font-bold text-gray-800 leading-tight">
-                    {roastTitle}
+                <div className="mb-2">
+                  <div 
+                    className="font-bold text-gray-800 leading-tight line-clamp-2 overflow-hidden" 
+                    style={{ fontSize: 'clamp(1rem, 4vw, 1.125rem)' }}
+                  >
+                    {roastTitle.length > 50 ? `${roastTitle.slice(0, 50)}...` : roastTitle}
                   </div>
                 </div>
               )}
 
               {/* 锐评内容 */}
               {roastMessage && (
-                <div className="mb-3">
-                  <div className="text-sm text-gray-800 leading-relaxed text-justify">
-                    {roastMessage.length > 180 ? `${roastMessage.slice(0, 180)}...` : roastMessage}
+                <div className="mb-2 flex-shrink-0">
+                  <div 
+                    className="text-gray-800 leading-relaxed text-justify line-clamp-6 overflow-hidden" 
+                    style={{ 
+                      fontSize: 'clamp(0.75rem, 3vw, 0.875rem)',
+                      display: '-webkit-box',
+                      WebkitLineClamp: 6,
+                      WebkitBoxOrient: 'vertical'
+                    }}
+                  >
+                    {roastMessage.length > 240 ? `${roastMessage.slice(0, 240)}...` : roastMessage}
                   </div>
                 </div>
               )}
 
               {/* 锐评下分割线 */}
               {(roastTitle || roastMessage) && (
-                <div className="mb-3">
+                <div>
                   <hr className="border-gray-100" />
                 </div>
               )}
 
-              {/* 中间金额显示 */}
-              <div className="mb-3 flex justify-center">
-                <div 
-                  className="text-8xl font-bold leading-none"
-                  style={{
-                    background: 'linear-gradient(to right, rgb(234, 205, 163), rgb(214, 174, 123))',
-                    WebkitBackgroundClip: 'text',
-                    backgroundClip: 'text',
-                    color: 'transparent'
-                  }}
-                >
-                  {formatCurrencyTwoDecimals(totalCost, currency)}
+              {/* 中间金额显示 - 中等区域 */}
+              <div className="flex-1 flex flex-col justify-center" style={{ minHeight: '100px', maxHeight: '200px' }}>
+                <div className="mb-2 flex justify-center">
+                  <div 
+                    className="font-bold leading-none"
+                    style={{
+                      fontSize: 'clamp(2.5rem, 18vw, 6.5rem)', // 继续增大数字字体尺寸
+                      background: 'linear-gradient(to right, rgb(234, 205, 163), rgb(214, 174, 123))',
+                      WebkitBackgroundClip: 'text',
+                      backgroundClip: 'text',
+                      color: 'transparent'
+                    }}
+                  >
+                    {formatCurrencyTwoDecimals(totalCost, currency)}
+                  </div>
+                </div>
+
+                {/* 金额描述文字 */}
+                <div className="mb-2 flex justify-center">
+                  <div className="text-gray-500" style={{ fontSize: 'clamp(1rem, 4.5vw, 1.25rem)' }}>
+                    今天，你的数字员工花了这么多诶
+                  </div>
                 </div>
               </div>
 
-              {/* 金额描述文字 */}
-              <div className="mb-3 flex justify-end">
-                <div className="text-xs text-gray-500">
-                  今天，你的数字员工花了这么多诶
+              {/* 底部固定区域 */}
+              <div className="flex-shrink-0">
+                {/* 分割线 */}
+                <div className="mb-4">
+                  <hr className="border-gray-100" />
                 </div>
-              </div>
 
-              {/* 金额描述下分割线 */}
-              <div className="mb-3">
-                <hr className="border-gray-100" />
-              </div>
-
-              {/* 服务标题 */}
-              <div className="mb-3">
-                <div className="text-xs text-gray-500 font-bold">
-                  订阅服务 ({activeServices.length}个)
+                {/* 服务标题 */}
+                <div className="mb-3">
+                  <div className="text-gray-500 font-bold" style={{ fontSize: 'clamp(0.625rem, 2.5vw, 0.75rem)' }}>
+                    订阅服务 ({activeServices.length}个)
+                  </div>
                 </div>
-              </div>
 
-              {/* 服务图标 */}
-              <div>
-                <div className="grid grid-cols-8 gap-x-2 gap-y-2 justify-items-center">
+                {/* 服务图标 */}
+                <div>
+                <div className="grid grid-cols-8 gap-x-3 gap-y-3 justify-items-center">
                   {(() => {
                     if (activeServices.length <= 16) {
                       // 16个或以下，显示全部
                       return activeServices.map((service) => (
                         <div
                           key={service.id}
-                          className="w-8 h-8 rounded-lg flex items-center justify-center bg-gray-50 border border-gray-200"
+                          className="rounded-lg flex items-center justify-center bg-gray-50 border border-gray-200"
+                          style={{ 
+                            width: 'clamp(1.5rem, 6vw, 2rem)', 
+                            height: 'clamp(1.5rem, 6vw, 2rem)' 
+                          }}
                         >
-                          <IconRenderer name={service.icon} size={16} />
+                          <IconRenderer name={service.icon} size={Math.max(12, Math.min(16, window.innerWidth * 0.04))} />
                         </div>
                       ));
                     } else {
@@ -233,12 +249,23 @@ export function ShareImageGenerator({
                           {displayServices.map((service) => (
                             <div
                               key={service.id}
-                              className="w-8 h-8 rounded-lg flex items-center justify-center bg-gray-50 border border-gray-200"
+                              className="rounded-lg flex items-center justify-center bg-gray-50 border border-gray-200"
+                              style={{ 
+                                width: 'clamp(1.5rem, 6vw, 2rem)', 
+                                height: 'clamp(1.5rem, 6vw, 2rem)' 
+                              }}
                             >
-                              <IconRenderer name={service.icon} size={16} />
+                              <IconRenderer name={service.icon} size={Math.max(12, Math.min(16, window.innerWidth * 0.04))} />
                             </div>
                           ))}
-                          <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-gray-100 text-xs font-medium text-gray-600">
+                          <div 
+                            className="rounded-lg flex items-center justify-center bg-gray-100 font-medium text-gray-600"
+                            style={{ 
+                              width: 'clamp(1.5rem, 6vw, 2rem)', 
+                              height: 'clamp(1.5rem, 6vw, 2rem)',
+                              fontSize: 'clamp(0.625rem, 2.5vw, 0.75rem)'
+                            }}
+                          >
                             +{remainingCount}
                           </div>
                         </>
@@ -246,10 +273,10 @@ export function ShareImageGenerator({
                     }
                   })()}
                 </div>
+                </div>
               </div>
             </div>
             </div>
-          </div>
           </div>
         </div>
 
