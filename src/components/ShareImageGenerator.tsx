@@ -135,11 +135,11 @@ export function ShareImageGenerator({
             >
 
             {/* 内容 - Tweet Card 样式布局 */}
-            <div className="relative z-10 h-full flex flex-col p-4">
+            <div className="relative z-10 h-full flex flex-col p-4 border-2 border-red-500">
 
               {/* 锐评标题 */}
               {roastTitle && (
-                <div className="mb-3">
+                <div className="mb-3 border-2 border-blue-500">
                   <div className="text-lg font-bold text-black leading-tight">
                     {roastTitle}
                   </div>
@@ -148,27 +148,78 @@ export function ShareImageGenerator({
 
               {/* 锐评内容 */}
               {roastMessage && (
-                <div className="flex-1 mb-4">
+                <div className="flex-1 mb-4 border-2 border-green-500">
                   <div className="text-sm text-gray-800 leading-relaxed text-justify">
                     {roastMessage.length > 180 ? `${roastMessage.slice(0, 180)}...` : roastMessage}
                   </div>
                 </div>
               )}
 
-              {/* 底部 - 服务图标 */}
-              <div className="mt-auto pt-2 border-t border-gray-100">
+              {/* 中间金额显示 */}
+              <div className="mb-2 flex justify-center border-2 border-yellow-500">
+                <div 
+                  className="text-8xl font-bold leading-none"
+                  style={{
+                    background: 'linear-gradient(to right, rgb(234, 205, 163), rgb(214, 174, 123))',
+                    WebkitBackgroundClip: 'text',
+                    backgroundClip: 'text',
+                    color: 'transparent'
+                  }}
+                >
+                  {formatCurrency(totalCost, currency).slice(0, -3)}
+                </div>
+              </div>
+
+              {/* 金额描述文字 */}
+              <div className="mb-4 flex justify-end border-2 border-orange-500">
+                <div className="text-xs text-gray-500">
+                  今天你的数字员工花了这么些
+                </div>
+              </div>
+
+              {/* 服务标题 */}
+              <div className="mt-auto pt-2 border-t border-gray-100 border-2 border-purple-500">
                 <div className="text-xs text-gray-500 mb-2">
                   订阅服务 ({activeServices.length}个)
                 </div>
+              </div>
+
+              {/* 服务图标 */}
+              <div className="border-2 border-pink-500">
                 <div className="flex flex-wrap gap-2">
-                  {activeServices.map((service) => (
-                    <div
-                      key={service.id}
-                      className="w-8 h-8 rounded-lg flex items-center justify-center bg-gray-50 border border-gray-200"
-                    >
-                      <IconRenderer name={service.icon} size={16} />
-                    </div>
-                  ))}
+                  {(() => {
+                    if (activeServices.length <= 16) {
+                      // 16个或以下，显示全部
+                      return activeServices.map((service) => (
+                        <div
+                          key={service.id}
+                          className="w-8 h-8 rounded-lg flex items-center justify-center bg-gray-50 border border-gray-200"
+                        >
+                          <IconRenderer name={service.icon} size={16} />
+                        </div>
+                      ));
+                    } else {
+                      // 超过16个，显示前15个 + "+N"
+                      const displayServices = activeServices.slice(0, 15);
+                      const remainingCount = activeServices.length - 15;
+                      
+                      return (
+                        <>
+                          {displayServices.map((service) => (
+                            <div
+                              key={service.id}
+                              className="w-8 h-8 rounded-lg flex items-center justify-center bg-gray-50 border border-gray-200"
+                            >
+                              <IconRenderer name={service.icon} size={16} />
+                            </div>
+                          ))}
+                          <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-gray-100 text-xs font-medium text-gray-600">
+                            +{remainingCount}
+                          </div>
+                        </>
+                      );
+                    }
+                  })()}
                 </div>
               </div>
             </div>
