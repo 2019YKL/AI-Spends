@@ -83,12 +83,12 @@ export function ShareImageGenerator({
     setIsGenerating(true)
     try {
       const dataUrl = await htmlToImage.toPng(shareCardRef.current, {
-        width: 900,
-        height: 1200,
+        width: 450,
+        height: 600,
         backgroundColor: 'transparent',
-        pixelRatio: 1,
+        pixelRatio: 2,
         style: {
-          transform: 'scale(2)',
+          transform: 'scale(1)',
           transformOrigin: 'top left'
         }
       })
@@ -124,10 +124,11 @@ export function ShareImageGenerator({
         <div className="mb-4 sm:mb-6 flex justify-center">
           <div 
             ref={shareCardRef}
-            className="relative overflow-hidden w-full max-w-sm sm:max-w-md lg:max-w-lg mx-auto"
+            className="relative overflow-hidden mx-auto"
               style={{ 
-                aspectRatio: '3/4', // 保持 450:600 的宽高比
-                padding: 'clamp(20px, 8vw, 40px)', // 响应式内边距
+                width: '450px',
+                height: '600px',
+                padding: '32px',
                 backgroundImage: backgroundOptions[selectedBackground].gradient,
                 fontFamily: 'PingFang SC, Microsoft YaHei, sans-serif'
               }}

@@ -83,12 +83,12 @@ export function DesktopShareImageGenerator({
     setIsGenerating(true)
     try {
       const dataUrl = await htmlToImage.toPng(shareCardRef.current, {
-        width: 900,
-        height: 1200,
+        width: 450,
+        height: 600,
         backgroundColor: 'transparent',
-        pixelRatio: 1,
+        pixelRatio: 2,
         style: {
-          transform: 'scale(2)',
+          transform: 'scale(1)',
           transformOrigin: 'top left'
         }
       })
@@ -147,7 +147,7 @@ export function DesktopShareImageGenerator({
                   {/* 锐评标题 */}
                   {roastTitle && (
                     <div className="mb-4">
-                      <div className="text-xl font-bold text-gray-800 leading-tight">
+                      <div className="font-bold text-gray-800 leading-tight" style={{ fontSize: '16px' }}>
                         {roastTitle.length > 60 ? `${roastTitle.slice(0, 60)}...` : roastTitle}
                       </div>
                     </div>
@@ -159,14 +159,14 @@ export function DesktopShareImageGenerator({
                       <div 
                         className="text-gray-800 leading-relaxed text-justify overflow-hidden"
                         style={{ 
-                          fontSize: '16px',
+                          fontSize: '13px',
                           display: '-webkit-box',
-                          WebkitLineClamp: 8,
+                          WebkitLineClamp: 6,
                           WebkitBoxOrient: 'vertical',
-                          lineHeight: '1.6'
+                          lineHeight: '1.5'
                         }}
                       >
-                        {roastMessage.length > 320 ? `${roastMessage.slice(0, 320)}...` : roastMessage}
+                        {roastMessage.length > 240 ? `${roastMessage.slice(0, 240)}...` : roastMessage}
                       </div>
                     </div>
                   )}
@@ -184,7 +184,7 @@ export function DesktopShareImageGenerator({
                       <div 
                         className="font-bold leading-none"
                         style={{
-                          fontSize: '72px',
+                          fontSize: '48px',
                           background: 'linear-gradient(to right, rgb(234, 205, 163), rgb(214, 174, 123))',
                           WebkitBackgroundClip: 'text',
                           backgroundClip: 'text',
@@ -196,8 +196,8 @@ export function DesktopShareImageGenerator({
                     </div>
 
                     {/* 金额描述文字 */}
-                    <div className="mb-4 text-center">
-                      <div className="text-gray-500 text-xl">
+                    <div className="mb-3 text-center">
+                      <div className="text-gray-500" style={{ fontSize: '16px' }}>
                         今天，你的数字员工花了这么多诶
                       </div>
                     </div>
@@ -206,46 +206,46 @@ export function DesktopShareImageGenerator({
                   {/* 底部固定区域 */}
                   <div className="flex-shrink-0">
                     {/* 分割线 */}
-                    <div className="mb-6">
+                    <div className="mb-3">
                       <hr className="border-gray-200" />
                     </div>
 
                     {/* 服务标题 */}
-                    <div className="mb-4">
-                      <div className="text-gray-500 font-bold text-base">
+                    <div className="mb-3">
+                      <div className="text-gray-500 font-bold" style={{ fontSize: '12px' }}>
                         订阅服务 ({activeServices.length}个)
                       </div>
                     </div>
 
                     {/* 服务图标 - 桌面端优化布局 */}
-                    <div className="grid grid-cols-10 gap-3 justify-items-center">
+                    <div className="grid grid-cols-8 gap-2 justify-items-center">
                       {(() => {
-                        if (activeServices.length <= 20) {
+                        if (activeServices.length <= 16) {
                           // 20个或以下，显示全部
                           return activeServices.map((service) => (
                             <div
                               key={service.id}
-                              className="w-8 h-8 rounded-lg flex items-center justify-center bg-gray-50 border border-gray-200"
+                              className="w-6 h-6 rounded-lg flex items-center justify-center bg-gray-50 border border-gray-200"
                             >
-                              <IconRenderer name={service.icon} size={20} />
+                              <IconRenderer name={service.icon} size={16} />
                             </div>
                           ));
                         } else {
-                          // 超过20个，显示前19个 + "+N"
-                          const displayServices = activeServices.slice(0, 19);
-                          const remainingCount = activeServices.length - 19;
+                          // 超过16个，显示前15个 + "+N"
+                          const displayServices = activeServices.slice(0, 15);
+                          const remainingCount = activeServices.length - 15;
                           
                           return (
                             <>
                               {displayServices.map((service) => (
                                 <div
                                   key={service.id}
-                                  className="w-8 h-8 rounded-lg flex items-center justify-center bg-gray-50 border border-gray-200"
+                                  className="w-6 h-6 rounded-lg flex items-center justify-center bg-gray-50 border border-gray-200"
                                 >
-                                  <IconRenderer name={service.icon} size={20} />
+                                  <IconRenderer name={service.icon} size={16} />
                                 </div>
                               ))}
-                              <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-gray-100 font-medium text-gray-600 text-sm">
+                              <div className="w-6 h-6 rounded-lg flex items-center justify-center bg-gray-100 font-medium text-gray-600" style={{ fontSize: '10px' }}>
                                 +{remainingCount}
                               </div>
                             </>
