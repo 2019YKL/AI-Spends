@@ -183,7 +183,7 @@ export function AIRoastChat({
             <Button 
               onClick={handleRoast}
               disabled={isLoading || activeServices.length === 0}
-              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 flex items-center justify-center gap-2"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 flex items-center justify-center gap-2"
             >
               {isLoading ? (
                 <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
@@ -193,18 +193,6 @@ export function AIRoastChat({
                   测水平
                 </>
               )}
-            </Button>
-            
-            <Button 
-              onClick={() => {
-                setStaticTotalCost(totalCurrentCost)
-                setShowShareGenerator(true)
-              }}
-              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 flex items-center justify-center gap-2"
-              disabled={activeServices.length === 0 || !roastMessage}
-            >
-              <ImageIcon className="w-4 h-4" />
-              分享
             </Button>
           </div>
         </div>
@@ -277,29 +265,17 @@ export function AIRoastChat({
 
       </CardContent>
       
-      {/* 分享图生成器弹窗 */}
-      {showShareGenerator && isMounted && (
-        isDesktop ? (
-          <DesktopShareImageGenerator
-            totalCost={staticTotalCost}
-            activeServices={activeServices}
-            currency={currency}
-            roastMessage={roastMessage}
-            roastTitle={roastTitle}
-            username={userInput}
-            onClose={() => setShowShareGenerator(false)}
-          />
-        ) : (
-          <ShareImageGenerator
-            totalCost={staticTotalCost}
-            activeServices={activeServices}
-            currency={currency}
-            roastMessage={roastMessage}
-            roastTitle={roastTitle}
-            username={userInput}
-            onClose={() => setShowShareGenerator(false)}
-          />
-        )
+      {/* 分享图生成器弹窗 - 仅桌面端 */}
+      {showShareGenerator && isMounted && isDesktop && (
+        <DesktopShareImageGenerator
+          totalCost={staticTotalCost}
+          activeServices={activeServices}
+          currency={currency}
+          roastMessage={roastMessage}
+          roastTitle={roastTitle}
+          username={userInput}
+          onClose={() => setShowShareGenerator(false)}
+        />
       )}
     </Card>
   )
