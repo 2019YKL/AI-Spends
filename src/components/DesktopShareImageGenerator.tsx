@@ -184,7 +184,7 @@ export function DesktopShareImageGenerator({
                       <div 
                         className="font-bold leading-none"
                         style={{
-                          fontSize: '48px',
+                          fontSize: '100px',
                           background: 'linear-gradient(to right, rgb(234, 205, 163), rgb(214, 174, 123))',
                           WebkitBackgroundClip: 'text',
                           backgroundClip: 'text',
