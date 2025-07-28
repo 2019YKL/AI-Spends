@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
         'X-Title': 'AiSpends',
       },
       body: JSON.stringify({
-        model: 'deepseek/deepseek-chat:free',
+        model: 'deepseek/deepseek-chat-v3-0324:free',
         messages: messages,
         max_tokens: 1000,
         temperature: 0.8,
