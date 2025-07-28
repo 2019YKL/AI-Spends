@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { AIService } from '@/types/ai-services'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -8,6 +8,7 @@ import { generateRoastPrompt } from '@/lib/prompts'
 import { Input } from '@/components/ui/input'
 import { IconRenderer } from '@/components/IconRenderer'
 import { ShareImageGenerator } from '@/components/ShareImageGenerator'
+import { DesktopShareImageGenerator } from '@/components/DesktopShareImageGenerator'
 import { ImageIcon, Send } from 'lucide-react'
 import { formatCurrency } from '@/lib/cost-calculator'
 import { RollingNumber } from '@/components/RollingNumber'
@@ -36,6 +37,21 @@ export function AIRoastChat({
   const [username, setUsername] = useState('')
   const [userInput, setUserInput] = useState('')
   const [staticTotalCost, setStaticTotalCost] = useState(0)
+  const [isDesktop, setIsDesktop] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
+
+  // 检测设备类型
+  useEffect(() => {
+    setIsMounted(true)
+    const checkIsDesktop = () => {
+      setIsDesktop(window.innerWidth >= 768) // md断点
+    }
+    
+    checkIsDesktop()
+    window.addEventListener('resize', checkIsDesktop)
+    
+    return () => window.removeEventListener('resize', checkIsDesktop)
+  }, [])
 
   const handleRoast = async () => {
     // 检查用户输入是否为空
@@ -262,16 +278,28 @@ export function AIRoastChat({
       </CardContent>
       
       {/* 分享图生成器弹窗 */}
-      {showShareGenerator && (
-        <ShareImageGenerator
-          totalCost={staticTotalCost}
-          activeServices={activeServices}
-          currency={currency}
-          roastMessage={roastMessage}
-          roastTitle={roastTitle}
-          username={userInput}
-          onClose={() => setShowShareGenerator(false)}
-        />
+      {showShareGenerator && isMounted && (
+        isDesktop ? (
+          <DesktopShareImageGenerator
+            totalCost={staticTotalCost}
+            activeServices={activeServices}
+            currency={currency}
+            roastMessage={roastMessage}
+            roastTitle={roastTitle}
+            username={userInput}
+            onClose={() => setShowShareGenerator(false)}
+          />
+        ) : (
+          <ShareImageGenerator
+            totalCost={staticTotalCost}
+            activeServices={activeServices}
+            currency={currency}
+            roastMessage={roastMessage}
+            roastTitle={roastTitle}
+            username={userInput}
+            onClose={() => setShowShareGenerator(false)}
+          />
+        )
       )}
     </Card>
   )
